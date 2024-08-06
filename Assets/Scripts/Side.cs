@@ -14,17 +14,19 @@ public class Side : IInitializable
 
     public Action Click;
     private DiContainer _container;
+    public int Count;
 
-    public Side(Color color, Cannon cannon, GameObject projectileConfig, ButtonManager buttonManager, DiContainer container) {
+    public Side(Color color, Cannon cannon, GameObject projectileConfig, DiContainer container) {
         _color = color;
         _cannon = cannon;
         _config = projectileConfig;
-        //_count = count;
         _container = container;
     }
 
     private void HandleClick() {
-        _container.InstantiatePrefab(_config, _cannon.transform.position, Quaternion.identity, null);
+        var g = _container.InstantiatePrefab(_config, _cannon.transform.position, Quaternion.identity, null);
+        g.GetComponent<ProjectileConfig>().StartVelocity = _cannon.transform.right;
+        g.GetComponent<ProjectileConfig>().StartM();
     }
 
     public void Initialize()
