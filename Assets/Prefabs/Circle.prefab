@@ -162,5 +162,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartVelocity: {x: 0, y: 0}
-  StartVelocityMultiplier: 4
+  StartVelocityMultiplier: 7
   StartCollisionCooldown: 0

@@ -1217,7 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87db64567ff624bd78033de1aa3a1653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.53631115, g: 1, b: 0, a: 0}
+  color: {r: 0.53631115, g: 1, b: 0, a: 1}
   cannon: {fileID: 1091280226}
   config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
   countText: {fileID: 1023163678}

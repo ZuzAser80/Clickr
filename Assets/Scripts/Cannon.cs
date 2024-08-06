@@ -1,16 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class Cannon : MonoBehaviour {
     [SerializeField] private Vector3 upperAngle;
     [SerializeField] private Vector3 lowerAngle;
     [SerializeField] private float RotationSpeed = 1f;
 
-    public Side side;
-
     private Vector3 _current;
     private bool _rotating = false;
-    private Quaternion rot;
 
     private void Start() {
         _rotating = true;
@@ -26,6 +25,19 @@ public class Cannon : MonoBehaviour {
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
         if(Quaternion.Angle(transform.rotation, rotation) < 1f) { SwitchCurrent(); }
+    }
+
+    public void Shoot(GameObject _config, int count, DiContainer container, Color color) {
+        for (int i = 0; i < count; i++) {
+            var g = container.InstantiatePrefab(_config, transform.position, Quaternion.identity, null);
+            var _p = g.GetComponent<ProjectileConfig>();
+            _p.StartM(color, transform.right);
+        }
+    }
+
+    public IEnumerator wait(Action action, float seconds) {
+        yield return new WaitForSeconds(seconds);
+        action.Invoke();
     }
 
     private void SwitchCurrent() { _current = _current == upperAngle ? lowerAngle : upperAngle; }
