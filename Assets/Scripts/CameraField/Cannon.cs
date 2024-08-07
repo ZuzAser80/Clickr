@@ -9,14 +9,8 @@ public class Cannon : MonoBehaviour {
     [SerializeField] private float RotationSpeed = 1f;
 
     private Vector3 _current;
-    private bool _rotating = false;
-
-    private void Start() {
-        _rotating = true;
-    }
 
     private void Update() {
-        if(!_rotating) {return;}
         RotateTo();
     }
 
@@ -35,9 +29,12 @@ public class Cannon : MonoBehaviour {
         }
     }
 
-    public IEnumerator wait(Action action, float seconds) {
-        yield return new WaitForSeconds(seconds);
-        action.Invoke();
+    public IEnumerator wait(Action action, Action update, float seconds) {
+        for(int i = 0; i < seconds * 2; i++) {
+            update?.Invoke();
+            yield return new WaitForSeconds(0.5f);
+        }
+        action?.Invoke();
     }
 
     private void SwitchCurrent() { _current = _current == upperAngle ? lowerAngle : upperAngle; }

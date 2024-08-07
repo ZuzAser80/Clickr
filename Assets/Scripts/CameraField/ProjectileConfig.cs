@@ -35,4 +35,6 @@ public class ProjectileConfig : MonoBehaviour
         StartCoroutine(startMove());
     }
 
+    public void Die() { Destroy(gameObject); }
+
 }

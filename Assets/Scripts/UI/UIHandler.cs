@@ -20,6 +20,7 @@ public class UIHandler : ITickable
 
     public void Tick()
     {
+        if(Input.GetKeyDown(KeyCode.Space)) { _button.onClick.Invoke(); }
         _countText.text = _currentSide.GetCount().ToString();
         _slider.value = _currentSide.GetTimer();
     }

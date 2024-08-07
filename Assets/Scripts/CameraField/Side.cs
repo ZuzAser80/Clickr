@@ -38,8 +38,9 @@ public class Side : IInitializable
     public float GetTimer() { return _timer; }
 
     private void PutOnCooldown() {
-        _cannon.StartCoroutine(_cannon.wait(delegate 
-            { Debug.Log("DONE COOLDOWN"); _timer = 1; _count++; PutOnCooldown(); }, 
+        _cannon.StartCoroutine(_cannon.wait(
+            delegate { _timer = 0; _count++; PutOnCooldown(); }, 
+            delegate { _timer += 0.1f; },
             5
         ));
     }
