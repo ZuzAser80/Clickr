@@ -10,6 +10,12 @@ public class Cannon : MonoBehaviour {
 
     private Vector3 _current;
 
+    private GameObject _g;
+    private ProjectileConfig _p;
+    private Vector3 _dir;
+    private float _;
+
+    #region Rotation
     private void Update() {
         RotateTo();
     }
@@ -20,19 +26,29 @@ public class Cannon : MonoBehaviour {
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
         if(Quaternion.Angle(transform.rotation, rotation) < 1f) { SwitchCurrent(); }
     }
+    #endregion
 
-    public void Shoot(GameObject _config, int count, DiContainer container, Color color) {
-        for (int i = 0; i < count; i++) {
-            var g = container.InstantiatePrefab(_config, transform.position, Quaternion.identity, null);
-            var _p = g.GetComponent<ProjectileConfig>();
-            _p.StartM(color, transform.right);
+    public void Shoot(GameObject config, ref int count, DiContainer container, Color color) {
+        if (count % 2 != 0) { ShootInDir(transform.right, 0, config, container, color); }
+        _ = count > 1 ? (count <= 8 ? Mathf.Ceil(count / 2) : 4) : 0;
+        for (int i = 0; count <= 1 ? i < _ : i <= _; i++) {
+            ShootInDir(transform.right, (count % 2 == 0 ? 0 : 90/((count+1)*2)) + (90/(count+1)) * i, config, container, color);
         }
+        count -= (int)(count <= 8 ? count : 8);
     }
 
+    private void ShootInDir(Vector2 fwd, float angle, GameObject config, DiContainer container, Color color) {
+        _g = container.InstantiatePrefab(config, transform.position, Quaternion.identity, null);
+        _p = _g.GetComponent<ProjectileConfig>();
+        _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
+        _p.StartM(color, _dir);
+    }
+    
     public IEnumerator wait(Action action, Action update, float seconds) {
-        for(int i = 0; i < seconds * 2; i++) {
+        for (float i = 0; i < seconds;) {
             update?.Invoke();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForEndOfFrame();
+            i += Time.deltaTime;
         }
         action?.Invoke();
     }

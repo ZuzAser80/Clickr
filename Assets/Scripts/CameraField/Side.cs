@@ -28,8 +28,7 @@ public class Side : IInitializable
     }
 
     private void HandleClick() {
-        _cannon.Shoot(_config, _count, _container, _color);
-        _count = 0;
+        _cannon.Shoot(_config, ref _count, _container, _color);
         PutOnCooldown();
     }
 
@@ -39,14 +38,15 @@ public class Side : IInitializable
 
     private void PutOnCooldown() {
         _cannon.StartCoroutine(_cannon.wait(
-            delegate { _timer = 0; _count++; PutOnCooldown(); }, 
-            delegate { _timer += 0.1f; },
-            5
+            delegate { _timer = 0; _count++; _cannon.StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { _timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
+            3.5f
         ));
     }
 
     public void Initialize()
     {
         Click += delegate { HandleClick(); };
+        PutOnCooldown();
     }
 }
