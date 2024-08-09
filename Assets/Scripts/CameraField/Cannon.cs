@@ -41,7 +41,7 @@ public class Cannon : MonoBehaviour {
         for (int i = 1; i <= _; i++) {
             ShootInDir(transform.right, (count % 2 == 0 ? 0 : -90/((count+1)*2)) - 90/(count+1) * i, config, container, color);
         }
-        count -= (int)(count <= 8 ? count : 8);
+        count -= count <= 8 ? count : 8;
     }
 
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, DiContainer container, Color color) {

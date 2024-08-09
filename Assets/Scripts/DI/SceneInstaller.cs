@@ -12,7 +12,7 @@ namespace Assets.Scripts.DI {
         [SerializeField] private GameObject config;
 
         [SerializeField] private TextMeshProUGUI countText;
-        [SerializeField] private Slider slider;
+        [SerializeField] private Image slider;
         [SerializeField] private Button launch;
 
         [SerializeField] private List<EffectZone> effectZones;
