@@ -4069,7 +4069,14 @@ MonoBehaviour:
   countText: {fileID: 1023163678}
   slider: {fileID: 766947584}
   launch: {fileID: 883662765}
-  effectZones: []
+  effectZones:
+  - {fileID: 1797085456}
+  - {fileID: 1165611286}
+  - {fileID: 429185057}
+  - {fileID: 993020121}
+  - {fileID: 15442718}
+  - {fileID: 1130214145}
+  - {fileID: 837659524}
 --- !u!114 &1581670008
 MonoBehaviour:
   m_ObjectHideFlags: 0

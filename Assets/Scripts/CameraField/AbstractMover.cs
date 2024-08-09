@@ -21,7 +21,6 @@ public class AbstractMover : MonoBehaviour {
 
     private IEnumerator moveList(List<MoverNode> nodes) {
         foreach(var node in nodes) {
-            //Debug.Log("started moving: " + node.Pos);
             yield return move(node);
         }
     }

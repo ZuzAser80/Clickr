@@ -15,6 +15,10 @@ public class Cannon : MonoBehaviour {
     private Vector3 _dir;
     private float _;
 
+    private void Awake() {
+        _current = upperAngle;
+    }
+
     #region Rotation
     private void Update() {
         RotateTo();
@@ -30,13 +34,11 @@ public class Cannon : MonoBehaviour {
 
     public void Shoot(GameObject config, ref int count, DiContainer container, Color color) {
         if (count % 2 != 0) { ShootInDir(transform.right, 0, config, container, color); }
-        _ = count > 1 ? (count <= 8 ? Mathf.Ceil(count / 2) : 4) : 0;
+        _ = count > 1 ? (count <= 8 ? Mathf.Floor(count / 2) : 4) : 0;
         for (int i = 1;  i <= _; i++) {
-            Debug.Log(":: " + i + " : " + _ + " :: #1");
             ShootInDir(transform.right, (count % 2 == 0 ? 0 : 90/((count+1)*2)) + 90/(count+1) * i, config, container, color);
         }
         for (int i = 1; i <= _; i++) {
-            Debug.Log(":: " + i + " : " + (count % 2 == 0 ? 0 : -90/((count+1)*2)) + " :: #2");
             ShootInDir(transform.right, (count % 2 == 0 ? 0 : -90/((count+1)*2)) - 90/(count+1) * i, config, container, color);
         }
         count -= (int)(count <= 8 ? count : 8);
