@@ -6,10 +6,7 @@ using Assets.Scripts.Sides;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.DI {
-    public class SceneInstaller : MonoInstaller {
-        [SerializeField] private Color color;
-        [SerializeField] private Cannon cannon;
-        [SerializeField] private GameObject config;
+    public class UiInstaller : MonoInstaller {
 
         [SerializeField] private TextMeshProUGUI countText;
         [SerializeField] private Image slider;
@@ -19,11 +16,9 @@ namespace Assets.Scripts.DI {
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<Side>().AsSingle()
-                .WithArguments(color, cannon, config);
             Container.BindInterfacesAndSelfTo<SideSpawnManager>().AsSingle()
                 .WithArguments(effectZones);
-            Container.BindInterfacesAndSelfTo<UIHandler>().AsSingle()
+            Container.BindInterfacesAndSelfTo<UiHandler>().AsSingle()
                 .WithArguments(countText, slider, launch);
         }
     }

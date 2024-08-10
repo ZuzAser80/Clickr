@@ -7,25 +7,17 @@ using Zenject;
 
 namespace Assets.Scripts.Sides {
     [Serializable]
-    public class Side : IInitializable
+    public class CameraFieldSide : MonoBehaviour
     {
-        private Color _color;
-        private Cannon _cannon;
-        private GameObject _config;
+        [SerializeField] private Color _color;
+        [SerializeField] private Cannon _cannon;
+        [SerializeField] private GameObject _config;
 
         private float _timer;
         private int _count;
 
         public Action Click;
         private DiContainer _container;
-        public int Count;
-        
-        public Side(Color color, Cannon cannon, GameObject projectileConfig, DiContainer container) {
-            _color = color;
-            _cannon = cannon;
-            _config = projectileConfig;
-            _container = container;
-        }
 
         private void HandleClick() {
             _cannon.Shoot(_config, ref _count, _container, _color);
@@ -46,11 +38,12 @@ namespace Assets.Scripts.Sides {
 
         public void AddCount(int amount) { _count += amount; }
 
-        public void Initialize()
+        public void Awake()
         {
             _count = 1;
             Click += delegate { HandleClick(); };
             PutOnCooldown();
+            _container = GetComponent<ZenjectBinding>().Context.Container;
         }
     }
 }
