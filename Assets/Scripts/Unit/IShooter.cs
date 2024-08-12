@@ -1,5 +1,5 @@
 namespace Assets.Scripts.Unit {
     public interface IShooter {
-        public void Shoot();
+        public void Shoot(PathwalkingUnit target);
     }
 }

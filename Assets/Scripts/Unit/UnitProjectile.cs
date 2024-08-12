@@ -20,6 +20,7 @@ namespace Assets.Scripts.Unit {
         private void OnTriggerEnter(Collider other) {
             if(other.gameObject.layer != LayerMask.NameToLayer("Unit")) { return; }
             //damage unit
+            other.gameObject.GetComponent<IDamagable>().Damage(Damage);
             Destroy(gameObject);
         }
 

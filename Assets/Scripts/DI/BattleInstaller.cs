@@ -1,4 +1,6 @@
+using System.Threading;
 using Assets.Scripts.Battle;
+using Assets.Scripts.Unit.Units;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +14,12 @@ namespace Assets.Scripts.DI {
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<BattleSide>().AsSingle().NonLazy();
-            //Creating base unit
-            Container.InstantiatePrefab(baseGO, baseSpawn.position, baseSpawn.rotation, baseSpawn);
+
+            Container.InstantiatePrefabForComponent<BaseUnit>(baseGO, baseSpawn.position, baseSpawn.rotation, baseSpawn, new Object[]{});
+
+            
         }
+
+        
     }
 }
