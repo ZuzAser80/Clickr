@@ -238,7 +238,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8999014768493479651}
   serializedVersion: 4
-  m_Mass: 0.1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -269,8 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039f2211601884b7b9d9cce0165b839f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartSpeed: 1
+  StartSpeed: 15
   Lifetime: 5
   Explode: 0
   ExplosionRadius: 0
-  Damage: 0
+  Damage: 10

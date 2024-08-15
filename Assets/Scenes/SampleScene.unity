@@ -1692,6 +1692,7 @@ MonoBehaviour:
     MaxSpread: 0
     UnitProjectile: {fileID: 0}
     Reload: 0
+  _side: {fileID: 0}
 --- !u!195 &721866340
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4285,132 +4286,6 @@ MonoBehaviour:
   _color: {r: 1, g: 0, b: 0, a: 1}
   _cannon: {fileID: 1091280226}
   _config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
---- !u!1 &1593611793
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1593611799}
-  - component: {fileID: 1593611798}
-  - component: {fileID: 1593611797}
-  - component: {fileID: 1593611796}
-  - component: {fileID: 1593611795}
-  - component: {fileID: 1593611794}
-  m_Layer: 0
-  m_Name: SceneInstaller (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1593611794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 1593611797}
-  - {fileID: 1593611798}
-  _installerPrefabs: []
-  _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &1593611795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _components:
-  - {fileID: 1593611796}
-  _identifier: 
-  _useSceneContext: 0
-  _context: {fileID: 0}
-  _bindType: 0
---- !u!114 &1593611796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22be4d46a2b148fca8896e4c8bd19c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _color: {r: 0, g: 1, b: 0.057691574, a: 1}
-  _cannon: {fileID: 1091280226}
-  _config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
---- !u!114 &1593611797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed4867b9b51f74f67abe5810e33875de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSpawn: {fileID: 841799192}
-  baseGO: {fileID: 7663681334788740299, guid: 91cf97be16ad1494ea4e7d56fa6c1325, type: 3}
-  unitySpawnArea: {fileID: 0}
---- !u!114 &1593611798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87db64567ff624bd78033de1aa3a1653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countText: {fileID: 1023163678}
-  slider: {fileID: 312182763}
-  launch: {fileID: 883662765}
-  effectZones:
-  - {fileID: 1797085456}
-  - {fileID: 1165611286}
-  - {fileID: 429185057}
-  - {fileID: 993020121}
-  - {fileID: 15442718}
-  - {fileID: 1130214145}
-  - {fileID: 837659524}
---- !u!4 &1593611799
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593611793}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9343641, y: 1.1568356, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1626791696
 GameObject:
   m_ObjectHideFlags: 0
@@ -5490,6 +5365,7 @@ MonoBehaviour:
     MaxSpread: 10
     UnitProjectile: {fileID: 6671574179125943627, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
     Reload: 5
+  _side: {fileID: 1581670009}
 --- !u!54 &1890190023
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6086,7 +5962,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1462681432}
   - {fileID: 1581670006}
-  - {fileID: 1593611799}
   - {fileID: 1626791700}
   - {fileID: 1170076789}
   - {fileID: 712772280}

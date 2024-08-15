@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Assets.Scripts.DI;
 using Assets.Scripts.Sides;
 using Assets.Scripts.Unit.Units;
 using Unity.Mathematics;
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Unit {
 
         public Action onDeath;
 
-        private CameraFieldSide _side;
+        [SerializeField] private BattleInstaller _side;
         private NavMeshAgent _navMeshAgent;
 
         private float _currentHealth;
@@ -27,25 +28,26 @@ namespace Assets.Scripts.Unit {
         private DiContainer _container;
 
         private void Awake() {
+            _navMeshAgent = GetComponent<NavMeshAgent>();
             _lookDir = transform.GetChild(0);
             StartPathfind(new Vector3(0, 0, 0));
         }
 
         [Inject]
-        public void Construct(CameraFieldSide side, DiContainer container) {
-            _side = side;
+        public void Construct(DiContainer container) {
+            Debug.Log(" :: " + _side);
             _container = container;
-            _navMeshAgent = GetComponent<NavMeshAgent>();
+            
             _currentHealth = _properties.MaxHealth;
             // todo: set color
         }
 
-        public CameraFieldSide GetSide() {
+        public BattleInstaller GetSide() {
             return _side;
         }
 
         public virtual void Detect(PathwalkingUnit unit) { 
-            if(unit.GetSide() == _side) { Debug.Log("SAME SIDE"); return; }
+            //if(unit.GetSide() == _side) { Debug.Log("SAME SIDE : " + _side); return; }
             _navMeshAgent.isStopped = true;
             _currentEnemy = unit;
             _currentEnemy.onDeath += delegate { 
@@ -89,6 +91,7 @@ namespace Assets.Scripts.Unit {
 
         public void Shoot(PathwalkingUnit target)
         {
+            Debug.Log("::::");
             Vector3 direction = target.transform.position - _lookDir.position;
             _lookDir.rotation = Quaternion.LookRotation(direction);
             var p = _container.InstantiatePrefabForComponent<UnitProjectile>(_properties.UnitProjectile, transform.position, _lookDir.rotation, null, new object[] { _lookDir.forward, this });
