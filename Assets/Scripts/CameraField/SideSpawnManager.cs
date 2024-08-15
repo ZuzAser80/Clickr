@@ -5,9 +5,9 @@ using Zenject;
 namespace Assets.Scripts.Sides {
     public class SideSpawnManager : IInitializable {
         private List<EffectZone> _effectZones = new List<EffectZone>();
-        private Side _side;
+        private CameraFieldSide _side;
 
-        public SideSpawnManager(List<EffectZone> effectZone, Side side) {
+        public SideSpawnManager(List<EffectZone> effectZone, CameraFieldSide side) {
             _effectZones = effectZone;
             _side = side;
         }
