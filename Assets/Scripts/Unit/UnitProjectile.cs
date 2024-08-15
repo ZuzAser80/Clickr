@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -11,15 +12,10 @@ namespace Assets.Scripts.Unit {
         public float Damage;
 
         private Collider[] res;
-        private Rigidbody _rb;
-
-        private void Awake() {
-            _rb = GetComponent<Rigidbody>();
-        }
+        private PathwalkingUnit _unit;
 
         private void OnTriggerEnter(Collider other) {
-            if(other.gameObject.layer != LayerMask.NameToLayer("Unit")) { return; }
-            //damage unit
+            if(other.gameObject.layer != LayerMask.NameToLayer("Unit") || other.GetComponent<PathwalkingUnit>() == _unit) { return; }
             other.gameObject.GetComponent<IDamagable>().Damage(Damage);
             Destroy(gameObject);
         }
@@ -29,15 +25,22 @@ namespace Assets.Scripts.Unit {
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
                     if(x.gameObject.layer == LayerMask.NameToLayer("Unit")) {  
-                        //damage unit
+                        x.gameObject.GetComponent<IDamagable>().Damage(Damage);
                     }
                 });
             }
         }
 
-        public void Init(Vector3 startDirection) {
-            _rb.velocity = startDirection * StartSpeed;
+        [Inject]
+        public void Construct(Vector3 startDirection, PathwalkingUnit owner) {
+            _unit = owner;
+            GetComponent<Rigidbody>().velocity = startDirection * StartSpeed;
             Destroy(gameObject, Lifetime);
+        }
+
+        private void OnDrawGizmos() {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward);
         }
     }
 }

@@ -16,8 +16,6 @@ namespace Assets.Scripts.DI {
             Container.BindInterfacesAndSelfTo<BattleSide>().AsSingle().NonLazy();
 
             Container.InstantiatePrefabForComponent<BaseUnit>(baseGO, baseSpawn.position, baseSpawn.rotation, baseSpawn, new Object[]{});
-
-            
         }
 
         

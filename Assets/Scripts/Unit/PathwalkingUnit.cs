@@ -2,15 +2,20 @@ using System;
 using System.Collections;
 using Assets.Scripts.Sides;
 using Assets.Scripts.Unit.Units;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using Random = UnityEngine.Random;
+
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(NavMeshAgent))]
     public class PathwalkingUnit : MonoBehaviour, IDamagable, IShooter
     {
         [SerializeField] protected UnitProperties _properties;
+
+        public Action onDeath;
 
         private CameraFieldSide _side;
         private NavMeshAgent _navMeshAgent;
@@ -19,6 +24,7 @@ namespace Assets.Scripts.Unit {
         private PathwalkingUnit _currentEnemy;
         private bool canShoot = true;
         private Transform _lookDir;
+        private DiContainer _container;
 
         private void Awake() {
             _lookDir = transform.GetChild(0);
@@ -26,16 +32,26 @@ namespace Assets.Scripts.Unit {
         }
 
         [Inject]
-        public void Construct(CameraFieldSide side) {
+        public void Construct(CameraFieldSide side, DiContainer container) {
             _side = side;
+            _container = container;
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _currentHealth = _properties.MaxHealth;
             // todo: set color
         }
 
+        public CameraFieldSide GetSide() {
+            return _side;
+        }
+
         public virtual void Detect(PathwalkingUnit unit) { 
-            Stop();
+            if(unit.GetSide() == _side) { Debug.Log("SAME SIDE"); return; }
+            _navMeshAgent.isStopped = true;
             _currentEnemy = unit;
+            _currentEnemy.onDeath += delegate { 
+                Debug.Log("Enemy killed"); 
+                _navMeshAgent.isStopped = false; 
+            };
             if(canShoot) {
                 StartCoroutine(reload());
             }
@@ -51,6 +67,10 @@ namespace Assets.Scripts.Unit {
             canShoot = false;
             Shoot(_currentEnemy);
             yield return new WaitForSeconds(_properties.Reload);
+            if(_navMeshAgent.isStopped) {
+                StopAllCoroutines();
+                StartCoroutine(reload());
+            }
             canShoot = true;
         }
 
@@ -63,17 +83,15 @@ namespace Assets.Scripts.Unit {
         }
 
         public virtual void Die() { 
+            onDeath?.Invoke();
             Destroy(gameObject);
         }
 
         public void Shoot(PathwalkingUnit target)
         {
             Vector3 direction = target.transform.position - _lookDir.position;
-            direction.y = Mathf.Deg2Rad * UnityEngine.Random.Range(0, _properties.ArcAngle);
-            //direction.z = Mathf.Deg2Rad * UnityEngine.Random.Range(1f, 73f) * 5;
             _lookDir.rotation = Quaternion.LookRotation(direction);
-            // add more random plane rotation
-            // then spawn at .forward vector uniproj from _properties
+            var p = _container.InstantiatePrefabForComponent<UnitProjectile>(_properties.UnitProjectile, transform.position, _lookDir.rotation, null, new object[] { _lookDir.forward, this });
 
         }
     }
