@@ -28,7 +28,7 @@ public class Cannon : MonoBehaviour {
         float angle = Mathf.Atan2(_current.y, _current.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, RotationSpeed * Time.deltaTime);
-        if(Quaternion.Angle(transform.rotation, rotation) < 1f) { SwitchCurrent(); }
+        if(Quaternion.Angle(transform.rotation, rotation) < 5f) { SwitchCurrent(); }
     }
     #endregion
 

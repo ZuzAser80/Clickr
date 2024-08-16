@@ -24,9 +24,9 @@ public class ProjectileConfig : MonoBehaviour
     }
 
     private IEnumerator startMove() {
+        _rb.velocity = _startVelocity * StartVelocityMultiplier;
         yield return new WaitForSeconds(StartCollisionCooldown);
         _collider.enabled = true;
-        _rb.velocity = _startVelocity * StartVelocityMultiplier;
     }
 
     public void StartM(Color color, Vector3 startVelocity) {
