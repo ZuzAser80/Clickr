@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
+using Mirror;
 using UnityEngine;
 using Zenject;
 
-public class Cannon : MonoBehaviour {
+public class Cannon : NetworkBehaviour {
     [SerializeField] private Vector3 upperAngle;
     [SerializeField] private Vector3 lowerAngle;
     [SerializeField] private float RotationSpeed = 1f;
@@ -32,32 +33,29 @@ public class Cannon : MonoBehaviour {
     }
     #endregion
 
-    public void Shoot(GameObject config, ref int count, DiContainer container, Color color) {
-        if (count % 2 != 0) { ShootInDir(transform.right, 0, config, container, color); }
+    [Server]
+    public void Shoot(GameObject config, ref int count, Color player) {
+        if (count % 2 != 0) { ShootInDir(transform.right, 0, config, player); }
         _ = count > 1 ? (count <= 8 ? Mathf.Floor(count / 2) : 4) : 0;
         for (int i = 1;  i <= _; i++) {
-            ShootInDir(transform.right, (count % 2 == 0 ? 0 : 90/((count+1)*2)) + 90/(count+1) * i, config, container, color);
+            ShootInDir(transform.right, (count % 2 == 0 ? 0 : 90/((count+1)*2)) + 90/(count+1) * i, config, player);
         }
         for (int i = 1; i <= _; i++) {
-            ShootInDir(transform.right, (count % 2 == 0 ? 0 : -90/((count+1)*2)) - 90/(count+1) * i, config, container, color);
+            ShootInDir(transform.right, (count % 2 == 0 ? 0 : -90/((count+1)*2)) - 90/(count+1) * i, config, player);
         }
         count -= count <= 8 ? count : 8;
     }
 
-    private void ShootInDir(Vector2 fwd, float angle, GameObject config, DiContainer container, Color color) {
-        _g = container.InstantiatePrefab(config, transform.position, Quaternion.identity, null);
+    [Server]
+    private void ShootInDir(Vector2 fwd, float angle, GameObject config, Color player) {
+        
+        Debug.Log("shot from player: " + player);
+        _g = Instantiate(config, transform.position, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
-        _p.StartM(color, _dir);
-    }
-    
-    public IEnumerator wait(Action action, Action update, float seconds) {
-        for (float i = 0; i < seconds;) {
-            update?.Invoke();
-            yield return new WaitForEndOfFrame();
-            i += Time.deltaTime;
-        }
-        action?.Invoke();
+        _p.StartM(player, _dir);
+        NetworkServer.Spawn(_g, NetworkClient.localPlayer.gameObject);
+
     }
 
     private void SwitchCurrent() { _current = _current == upperAngle ? lowerAngle : upperAngle; }

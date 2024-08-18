@@ -15,11 +15,11 @@ namespace Assets.Scripts.Sides {
         public void Initialize()
         {
             _effectZones[0].ApplyEffect += delegate { Spawn("Soldier"); };
-            _effectZones[1].ApplyEffect += delegate { _side.AddCount(1); };
+            //_effectZones[1].ApplyEffect += delegate { _side.AddCount(1); };
             _effectZones[2].ApplyEffect += delegate { Spawn("Gunner"); };
-            _effectZones[3].ApplyEffect += delegate { _side.AddCount(1); };
+            //_effectZones[3].ApplyEffect += delegate { _side.AddCount(1); };
             _effectZones[4].ApplyEffect += delegate { Spawn("Cannon"); };
-            _effectZones[5].ApplyEffect += delegate { _side.AddCount(1); };
+            //_effectZones[5].ApplyEffect += delegate { _side.AddCount(1); };
             _effectZones[6].ApplyEffect += delegate { Spawn("Tank"); };
         }
 

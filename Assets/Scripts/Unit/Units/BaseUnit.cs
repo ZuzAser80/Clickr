@@ -8,18 +8,18 @@ namespace Assets.Scripts.Unit.Units {
         private float _maxHealth;
         private float _currentHealth;
         private CameraFieldSide _side;
-        private UiHandler _handler;
+        //private UiHandler _handler;
 
         private void Awake() {
             Debug.Log("Awake");
         }
 
         [Inject]
-        public void Construct(CameraFieldSide side, UiHandler handler)
+        public void Construct(CameraFieldSide side)
         {
             _maxHealth = 32;
             _side = side;
-            _handler = handler;
+            //_handler = handler;
         }
 
         public void Damage(float amount) {

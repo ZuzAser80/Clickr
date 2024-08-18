@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class ProjectileConfig : MonoBehaviour
+public class ProjectileConfig : NetworkBehaviour
 {
     private Vector2 _startVelocity;
     public float StartVelocityMultiplier = 1;
@@ -29,6 +30,8 @@ public class ProjectileConfig : MonoBehaviour
         _collider.enabled = true;
     }
 
+    // fumble
+    [Server]
     public void StartM(Color color, Vector3 startVelocity) {
         _startVelocity = startVelocity;
         _renderer.color = color;
