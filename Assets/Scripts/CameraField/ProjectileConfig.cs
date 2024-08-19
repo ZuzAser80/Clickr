@@ -13,6 +13,7 @@ public class ProjectileConfig : NetworkBehaviour
 
     private Collider2D _collider;
     private Rigidbody2D _rb;
+    public Player owner;
     [SyncVar(hook = nameof(HandleColor))]
     public Color color;
     private SpriteRenderer _renderer;
@@ -41,9 +42,9 @@ public class ProjectileConfig : NetworkBehaviour
 
     // fumble
     [Server]
-    public void StartM(Color color, Vector3 startVelocity) {
+    public void StartM(Player player, Vector3 startVelocity) {
         _startVelocity = startVelocity;
-        _renderer.color = color;
+        owner = player;
         StartCoroutine(startMove());
     }
 

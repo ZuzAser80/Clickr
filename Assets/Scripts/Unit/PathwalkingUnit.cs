@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.DI;
 using Assets.Scripts.Sides;
 using Assets.Scripts.Unit.Units;
+using Mirror;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,20 +13,19 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class PathwalkingUnit : MonoBehaviour, IDamagable, IShooter
+    public class PathwalkingUnit : NetworkBehaviour, IDamagable, IShooter
     {
         [SerializeField] protected UnitProperties _properties;
 
         public Action onDeath;
 
-        [SerializeField] private BattleInstaller _side;
+        [SerializeField] private Player owner;
         private NavMeshAgent _navMeshAgent;
 
         private float _currentHealth;
         private PathwalkingUnit _currentEnemy;
         private bool canShoot = true;
         private Transform _lookDir;
-        private DiContainer _container;
 
         private void Awake() {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -33,17 +33,8 @@ namespace Assets.Scripts.Unit {
             StartPathfind(new Vector3(0, 0, 0));
         }
 
-        [Inject]
-        public void Construct(DiContainer container) {
-            Debug.Log(" :: " + _side);
-            _container = container;
-            
-            _currentHealth = _properties.MaxHealth;
-            // todo: set color
-        }
-
-        public BattleInstaller GetSide() {
-            return _side;
+        public Player GetSide() {
+            return owner;
         }
 
         public virtual void Detect(PathwalkingUnit unit) { 
@@ -89,13 +80,16 @@ namespace Assets.Scripts.Unit {
             Destroy(gameObject);
         }
 
+        [Server]
         public void Shoot(PathwalkingUnit target)
         {
-            Debug.Log("::::");
+            Debug.Log("Shoot: " + target);
             Vector3 direction = target.transform.position - _lookDir.position;
+            //direction.y = 90;
             _lookDir.rotation = Quaternion.LookRotation(direction);
-            var p = _container.InstantiatePrefabForComponent<UnitProjectile>(_properties.UnitProjectile, transform.position, _lookDir.rotation, null, new object[] { _lookDir.forward, this });
 
+            var p = Instantiate(_properties.UnitProjectile.gameObject, transform.position, _lookDir.rotation);
+            NetworkServer.Spawn(p);
         }
     }
 }

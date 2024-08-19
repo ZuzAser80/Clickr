@@ -1,10 +1,11 @@
 using System.Linq;
+using Mirror;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-    public class UnitProjectile : MonoBehaviour {
+    public class UnitProjectile : NetworkBehaviour {
         public float StartSpeed = 1f;
         public float Lifetime = 5f;
         public bool Explode = false;
@@ -31,8 +32,8 @@ namespace Assets.Scripts.Unit {
             }
         }
 
-        [Inject]
-        public void Construct(Vector3 startDirection, PathwalkingUnit owner) {
+        [Server]
+        public void Init(Vector3 startDirection, PathwalkingUnit owner) {
             _unit = owner;
             GetComponent<Rigidbody>().velocity = startDirection * StartSpeed;
             Destroy(gameObject, Lifetime);

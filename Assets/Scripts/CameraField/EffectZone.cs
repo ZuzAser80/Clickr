@@ -6,12 +6,18 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider2D))]
 public class EffectZone : NetworkBehaviour {
     public Action ApplyEffect;
+    private ProjectileConfig _;
 
-    [Server]
+    private void Awake() {
+        ApplyEffect += delegate { Debug.Log("ROFL PRIKOL: " + NetworkClient.localPlayer.GetComponent<Player>().color); };
+    }
+
     private void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.layer != LayerMask.NameToLayer("Ball")) { return; }
-        other.GetComponent<ProjectileConfig>().Die();
-        Debug.Log(":::::: " + other.GetComponent<ProjectileConfig>().isLocalPlayer);
+        _ = other.GetComponent<ProjectileConfig>();
+        _.Die();
+        _.owner.HandleEventRpc();
+        //Debug.Log(":::::: " + other.GetComponent<ProjectileConfig>().isLocalPlayer);
         ApplyEffect?.Invoke();
     }
 }

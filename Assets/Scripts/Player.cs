@@ -9,21 +9,17 @@ public class Player : NetworkBehaviour {
     [SyncVar(hook = nameof(PlayerColorChanged))]
     public Color color;
 
-    public int count;
+    [SyncVar] public int count;
     public float timer;
 
     [SerializeField] private GameObject _config;
+    [SerializeField] private GameObject _ui;
     private UIReciever reciever;
-
-    public override void OnStartAuthority()
-    {
-        //color = UnityEngine.Random.ColorHSV();
-    }
 
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; count++; StopAllCoroutines(); PutOnCooldown(); }, 
-            delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3);  },
+            delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
     }
@@ -37,10 +33,21 @@ public class Player : NetworkBehaviour {
         action?.Invoke();
     }
 
+    public override void OnStartAuthority()
+    {
+        _ui.SetActive(true);
+    }
+
     public override void OnStartLocalPlayer()
     {
-        reciever = FindObjectOfType<UIReciever>();
-        reciever.CurrentPlayer = this;
+        //reciever = FindObjectOfType<UIReciever>();
+        Debug.Log("::::: " + color + " -- ");
+        //PutOnCooldown();
+    }
+
+    public override void OnStartClient()
+    {
+        PutOnCooldown();
     }
 
     private void PlayerColorChanged(Color o, Color n)
@@ -50,16 +57,29 @@ public class Player : NetworkBehaviour {
 
     // todo: ui work
 
+    [TargetRpc]
+    public void HandleEventRpc() {
+        CmdSpawnUnit();
+    }
+
+    [Command]
+    public void CmdSpawnUnit() {
+        
+    }
+
     [Command]
     public void CmdClick() {
-        PutOnCooldown();
-        FindObjectOfType<Cannon>().Shoot(_config, ref count, color);
+        Debug.Log(" ::: " + count);
+        FindObjectOfType<Cannon>().Shoot(_config, ref count, this);
     }
 
     private void Update() {
-        //_reciever.UpdateUIRpc(timer, 0, count);
-        if(Input.GetKeyDown(KeyCode.Space) && isLocalPlayer) {
+        if(!isLocalPlayer) { return; }
+        _ui.GetComponent<UIReciever>().UpdateUIRpc(timer, count);
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log(0);
             CmdClick();
         }
+
     }
 }

@@ -33,8 +33,8 @@ public class Cannon : NetworkBehaviour {
     }
     #endregion
 
-    [Server]
-    public void Shoot(GameObject config, ref int count, Color player) {
+    //[Server]
+    public void Shoot(GameObject config, ref int count, Player player) {
         if (count % 2 != 0) { ShootInDir(transform.right, 0, config, player); }
         _ = count > 1 ? (count <= 8 ? Mathf.Floor(count / 2) : 4) : 0;
         for (int i = 1;  i <= _; i++) {
@@ -46,16 +46,16 @@ public class Cannon : NetworkBehaviour {
         count -= count <= 8 ? count : 8;
     }
 
-    [Server]
-    private void ShootInDir(Vector2 fwd, float angle, GameObject config, Color player) {
+    //[Server]
+    private void ShootInDir(Vector2 fwd, float angle, GameObject config, Player player) {
         
-        //Debug.Log("shot from player: " + player);
+        Debug.Log("shot from player: " + player);
         _g = Instantiate(config, transform.position, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
         _p.StartM(player, _dir);
-        _p.color = player;
-        NetworkServer.Spawn(_g, NetworkClient.localPlayer.gameObject);
+        _p.color = player.color;
+        NetworkServer.Spawn(_g);
 
     }
 
