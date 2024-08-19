@@ -13,7 +13,10 @@ public class ProjectileConfig : NetworkBehaviour
 
     private Collider2D _collider;
     private Rigidbody2D _rb;
+    [SyncVar(hook = nameof(HandleColor))]
+    public Color color;
     private SpriteRenderer _renderer;
+    
     
     private void Awake() {
         gameObject.layer = LayerMask.NameToLayer("Ball");
@@ -24,10 +27,16 @@ public class ProjectileConfig : NetworkBehaviour
         _collider.enabled = false;
     }
 
+    [Server]
     private IEnumerator startMove() {
         _rb.velocity = _startVelocity * StartVelocityMultiplier;
         yield return new WaitForSeconds(StartCollisionCooldown);
         _collider.enabled = true;
+    }
+
+    public void HandleColor(Color o, Color n) {
+        color = n;
+        _renderer.color = color;
     }
 
     // fumble

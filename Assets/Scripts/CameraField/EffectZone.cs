@@ -7,10 +7,11 @@ using UnityEngine.Events;
 public class EffectZone : NetworkBehaviour {
     public Action ApplyEffect;
 
-    [ServerCallback]
+    [Server]
     private void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.layer != LayerMask.NameToLayer("Ball")) { return; }
         other.GetComponent<ProjectileConfig>().Die();
+        Debug.Log(":::::: " + other.GetComponent<ProjectileConfig>().isLocalPlayer);
         ApplyEffect?.Invoke();
     }
 }

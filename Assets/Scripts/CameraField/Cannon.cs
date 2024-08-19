@@ -49,11 +49,12 @@ public class Cannon : NetworkBehaviour {
     [Server]
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, Color player) {
         
-        Debug.Log("shot from player: " + player);
+        //Debug.Log("shot from player: " + player);
         _g = Instantiate(config, transform.position, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
         _p.StartM(player, _dir);
+        _p.color = player;
         NetworkServer.Spawn(_g, NetworkClient.localPlayer.gameObject);
 
     }

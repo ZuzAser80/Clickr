@@ -16,7 +16,7 @@ namespace Assets.Scripts.Sides {
         [SerializeField] private GameObject _config;
         [SerializeField] private UIReciever _reciver;
 
-        [Client][Command]
+        [Client]
         public void HandleClick(NetworkIdentity player) {
             _cannon.Shoot(_config, ref player.GetComponent<Player>().count, player.GetComponent<Player>().color);
         }

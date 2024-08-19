@@ -603,11 +603,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   rofl: {fileID: 6972673697824355664}
-  color: {r: 1, g: 0, b: 0, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   count: 0
   timer: 0
-  uiHolder: {fileID: 4702681403822383225}
-  _reciever: {fileID: 6376269937854725796}
+  _config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
 --- !u!114 &5443051762245197420
 MonoBehaviour:
   m_ObjectHideFlags: 0
