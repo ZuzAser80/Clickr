@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Assets.Scripts.DI;
-using Assets.Scripts.Sides;
 using Assets.Scripts.Unit.Units;
 using Mirror;
 using Unity.Mathematics;

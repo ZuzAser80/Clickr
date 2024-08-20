@@ -1,21 +1,23 @@
 using System;
 using System.Collections;
-using Assets.Scripts.Sides;
+using System.Linq;
 using Mirror;
 using UnityEngine;
 
 public class Player : NetworkBehaviour {
     public GameObject rofl;
-    [SyncVar(hook = nameof(PlayerColorChanged))]
-    public Color color;
+    [SyncVar] public Color color;
 
     [SyncVar] public int count;
-    public float timer;
+    [SyncVar] public float timer;
+    [SyncVar] public float enemyTimer;
 
     [SerializeField] private GameObject _config;
     [SerializeField] private GameObject _ui;
-    private UIReciever reciever;
+    private UIReciever _reciever;
+    private Player _enemy;
 
+    #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; count++; StopAllCoroutines(); PutOnCooldown(); }, 
@@ -32,54 +34,49 @@ public class Player : NetworkBehaviour {
         }
         action?.Invoke();
     }
+    #endregion
+
+    public void SetEnemy(Player _) { _enemy = _; }
 
     public override void OnStartAuthority()
     {
         _ui.SetActive(true);
+        _reciever = _ui.GetComponentInChildren<UIReciever>();
     }
 
-    public override void OnStartLocalPlayer()
-    {
-        //reciever = FindObjectOfType<UIReciever>();
-        Debug.Log("::::: " + color + " -- ");
-        //PutOnCooldown();
-    }
-
-    public override void OnStartClient()
-    {
+    public override void OnStartClient() {
         PutOnCooldown();
     }
 
-    private void PlayerColorChanged(Color o, Color n)
-    {
-        color = n;
-    }
-
-    // todo: ui work
-
     [TargetRpc]
-    public void HandleEventRpc() {
-        CmdSpawnUnit();
+    public void HandleEventRpc(GameObject unit) {
+        CmdSpawnUnit(unit);
     }
 
+    #region Commands
     [Command]
-    public void CmdSpawnUnit() {
+    public void CmdSpawnUnit(GameObject unit) {
         
     }
 
     [Command]
-    public void CmdClick() {
-        Debug.Log(" ::: " + count);
-        FindObjectOfType<Cannon>().Shoot(_config, ref count, this);
+    public void CmdUpdateUI() {
+        if(_enemy != null) {  _enemy.enemyTimer = timer; }   
     }
+
+    [Command]
+    public void CmdClick() {
+        FindObjectOfType<Cannon>().Shoot(_config, ref count, this);
+        if(_enemy != null) {  _enemy.enemyTimer = timer; }   
+    }
+    #endregion
 
     private void Update() {
         if(!isLocalPlayer) { return; }
-        _ui.GetComponent<UIReciever>().UpdateUIRpc(timer, count);
+        CmdUpdateUI();
+        _reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log(0);
             CmdClick();
         }
-
     }
 }
