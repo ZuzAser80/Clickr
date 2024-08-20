@@ -4972,7 +4972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _color: {r: 1, g: 0, b: 0, a: 1}
-  _cannon: {fileID: 0}
+  _cannon: {fileID: 534985831}
   _config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
 --- !u!1 &1626791696
 GameObject:
