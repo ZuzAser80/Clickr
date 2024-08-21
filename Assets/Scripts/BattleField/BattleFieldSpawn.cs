@@ -11,6 +11,6 @@ public class BattleFieldSpawn : NetworkBehaviour {
         var r = Instantiate(unit, Vector3.zero, Quaternion.identity);
         r.color = owner.color;
         NetworkServer.Spawn(r.gameObject, owner.gameObject);
-        r.StartPathfind(owner.transform.position);
+        r.StartPathfindRpc(owner.transform.position);
     }
 }

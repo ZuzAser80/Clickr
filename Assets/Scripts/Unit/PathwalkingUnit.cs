@@ -21,7 +21,8 @@ namespace Assets.Scripts.Unit {
         public Action onDeath;
         [SyncVar(hook = nameof(OnColorChanged))] public Color color;
 
-        [SyncVar][SerializeField] private GameObject owner;
+        [SerializeField] private Collider detector;
+
         private NavMeshAgent _navMeshAgent;
 
         private float _currentHealth;
@@ -38,33 +39,27 @@ namespace Assets.Scripts.Unit {
 
         void OnColorChanged(Color _Old, Color _New)
         {
+        
             var playerMaterialClone = new Material(GetComponent<Renderer>().material);
             playerMaterialClone.color = _New;
             GetComponent<Renderer>().material = playerMaterialClone;
         }
 
-        public GameObject GetSide() {
-            return owner;
-        }
-
-        [Server]
-        public void SetSide(GameObject player) {
-            owner = player;
-            color = player.GetComponent<Player>().color;
-        }
-
-        public virtual void Detect() { 
-            if(_currentEnemy != null) { return; }
-            Physics.OverlapSphereNonAlloc(transform.position, _properties.SpotRadius, res);
-            if(res.IsEmpty()) {return;}
-            foreach(var x in res.ToList()) {
-                if(x.TryGetComponent(out PathwalkingUnit u) && u.owner != owner) {  
-                    x.gameObject.GetComponent<IDamagable>().Damage(_properties.UnitProjectile.Damage);
-                    _currentEnemy = x.GetComponent<PathwalkingUnit>();
-                    break;
-                }
-            }
-            if(_currentEnemy == null) { return; }
+        public void Detect(PathwalkingUnit unit) { 
+            // if(_currentEnemy != null) { return; }
+            // Physics.OverlapSphereNonAlloc(transform.position, _properties.SpotRadius, res);
+            // Debug.Log(":: " + res.Count());
+            // foreach(var x in res.ToList()) {
+            //     Debug.Log("hit: " + x);
+            //     if(x.TryGetComponent(out PathwalkingUnit u) && u._properties.side != _properties.side) {  
+            //         Debug.Log("Found enemy");
+            //         x.gameObject.GetComponent<IDamagable>().Damage(_properties.UnitProjectile.Damage);
+            //         _currentEnemy = x.GetComponent<PathwalkingUnit>();
+            //         break;
+            //     }
+            // }
+            // if(_currentEnemy == null) { return; }
+            _currentEnemy = unit;
             _navMeshAgent.isStopped = true;
             _currentEnemy.onDeath += delegate { 
                 Debug.Log("Enemy killed"); 
@@ -76,12 +71,12 @@ namespace Assets.Scripts.Unit {
             }
         }
 
-        private void Update() {
-            Detect();
-        }
+        // private void Update() {
+        //     Detect();
+        // }
 
-        [Server]
-        public virtual void StartPathfind(Vector3 objective) => _navMeshAgent.SetDestination(objective);
+        [ClientRpc]
+        public virtual void StartPathfindRpc(Vector3 objective) => _navMeshAgent.SetDestination(objective);
 
         public UnitProperties GetProperties() => _properties;
 

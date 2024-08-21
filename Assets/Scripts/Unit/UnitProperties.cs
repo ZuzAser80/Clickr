@@ -1,4 +1,6 @@
 using System;
+using Mirror;
+using UnityEngine;
 
 namespace Assets.Scripts.Unit {
     [Serializable]
@@ -12,5 +14,6 @@ namespace Assets.Scripts.Unit {
         public float MaxSpread;
         public UnitProjectile UnitProjectile;
         public float Reload;
+        [SyncVar] public Color side;
     }
 }
