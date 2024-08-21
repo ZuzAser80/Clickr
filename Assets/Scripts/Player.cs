@@ -1,21 +1,29 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Assets.Scripts.Unit;
+using Assets.Scripts.Unit.Units;
 using Mirror;
 using UnityEngine;
 
 public class Player : NetworkBehaviour {
-    public GameObject rofl;
-    [SyncVar] public Color color;
 
+    [SyncVar] public Color color;
     [SyncVar] public int count;
     [SyncVar] public float timer;
     [SyncVar] public float enemyTimer;
 
-    [SerializeField] private GameObject _config;
-    [SerializeField] private GameObject _ui;
+    [SerializeField] private GameObject config;
+    [SerializeField] private GameObject ui;
+    [SerializeField] private Transform _camera;
+    [SerializeField] private float lookSpeed = 2f;
+    public PathwalkingUnit def;
+
+    public Material material;
+
     private UIReciever _reciever;
     private Player _enemy;
+    private float rotationX;
 
     #region Timer + count
     private void PutOnCooldown() {
@@ -40,23 +48,26 @@ public class Player : NetworkBehaviour {
 
     public override void OnStartAuthority()
     {
-        _ui.SetActive(true);
-        _reciever = _ui.GetComponentInChildren<UIReciever>();
+        ui.SetActive(true);
+        _reciever = ui.GetComponentInChildren<UIReciever>();
+        _camera.gameObject.SetActive(true);
     }
 
-    public override void OnStartClient() {
-        PutOnCooldown();
-    }
-
-    [TargetRpc]
-    public void HandleEventRpc(GameObject unit) {
-        CmdSpawnUnit(unit);
-    }
+    public override void OnStartClient() { 
+        PutOnCooldown(); 
+    } 
 
     #region Commands
     [Command]
-    public void CmdSpawnUnit(GameObject unit) {
-        
+    public void CmdSpawnUnit() {
+        FindObjectOfType<BattleFieldSpawn>().Spawn(this, def);
+    }
+
+    [TargetRpc]
+    public void SpawnUnit() {
+        if(!isLocalPlayer) { return; }
+        Debug.Log("SpawnUnit : " + gameObject);
+        CmdSpawnUnit();
     }
 
     [Command]
@@ -66,7 +77,7 @@ public class Player : NetworkBehaviour {
 
     [Command]
     public void CmdClick() {
-        FindObjectOfType<Cannon>().Shoot(_config, ref count, this);
+        FindObjectOfType<Cannon>().Shoot(config, ref count, this);
         if(_enemy != null) {  _enemy.enemyTimer = timer; }   
     }
     #endregion
@@ -78,5 +89,13 @@ public class Player : NetworkBehaviour {
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();
         }
+        // Camera rotation
+        transform.position = new Vector3(_camera.position.x + Input.GetAxis("Horizontal") * Time.deltaTime, _camera.position.y, _camera.position.z);
+        
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX = Mathf.Clamp(rotationX, -45, 45);
+        _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
+
     }
 }

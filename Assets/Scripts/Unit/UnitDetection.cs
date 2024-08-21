@@ -13,7 +13,7 @@ namespace Assets.Scripts.Unit {
         private void OnTriggerEnter(Collider other) {
             if(other.gameObject.layer != LayerMask.NameToLayer("Unit") || other.gameObject == transform.parent) { return; }
             // todo: refactor
-            unit.Detect(other.gameObject.GetComponent<PathwalkingUnit>());
+            //unit.Detect(other.gameObject.GetComponent<PathwalkingUnit>());
         }
 
         private void OnDrawGizmos() {
