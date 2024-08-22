@@ -173,9 +173,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &15442719
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1141,9 +1139,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &429185058
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1847,7 +1843,7 @@ Transform:
   m_GameObject: {fileID: 761315254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -17.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1997,9 +1993,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &837659525
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2162,9 +2156,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &993020122
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2901,9 +2893,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &1130214146
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3227,6 +3217,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
   - {fileID: 336533465400746355, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
+  - {fileID: 8999014768493479651, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -3285,7 +3276,7 @@ Transform:
   m_GameObject: {fileID: 1164162582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: 0}
+  m_LocalPosition: {x: -15, y: 0, z: -17.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3341,9 +3332,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &1165611287
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5077,9 +5066,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  ApplyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  number: 0
 --- !u!61 &1797085457
 BoxCollider2D:
   m_ObjectHideFlags: 0

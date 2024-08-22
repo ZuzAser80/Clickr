@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using Mirror;
 using UnityEngine;
-using Zenject;
 
 public class Cannon : NetworkBehaviour {
     [SerializeField] private Vector3 upperAngle;

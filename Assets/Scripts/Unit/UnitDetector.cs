@@ -6,7 +6,6 @@ namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(Collider))]
     public class UnitDetector : NetworkBehaviour {
 
-        public UnityEvent onDetect;
         [SerializeField] private PathwalkingUnit unit;
 
         private void Awake() {

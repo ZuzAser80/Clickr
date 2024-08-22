@@ -1,16 +1,11 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Assets.Scripts.DI;
-using Assets.Scripts.Unit.Units;
 using Mirror;
-using ModestTree;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 using Random = UnityEngine.Random;
-
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -45,22 +40,12 @@ namespace Assets.Scripts.Unit {
             GetComponent<Renderer>().material = playerMaterialClone;
         }
 
+        [ServerCallback]
         public void Detect(PathwalkingUnit unit) { 
-            // if(_currentEnemy != null) { return; }
-            // Physics.OverlapSphereNonAlloc(transform.position, _properties.SpotRadius, res);
-            // Debug.Log(":: " + res.Count());
-            // foreach(var x in res.ToList()) {
-            //     Debug.Log("hit: " + x);
-            //     if(x.TryGetComponent(out PathwalkingUnit u) && u._properties.side != _properties.side) {  
-            //         Debug.Log("Found enemy");
-            //         x.gameObject.GetComponent<IDamagable>().Damage(_properties.UnitProjectile.Damage);
-            //         _currentEnemy = x.GetComponent<PathwalkingUnit>();
-            //         break;
-            //     }
-            // }
-            // if(_currentEnemy == null) { return; }
+            //if(!isLocalPlayer) { return; }
+            Debug.Log("Detect: " + unit);
             _currentEnemy = unit;
-            _navMeshAgent.isStopped = true;
+            Stop();
             _currentEnemy.onDeath += delegate { 
                 Debug.Log("Enemy killed"); 
                 _navMeshAgent.isStopped = false; 
@@ -71,20 +56,17 @@ namespace Assets.Scripts.Unit {
             }
         }
 
-        // private void Update() {
-        //     Detect();
-        // }
-
         [ClientRpc]
         public virtual void StartPathfindRpc(Vector3 objective) => _navMeshAgent.SetDestination(objective);
 
         public UnitProperties GetProperties() => _properties;
 
+        [ClientRpc]
         public void Stop() => _navMeshAgent.isStopped = true;
 
         private IEnumerator reload() {
             canShoot = false;
-            Shoot(_currentEnemy);
+            ShootRpc(_currentEnemy);
             yield return new WaitForSeconds(_properties.Reload);
             if(_navMeshAgent.isStopped) {
                 StopAllCoroutines();
@@ -93,6 +75,7 @@ namespace Assets.Scripts.Unit {
             canShoot = true;
         }
 
+        [ClientRpc]
         public virtual void Damage(float amount) { 
             if(_currentHealth > amount) { 
                 _currentHealth -= amount; 
@@ -101,21 +84,24 @@ namespace Assets.Scripts.Unit {
             } 
         }
 
-        public virtual void Die() { 
+        [ClientRpc]
+        public virtual void Die() {
+            Debug.Log("Die");
             onDeath?.Invoke();
             Destroy(gameObject);
         }
 
-        //[Server]
-        public void Shoot(PathwalkingUnit target)
+        [ServerCallback]
+        public void ShootRpc(PathwalkingUnit target)
         {
-            Debug.Log("Shoot: " + target);
             Vector3 direction = target.transform.position - _lookDir.position;
-            //direction.y = 90;
+            direction.y += Random.Range(0, _properties.ArcAngle) / 100;
+            direction.x += Random.Range(-_properties.MaxSpread, _properties.MaxSpread) / 10;
             _lookDir.rotation = Quaternion.LookRotation(direction);
 
-            var p = Instantiate(_properties.UnitProjectile.gameObject, transform.position, _lookDir.rotation);
-            NetworkServer.Spawn(p);
+            var p = Instantiate(_properties.UnitProjectile, transform.position, _lookDir.rotation);
+            p.Init(_lookDir.forward, this);
+            NetworkServer.Spawn(p.gameObject);
         }
     }
 }

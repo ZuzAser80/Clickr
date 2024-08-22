@@ -1,7 +1,6 @@
 using System.Linq;
 using Mirror;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -15,24 +14,26 @@ namespace Assets.Scripts.Unit {
         private Collider[] res;
         private PathwalkingUnit _unit;
 
+        //TODO: PLAYER PERSONAL UNIT SPAWNPOINTS
+
+        [ServerCallback]
         private void OnTriggerEnter(Collider other) {
-            if(other.gameObject.layer != LayerMask.NameToLayer("Unit") || other.GetComponent<PathwalkingUnit>() == _unit) { return; }
-            other.gameObject.GetComponent<IDamagable>().Damage(Damage);
-            Destroy(gameObject);
+            if(!other.TryGetComponent(out PathwalkingUnit unit) || unit == _unit) { return; }
+            unit.Damage(Damage);
         }
 
         private void OnDestroy() {
             if(Explode) { 
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
-                    if(x.gameObject.layer == LayerMask.NameToLayer("Unit")) {  
-                        x.gameObject.GetComponent<IDamagable>().Damage(Damage);
+                    if(x.TryGetComponent(out IDamagable dmg)) {  
+                        dmg.Damage(Damage);
                     }
                 });
             }
         }
 
-        [Server]
+        [ServerCallback]
         public void Init(Vector3 startDirection, PathwalkingUnit owner) {
             _unit = owner;
             GetComponent<Rigidbody>().velocity = startDirection * StartSpeed;

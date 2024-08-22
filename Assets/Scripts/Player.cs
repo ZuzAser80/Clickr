@@ -18,6 +18,7 @@ public class Player : NetworkBehaviour {
     [SerializeField] private GameObject ui;
     [SerializeField] private Transform _camera;
     [SerializeField] private float lookSpeed = 2f;
+    [SerializeField] private float cameraSpeed = 1f;
     public PathwalkingUnit def;
 
     public Material material;
@@ -64,13 +65,6 @@ public class Player : NetworkBehaviour {
         FindObjectOfType<BattleFieldSpawn>().Spawn(this, def);
     }
 
-    [TargetRpc]
-    public void SpawnUnit() {
-        if(!isLocalPlayer) { return; }
-        Debug.Log("SpawnUnit : " + gameObject);
-        CmdSpawnUnit();
-    }
-
     [Command]
     public void CmdUpdateUI() {
         if(_enemy != null) {  _enemy.enemyTimer = timer; }   
@@ -83,6 +77,17 @@ public class Player : NetworkBehaviour {
     }
     #endregion
 
+    #region RPCs
+
+    [TargetRpc]
+    public void SpawnUnit() {
+        if(!isLocalPlayer) { return; }
+        Debug.Log("SpawnUnit : " + gameObject);
+        CmdSpawnUnit();
+    } 
+
+    #endregion
+
     private void Update() {
         if(!isLocalPlayer) { return; }
         CmdUpdateUI();
@@ -91,12 +96,11 @@ public class Player : NetworkBehaviour {
             CmdClick();
         }
         // Camera rotation
-        transform.position = new Vector3(_camera.position.x + Input.GetAxis("Horizontal") * Time.deltaTime, _camera.position.y, _camera.position.z);
+        transform.position = new Vector3(_camera.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, _camera.position.y, _camera.position.z);
         
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotationX = Mathf.Clamp(rotationX, -45, 45);
         _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
-
     }
 }
