@@ -30,11 +30,11 @@ namespace Assets.Scripts.Unit {
         private void Awake() {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _lookDir = transform.GetChild(0);
+            _currentHealth = _properties.MaxHealth;
         }
 
         void OnColorChanged(Color _Old, Color _New)
         {
-        
             var playerMaterialClone = new Material(GetComponent<Renderer>().material);
             playerMaterialClone.color = _New;
             GetComponent<Renderer>().material = playerMaterialClone;
@@ -42,13 +42,11 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         public void Detect(PathwalkingUnit unit) { 
-            //if(!isLocalPlayer) { return; }
-            Debug.Log("Detect: " + unit);
             _currentEnemy = unit;
-            Stop();
+            MeshFlipRpc();
             _currentEnemy.onDeath += delegate { 
-                Debug.Log("Enemy killed"); 
-                _navMeshAgent.isStopped = false; 
+                if(this == null) { return; }
+                MeshFlipRpc();
                 _currentEnemy = null;
             };
             if(canShoot) {
@@ -62,7 +60,7 @@ namespace Assets.Scripts.Unit {
         public UnitProperties GetProperties() => _properties;
 
         [ClientRpc]
-        public void Stop() => _navMeshAgent.isStopped = true;
+        public void MeshFlipRpc() => _navMeshAgent.isStopped = !_navMeshAgent.isStopped;
 
         private IEnumerator reload() {
             canShoot = false;
@@ -75,8 +73,9 @@ namespace Assets.Scripts.Unit {
             canShoot = true;
         }
 
-        [ClientRpc]
+        [ServerCallback]
         public virtual void Damage(float amount) { 
+            Debug.Log("::: " + amount + " : " + _currentHealth);
             if(_currentHealth > amount) { 
                 _currentHealth -= amount; 
             } else {
@@ -84,9 +83,8 @@ namespace Assets.Scripts.Unit {
             } 
         }
 
-        [ClientRpc]
+        [ServerCallback]
         public virtual void Die() {
-            Debug.Log("Die");
             onDeath?.Invoke();
             Destroy(gameObject);
         }
@@ -94,6 +92,7 @@ namespace Assets.Scripts.Unit {
         [ServerCallback]
         public void ShootRpc(PathwalkingUnit target)
         {
+            if(target == null) { return; }
             Vector3 direction = target.transform.position - _lookDir.position;
             direction.y += Random.Range(0, _properties.ArcAngle) / 100;
             direction.x += Random.Range(-_properties.MaxSpread, _properties.MaxSpread) / 10;

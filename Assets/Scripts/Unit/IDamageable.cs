@@ -1,6 +1,8 @@
+using Mirror;
+
 namespace Assets.Scripts.Unit {
     public interface IDamagable {
-        public void Damage(float amount);
-        public void Die();
+        [ClientRpc] public void Damage(float amount);
+        [ClientRpc] public void Die();
     }
 }

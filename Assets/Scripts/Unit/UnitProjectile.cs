@@ -18,8 +18,9 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         private void OnTriggerEnter(Collider other) {
-            if(!other.TryGetComponent(out PathwalkingUnit unit) || unit == _unit) { return; }
+            if(!other.TryGetComponent(out PathwalkingUnit unit) || unit.color == _unit.color) { return; }
             unit.Damage(Damage);
+            Destroy(gameObject);
         }
 
         private void OnDestroy() {

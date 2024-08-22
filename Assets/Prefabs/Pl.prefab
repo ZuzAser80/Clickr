@@ -467,6 +467,38 @@ MonoBehaviour:
   _fillOwn: {fileID: 5731732650350714503}
   _fillEnemy: {fileID: 9210304557091706416}
   _button: {fileID: 4178692844081224963}
+--- !u!1 &5278393982913745137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 101799242025128296}
+  m_Layer: 0
+  m_Name: CamHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &101799242025128296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5278393982913745137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8033856305327618355}
+  m_Father: {fileID: 295870497399605537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5797646723173089734
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,9 +509,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1630508251236648758}
   m_Layer: 0
-  m_Name: CameraHolder
+  m_Name: SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -492,7 +524,7 @@ Transform:
   m_GameObject: {fileID: 5797646723173089734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 304.99432, y: 242.2916, z: -0.022827145}
+  m_LocalPosition: {x: 0, y: -6, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -515,7 +547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8033856305327618355
 Transform:
   m_ObjectHideFlags: 0
@@ -529,7 +561,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 295870497399605537}
+  m_Father: {fileID: 101799242025128296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &666048058168633611
 Camera:
@@ -726,7 +758,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8033856305327618355}
+  - {fileID: 101799242025128296}
   - {fileID: 335080318242145203}
   - {fileID: 1630508251236648758}
   m_Father: {fileID: 0}
@@ -753,8 +785,16 @@ MonoBehaviour:
   config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
   ui: {fileID: 4702681403822383225}
   _camera: {fileID: 8033856305327618355}
+  cameraHolder: {fileID: 101799242025128296}
+  spawnables:
+  - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
+  - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
+  - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
+  - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
   lookSpeed: 2
+  cameraSpeed: 1
   def: {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
+  spawnPoint: {fileID: 1630508251236648758}
   material: {fileID: 0}
 --- !u!114 &5443051762245197420
 MonoBehaviour:

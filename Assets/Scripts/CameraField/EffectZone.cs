@@ -1,5 +1,6 @@
 using System;
 using Mirror;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,10 +14,10 @@ public class EffectZone : NetworkBehaviour {
         if(other.gameObject.layer != LayerMask.NameToLayer("Ball")) { return; }
         _ = other.GetComponent<ProjectileConfig>();
         _.Die();
-        // switch (number) {
-            
-
-        // }
-        _.owner.SpawnUnit();
+        if(number % 2 == 0) {
+            _.owner.SpawnUnit(number / 2);
+        } else {
+            _.owner.AddOne();
+        }
     }
 }

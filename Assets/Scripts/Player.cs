@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.UI;
 using Assets.Scripts.Unit;
@@ -17,9 +18,12 @@ public class Player : NetworkBehaviour {
     [SerializeField] private GameObject config;
     [SerializeField] private GameObject ui;
     [SerializeField] private Transform _camera;
+    [SerializeField] private Transform cameraHolder;
+    [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float cameraSpeed = 1f;
     public PathwalkingUnit def;
+    public Transform spawnPoint;
 
     public Material material;
 
@@ -52,7 +56,7 @@ public class Player : NetworkBehaviour {
     {
         ui.SetActive(true);
         _reciever = ui.GetComponentInChildren<UIReciever>();
-        _camera.gameObject.SetActive(true);
+        cameraHolder.gameObject.SetActive(true);
     }
 
     public override void OnStartClient() { 
@@ -61,8 +65,8 @@ public class Player : NetworkBehaviour {
 
     #region Commands
     [Command]
-    public void CmdSpawnUnit() {
-        FindObjectOfType<BattleFieldSpawn>().Spawn(this, def);
+    public void CmdSpawnUnit(int index) {
+        FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
     }
 
     [Command]
@@ -80,11 +84,16 @@ public class Player : NetworkBehaviour {
     #region RPCs
 
     [TargetRpc]
-    public void SpawnUnit() {
+    public void SpawnUnit(int index) {
         if(!isLocalPlayer) { return; }
-        Debug.Log("SpawnUnit : " + gameObject);
-        CmdSpawnUnit();
+        CmdSpawnUnit(index);
     } 
+
+    [TargetRpc]
+    public void AddOne() {
+        Debug.Log("ADDED ONE");
+        count++;
+    }
 
     #endregion
 
@@ -96,11 +105,11 @@ public class Player : NetworkBehaviour {
             CmdClick();
         }
         // Camera rotation
-        transform.position = new Vector3(_camera.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, _camera.position.y, _camera.position.z);
+        cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
         
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotationX = Mathf.Clamp(rotationX, -45, 45);
         _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
+        cameraHolder.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
     }
 }
