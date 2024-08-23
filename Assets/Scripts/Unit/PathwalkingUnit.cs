@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Mirror;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -24,6 +25,9 @@ namespace Assets.Scripts.Unit {
         private PathwalkingUnit _currentEnemy;
         private bool canShoot = true;
         private Transform _lookDir;
+        [SyncVar] public Color old;
+        public Material impactMat;
+        private Material oldMat;
 
         private Collider[] res = new Collider[]{};
 
@@ -31,10 +35,12 @@ namespace Assets.Scripts.Unit {
             _navMeshAgent = GetComponent<NavMeshAgent>();
             _lookDir = transform.GetChild(0);
             _currentHealth = _properties.MaxHealth;
+            oldMat = GetComponent<Renderer>().material;
         }
 
         void OnColorChanged(Color _Old, Color _New)
         {
+            if(_New != Color.white) { old = _New; GetComponent<Renderer>().material = oldMat; } else { GetComponent<Renderer>().material = impactMat; return; }
             var playerMaterialClone = new Material(GetComponent<Renderer>().material);
             playerMaterialClone.color = _New;
             GetComponent<Renderer>().material = playerMaterialClone;
@@ -64,7 +70,10 @@ namespace Assets.Scripts.Unit {
 
         private IEnumerator reload() {
             canShoot = false;
-            ShootRpc(_currentEnemy);
+            for(int i = 0; i < _properties.ProjectileCount; i++) {
+                ShootRpc(_currentEnemy);
+                yield return new WaitForSeconds(_properties.RPM);
+            }
             yield return new WaitForSeconds(_properties.Reload);
             if(_navMeshAgent.isStopped) {
                 StopAllCoroutines();
@@ -75,12 +84,18 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         public virtual void Damage(float amount) { 
-            Debug.Log("::: " + amount + " : " + _currentHealth);
+            StartCoroutine(impact());
             if(_currentHealth > amount) { 
                 _currentHealth -= amount; 
             } else {
                 Die();
             } 
+        }
+
+        private IEnumerator impact() {
+            color = Color.white;
+            yield return new WaitForSeconds(0.3f);
+            color = old;
         }
 
         [ServerCallback]

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Unit {
         public float SpotRadius;
         public int ProjectileCount;
         public float RPM;
-        public float ArcAngle;
+        [Tooltip("Поправка настильности")] public float ArcAngle;
         public float MaxSpread;
         public UnitProjectile UnitProjectile;
         public float Reload;

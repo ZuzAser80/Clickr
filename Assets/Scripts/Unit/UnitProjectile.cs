@@ -10,11 +10,10 @@ namespace Assets.Scripts.Unit {
         public bool Explode = false;
         public float ExplosionRadius;
         public float Damage;
+        public GameObject explosion;
 
         private Collider[] res;
         private PathwalkingUnit _unit;
-
-        //TODO: PLAYER PERSONAL UNIT SPAWNPOINTS
 
         [ServerCallback]
         private void OnTriggerEnter(Collider other) {
@@ -23,8 +22,12 @@ namespace Assets.Scripts.Unit {
             Destroy(gameObject);
         }
 
+        [ServerCallback]
         private void OnDestroy() {
             if(Explode) { 
+                var r = Instantiate(explosion, transform.position, Quaternion.identity);
+                Destroy(r, 0.5f);
+                NetworkServer.Spawn(r);
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
                     if(x.TryGetComponent(out IDamagable dmg)) {  

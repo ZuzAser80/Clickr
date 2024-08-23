@@ -1,37 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.UI;
 using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
 using Mirror;
 using UnityEngine;
 
-public class Player : NetworkBehaviour {
+public class SinglePlayer : ISP {
 
-    [SyncVar] public Color color;
-    [SyncVar] public int count;
-    [SyncVar] public float timer;
-    [SyncVar] public float enemyTimer;
-    [SyncVar] public float baseHp;
-    [SyncVar] public float enemyBaseHp;
-
-    [SerializeField] private GameObject config;
     [SerializeField] private GameObject ui;
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform cameraHolder;
-    [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float cameraSpeed = 1f;
-    public Transform spawnPoint;
 
     public Material material;
 
     private UIReciever _reciever;
-    private Player _enemy;
     private float rotationX;
-    [SerializeField] private BaseUnit baseUnit;
 
     #region Timer + count
     private void PutOnCooldown() {
@@ -52,73 +39,33 @@ public class Player : NetworkBehaviour {
     }
     #endregion
 
-    public virtual void SetEnemy(Player _) { _enemy = _; }
-
     public override void OnStartAuthority()
     {
         ui.SetActive(true);
-        
-        _reciever = ui.GetComponentInChildren<UIReciever>();
+        _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
-        SpawnBase();
     }
 
     public override void OnStartClient() { 
         PutOnCooldown(); 
-        
     } 
 
     #region Commands
-    [Command]
-    public void CmdSpawnUnit(int index) {
-        FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
-    }
 
-    [Command]
-    public void SpawnBase() {
-        FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnit);
-    }
-
-    [Command]
-    public virtual void CmdUpdateUI() {
-        if(_enemy != null) {  _enemy.enemyTimer = timer; Debug.Log("::: " + baseUnit._currentHealth); baseHp = baseUnit._currentHealth; _enemy.enemyBaseHp = baseHp; }   
-    }
-
-    [Command]
-    public virtual void CmdClick() {
-        Debug.Log(":: " + count);
-        FindObjectOfType<Cannon>().Shoot(config, ref count, this);
-    }
-    
     [Command]
     public void WinCmd() {
         Debug.Log("Player: " + this + " Won");
     }
     [Command]
-    public virtual void LoseCmd() {
-        _enemy.WinCmd();
+    public void LoseCmd() {
         Debug.Log("Player: " + this + " Won");
     }
     #endregion
 
-    #region RPCs
-
-    [TargetRpc]
-    public void SpawnUnit(int index) {
-        if(!isLocalPlayer) { return; }
-        CmdSpawnUnit(index);
-    } 
-
-    public void AddOne() {
-        count++;
-    }
-
-    #endregion
-
     private void Update() {
         if(!isLocalPlayer) { return; }
-        CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, count, baseHp, enemyBaseHp, baseUnit.MaxHealth);
+        UpdateEnemyTimer();
+        _reciever.UpdateUIRpc(timer, enemyTimer, count, baseHp, enemyBaseHp, _baseUnit.MaxHealth);
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();
         }

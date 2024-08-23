@@ -14,6 +14,7 @@ public class ProjectileConfig : NetworkBehaviour
     private Collider2D _collider;
     private Rigidbody2D _rb;
     public Player owner;
+    public ISP singleOwner;
     [SyncVar(hook = nameof(HandleColor))]
     public Color color;
     private SpriteRenderer _renderer;
@@ -45,6 +46,13 @@ public class ProjectileConfig : NetworkBehaviour
     public void StartM(Player player, Vector3 startVelocity) {
         _startVelocity = startVelocity;
         owner = player;
+        StartCoroutine(startMove());
+    }
+
+    [Server]
+    public void StartM(ISP player, Vector3 startVelocity) {
+        _startVelocity = startVelocity;
+        singleOwner = player;
         StartCoroutine(startMove());
     }
 

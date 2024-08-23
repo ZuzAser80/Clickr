@@ -14,10 +14,19 @@ public class EffectZone : NetworkBehaviour {
         if(other.gameObject.layer != LayerMask.NameToLayer("Ball")) { return; }
         _ = other.GetComponent<ProjectileConfig>();
         _.Die();
-        if(number % 2 == 0) {
-            _.owner.SpawnUnit(number / 2);
+        if(_.owner != null) {
+            if(number % 2 == 0) {
+                _.owner.SpawnUnit(number / 2);
+            } else {
+                _.owner.AddOne();
+            }
         } else {
-            _.owner.AddOne();
+            if(number % 2 == 0) {
+                Debug.Log(":::: " + _.singleOwner);
+                _.singleOwner.SpawnUnit(number / 2);
+            } else {
+                _.singleOwner.AddOne();
+            }
         }
     }
 }

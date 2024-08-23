@@ -1,10 +1,8 @@
-using System.Linq;
 using Mirror;
 using UnityEngine;
 
-public class ClickrNetworkManager : NetworkManager
-{
-        public Material color1;
+public class ClickrSNetworkManager : NetworkManager {
+    public Material color1;
         public Material color2;
 
         public Transform p1;
@@ -17,17 +15,15 @@ public class ClickrNetworkManager : NetworkManager
             Material m = numPlayers == 0 ? color1 : color2;
             Vector3 startP = numPlayers == 0 ? p1.position : p2.position;
             GameObject player = Instantiate(playerPrefab, startP, Quaternion.identity);
-            var _p = player.GetComponent<Player>();
-
+            var _p = player.GetComponent<SinglePlayer>();
+            _p.color = start;
             _p.material = m;
 
-            if(numPlayers != 0) {
-                Player _ = FindObjectsByType<Player>(FindObjectsSortMode.None).ToList().Where(x => x.color != _p.color).FirstOrDefault();
-                _.SetEnemy(_p);
-                _p.SetEnemy(_);
-            }
+            _p.SetEnemy(_p);
+
+            //FindObjectOfType<AI>().SetEnemy(_p);
+            FindObjectOfType<AI>().GetComponent<NetworkIdentity>().AssignClientAuthority(conn); 
 
             NetworkServer.AddPlayerForConnection(conn, player);
-            _p.color = start;
         }
 }
