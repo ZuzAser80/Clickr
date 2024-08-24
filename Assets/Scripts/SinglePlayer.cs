@@ -54,10 +54,12 @@ public class SinglePlayer : ISP {
     #region Commands
 
     public virtual void CmdUpdateUI() {
-        if(_enemy != null) {  _enemy.enemyTimer = timer; 
-            //baseHp = baseUnit.GetHealth(); _enemy.enemyBaseHp = baseUnit.GetHealth(); 
-            FindObjectOfType<UIBaseHpManager>().UpdateUISingle(baseUnit.GetHealth(), _enemy.GetBase().GetHealth(), baseUnit.GetProperties().MaxHealth);
-        }   
+        if(_enemy != null) {  
+            _enemy.enemyTimer = timer; 
+            if(_enemy.GetBase() != null) {
+                FindObjectOfType<UIBaseHpManager>().UpdateUISingle(baseUnit.GetHealth(), _enemy.GetBase().GetHealth(), baseUnit.GetProperties().MaxHealth);
+            }   
+        }
     }
 
     [Command]
@@ -66,7 +68,8 @@ public class SinglePlayer : ISP {
     }
     [Command]
     public void LoseCmd() {
-        Debug.Log("Player: " + this + " Won");
+        Debug.Log("Player: " + this + " LoseCmd");
+        
     }
     #endregion
 
