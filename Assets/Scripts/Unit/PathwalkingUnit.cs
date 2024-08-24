@@ -28,14 +28,16 @@ namespace Assets.Scripts.Unit {
         [SyncVar] public Color old;
         public Material impactMat;
         private Material oldMat;
+        
 
         private Collider[] res = new Collider[]{};
 
         private void Awake() {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _lookDir = transform.GetChild(0);
+            if(transform.childCount > 0) { _lookDir = transform.GetChild(0); }
             _currentHealth = _properties.MaxHealth;
             oldMat = GetComponent<Renderer>().material;
+            _navMeshAgent.speed = _properties.MaxSpeed;
         }
 
         void OnColorChanged(Color _Old, Color _New)
@@ -67,6 +69,8 @@ namespace Assets.Scripts.Unit {
 
         [ClientRpc]
         public void MeshFlipRpc() => _navMeshAgent.isStopped = !_navMeshAgent.isStopped;
+
+        public float GetHealth() { return _currentHealth; }
 
         private IEnumerator reload() {
             canShoot = false;

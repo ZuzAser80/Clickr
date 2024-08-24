@@ -20,6 +20,7 @@ public class ClickrNetworkManager : NetworkManager
             var _p = player.GetComponent<Player>();
 
             _p.material = m;
+            _p.isLeft = numPlayers == 0;
 
             if(numPlayers != 0) {
                 Player _ = FindObjectsByType<Player>(FindObjectsSortMode.None).ToList().Where(x => x.color != _p.color).FirstOrDefault();

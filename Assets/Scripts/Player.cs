@@ -14,8 +14,7 @@ public class Player : NetworkBehaviour {
     [SyncVar] public int count;
     [SyncVar] public float timer;
     [SyncVar] public float enemyTimer;
-    [SyncVar] public float baseHp;
-    [SyncVar] public float enemyBaseHp;
+    [SyncVar] public bool isLeft;
 
     [SerializeField] private GameObject config;
     [SerializeField] private GameObject ui;
@@ -24,6 +23,8 @@ public class Player : NetworkBehaviour {
     [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float cameraSpeed = 1f;
+    [SerializeField] private PathwalkingUnit baseUnitPrefab;
+
     public Transform spawnPoint;
 
     public Material material;
@@ -31,7 +32,7 @@ public class Player : NetworkBehaviour {
     private UIReciever _reciever;
     private Player _enemy;
     private float rotationX;
-    [SerializeField] private BaseUnit baseUnit;
+    private PathwalkingUnit baseUnit;
 
     #region Timer + count
     private void PutOnCooldown() {
@@ -76,17 +77,19 @@ public class Player : NetworkBehaviour {
 
     [Command]
     public void SpawnBase() {
-        FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnit);
+        FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnitPrefab, out baseUnit);
     }
 
     [Command]
     public virtual void CmdUpdateUI() {
-        if(_enemy != null) {  _enemy.enemyTimer = timer; Debug.Log("::: " + baseUnit._currentHealth); baseHp = baseUnit._currentHealth; _enemy.enemyBaseHp = baseHp; }   
+        if(_enemy != null) {  _enemy.enemyTimer = timer; 
+            //baseHp = baseUnit.GetHealth(); _enemy.enemyBaseHp = baseUnit.GetHealth(); 
+            FindObjectOfType<UIBaseHpManager>().UpdateUI(baseUnit.GetHealth(), baseUnit.GetProperties().MaxHealth, isLeft);
+        }   
     }
 
     [Command]
     public virtual void CmdClick() {
-        Debug.Log(":: " + count);
         FindObjectOfType<Cannon>().Shoot(config, ref count, this);
     }
     
@@ -115,10 +118,15 @@ public class Player : NetworkBehaviour {
 
     #endregion
 
+    public Vector3 GetEnemyBasePos() {
+        if(_enemy == null) { return Vector3.zero; }
+        return _enemy.baseUnit.transform.position;
+    }
+
     private void Update() {
         if(!isLocalPlayer) { return; }
         CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, count, baseHp, enemyBaseHp, baseUnit.MaxHealth);
+        _reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();
         }

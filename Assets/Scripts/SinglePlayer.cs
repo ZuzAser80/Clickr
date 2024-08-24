@@ -65,7 +65,7 @@ public class SinglePlayer : ISP {
     private void Update() {
         if(!isLocalPlayer) { return; }
         UpdateEnemyTimer();
-        _reciever.UpdateUIRpc(timer, enemyTimer, count, baseHp, enemyBaseHp, _baseUnit.MaxHealth);
+        _reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();
         }
