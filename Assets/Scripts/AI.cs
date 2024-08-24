@@ -14,6 +14,11 @@ public class AI : ISP {
         StartCoroutine(tryShoot(0.5f));
     }
 
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+    }
+
     public override void OnStartClient() { 
         PutOnCooldown(); 
     } 

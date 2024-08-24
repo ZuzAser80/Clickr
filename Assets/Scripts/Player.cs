@@ -120,7 +120,7 @@ public class Player : NetworkBehaviour {
 
     public Vector3 GetEnemyBasePos() {
         if(_enemy == null) { return Vector3.zero; }
-        return _enemy.baseUnit.transform.position;
+        return _enemy.spawnPoint.position;
     }
 
     private void Update() {

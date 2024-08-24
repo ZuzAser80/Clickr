@@ -44,6 +44,7 @@ public class SinglePlayer : ISP {
         ui.SetActive(true);
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
+        base.OnStartAuthority();
     }
 
     public override void OnStartClient() { 
@@ -51,6 +52,13 @@ public class SinglePlayer : ISP {
     } 
 
     #region Commands
+
+    public virtual void CmdUpdateUI() {
+        if(_enemy != null) {  _enemy.enemyTimer = timer; 
+            //baseHp = baseUnit.GetHealth(); _enemy.enemyBaseHp = baseUnit.GetHealth(); 
+            FindObjectOfType<UIBaseHpManager>().UpdateUISingle(baseUnit.GetHealth(), _enemy.GetBase().GetHealth(), baseUnit.GetProperties().MaxHealth);
+        }   
+    }
 
     [Command]
     public void WinCmd() {
@@ -65,6 +73,7 @@ public class SinglePlayer : ISP {
     private void Update() {
         if(!isLocalPlayer) { return; }
         UpdateEnemyTimer();
+        CmdUpdateUI();
         _reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();

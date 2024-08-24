@@ -21,7 +21,7 @@ namespace Assets.Scripts.Unit {
 
         private NavMeshAgent _navMeshAgent;
 
-        private float _currentHealth;
+        [SerializeField] private float _currentHealth;
         private PathwalkingUnit _currentEnemy;
         private bool canShoot = true;
         private Transform _lookDir;

@@ -12,19 +12,30 @@ public abstract class ISP : NetworkBehaviour {
     [SyncVar] public float enemyTimer;
     [SyncVar] public float baseHp;
     [SyncVar] public float enemyBaseHp;
+    [SyncVar] public bool isLeft;
 
     [SerializeField] private GameObject config;
     [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
+    [SerializeField] private PathwalkingUnit baseUnitPrefab;
 
     public Transform spawnPoint;
     protected ISP  _enemy;
-    protected BaseUnit _baseUnit;
+    protected PathwalkingUnit baseUnit;
 
     public void SetEnemy(ISP _) { _enemy = _; }
 
+    public PathwalkingUnit GetBase() {
+        return baseUnit;
+    }
+
+    public Vector3 GetEnemyBasePos() {
+        if(_enemy == null) { return Vector3.zero; }
+        return _enemy.spawnPoint.position;
+    }
+
     public override void OnStartAuthority()
     {
-        _baseUnit = GetComponentInChildren<BaseUnit>();
+        SpawnBase();
     }
 
     public void UpdateEnemyTimer() {
@@ -34,6 +45,11 @@ public abstract class ISP : NetworkBehaviour {
     [Command]
     public void CmdSpawnUnit(int index) {
         FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
+    }
+
+    [Command]
+    public void SpawnBase() {
+        FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnitPrefab, out baseUnit);
     }
 
     [Command]

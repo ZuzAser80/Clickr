@@ -514,7 +514,7 @@ GameObject:
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1630508251236648758
 Transform:
   m_ObjectHideFlags: 0
@@ -799,12 +799,16 @@ MonoBehaviour:
   count: 0
   timer: 0
   enemyTimer: 0
+  baseHp: 0
+  enemyBaseHp: 0
+  isLeft: 0
   config: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
   spawnables:
   - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
   - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
-  - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
-  - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
+  - {fileID: 5252859609185934413, guid: b4bc63f9e3a1645cb9e1d0723bbf6e9f, type: 3}
+  - {fileID: 5252859609185934413, guid: f5054cb07928141f7b502476a5cce616, type: 3}
+  baseUnitPrefab: {fileID: 2795377674258679671, guid: 1d7c6fa8beed14dcca924f2d7b6519ed, type: 3}
   spawnPoint: {fileID: 1630508251236648758}
   ui: {fileID: 4702681403822383225}
   _camera: {fileID: 8033856305327618355}

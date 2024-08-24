@@ -176,4 +176,4 @@ MonoBehaviour:
   color: {r: 0, g: 0, b: 0, a: 0}
   detector: {fileID: 0}
   old: {r: 0, g: 0, b: 0, a: 0}
-  impactMat: {fileID: 0}
+  impactMat: {fileID: 2100000, guid: e37b0032e4c0848ae8f0effea4f32034, type: 2}

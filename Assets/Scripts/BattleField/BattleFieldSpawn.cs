@@ -29,6 +29,14 @@ public class BattleFieldSpawn : NetworkBehaviour {
         cache = Instantiate(unit, owner.spawnPoint.position, Quaternion.identity);
         cache.color = owner.color;
         NetworkServer.Spawn(cache.gameObject, owner.gameObject);
-        cache.StartPathfindRpc(Vector3.zero);
+        cache.StartPathfindRpc(owner.GetEnemyBasePos());
+    }
+
+    [ServerCallback]
+    public void SpawnBase(ISP owner, PathwalkingUnit baseUnit, out PathwalkingUnit spawned) {
+        cache1 = Instantiate(baseUnit, owner.spawnPoint.position, Quaternion.identity);
+        cache1.color = owner.color;
+        spawned = cache1;
+        NetworkServer.Spawn(cache1.gameObject, owner.gameObject);
     }
 }

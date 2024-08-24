@@ -19,9 +19,10 @@ public class ClickrSNetworkManager : NetworkManager {
             _p.color = start;
             _p.material = m;
 
-            _p.SetEnemy(_p);
+            _p.SetEnemy(FindObjectOfType<AI>());
+            _p.isLeft = true;
 
-            //FindObjectOfType<AI>().SetEnemy(_p);
+            FindObjectOfType<AI>().SetEnemy(_p);
             FindObjectOfType<AI>().GetComponent<NetworkIdentity>().AssignClientAuthority(conn); 
 
             NetworkServer.AddPlayerForConnection(conn, player);

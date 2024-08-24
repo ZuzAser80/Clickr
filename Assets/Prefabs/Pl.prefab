@@ -790,8 +790,8 @@ MonoBehaviour:
   spawnables:
   - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
   - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
-  - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
-  - {fileID: 5252859609185934413, guid: d2cc4575acf744a44ab69c42f9a885a4, type: 3}
+  - {fileID: 5252859609185934413, guid: b4bc63f9e3a1645cb9e1d0723bbf6e9f, type: 3}
+  - {fileID: 5252859609185934413, guid: f5054cb07928141f7b502476a5cce616, type: 3}
   lookSpeed: 2
   cameraSpeed: 1
   baseUnitPrefab: {fileID: 2795377674258679671, guid: 1d7c6fa8beed14dcca924f2d7b6519ed, type: 3}
