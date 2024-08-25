@@ -1,14 +1,32 @@
 using System;
+using Mirror;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
-public class EffectZone : MonoBehaviour {
-    public Action ApplyEffect;
+public class EffectZone : NetworkBehaviour {
+    private ProjectileConfig _;
+    [SerializeField] private int number;
 
+    [Server]
     private void OnTriggerStay2D(Collider2D other) {
         if(other.gameObject.layer != LayerMask.NameToLayer("Ball")) { return; }
-        other.GetComponent<ProjectileConfig>().Die();
-        ApplyEffect?.Invoke();
+        _ = other.GetComponent<ProjectileConfig>();
+        _.Die();
+        if(_.owner != null) {
+            if(number % 2 == 0) {
+                _.owner.SpawnUnit(number / 2);
+            } else {
+                _.owner.AddOne();
+            }
+        } else {
+            if(number % 2 == 0) {
+                Debug.Log(":::: " + _.singleOwner);
+                _.singleOwner.SpawnUnit(number / 2);
+            } else {
+                _.singleOwner.AddOne();
+            }
+        }
     }
 }

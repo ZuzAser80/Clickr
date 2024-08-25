@@ -1,73 +1,87 @@
 using System;
 using System.Collections;
-using Assets.Scripts.DI;
-using Assets.Scripts.Sides;
-using Assets.Scripts.Unit.Units;
+using System.Linq;
+using Mirror;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 using Random = UnityEngine.Random;
-
 
 namespace Assets.Scripts.Unit {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class PathwalkingUnit : MonoBehaviour, IDamagable, IShooter
+    public class PathwalkingUnit : NetworkBehaviour, IDamagable, IShooter
     {
         [SerializeField] protected UnitProperties _properties;
 
         public Action onDeath;
+        [SyncVar(hook = nameof(OnColorChanged))] public Color color;
 
-        [SerializeField] private BattleInstaller _side;
+        [SerializeField] private Collider detector;
+
         private NavMeshAgent _navMeshAgent;
 
-        private float _currentHealth;
+        [SerializeField] private float _currentHealth;
         private PathwalkingUnit _currentEnemy;
         private bool canShoot = true;
         private Transform _lookDir;
-        private DiContainer _container;
+        [SyncVar] public Color old;
+        public Material impactMat;
+        private Material oldMat;
+        private Renderer _renderer;
+        
+
+        private Collider[] res = new Collider[]{};
 
         private void Awake() {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _lookDir = transform.GetChild(0);
-            StartPathfind(new Vector3(0, 0, 0));
-        }
-
-        [Inject]
-        public void Construct(DiContainer container) {
-            Debug.Log(" :: " + _side);
-            _container = container;
-            
+            if(transform.childCount > 0) { _lookDir = transform.GetChild(0); }
             _currentHealth = _properties.MaxHealth;
-            // todo: set color
+            oldMat = GetComponent<Renderer>().material;
+            _navMeshAgent.speed = _properties.MaxSpeed;
+            _renderer = GetComponent<Renderer>();
         }
 
-        public BattleInstaller GetSide() {
-            return _side;
+        void OnColorChanged(Color _Old, Color _New)
+        {
+            if(_New != Color.white) { old = _New; _renderer.material = oldMat; } else { GetComponent<Renderer>().material = impactMat; return; }
+            var playerMaterialClone = new Material(_renderer.material);
+            playerMaterialClone.color = _New;
+            playerMaterialClone.EnableKeyword("_EMISSION");
+            playerMaterialClone.SetColor("_EmissionColor", _New);
+            _renderer.material = playerMaterialClone;
         }
 
-        public virtual void Detect(PathwalkingUnit unit) { 
-            //if(unit.GetSide() == _side) { Debug.Log("SAME SIDE : " + _side); return; }
-            _navMeshAgent.isStopped = true;
+        [ServerCallback]
+        public void Detect(PathwalkingUnit unit) { 
             _currentEnemy = unit;
+            MeshFlipRpc();
             _currentEnemy.onDeath += delegate { 
-                Debug.Log("Enemy killed"); 
-                _navMeshAgent.isStopped = false; 
+                if(this == null) { return; }
+                MeshFlipRpc();
+                _currentEnemy = null;
             };
             if(canShoot) {
                 StartCoroutine(reload());
             }
         }
 
-        public virtual void StartPathfind(Vector3 objective) => _navMeshAgent.SetDestination(objective);
+        [ClientRpc]
+        public virtual void StartPathfindRpc(Vector3 objective) => _navMeshAgent.SetDestination(objective);
 
         public UnitProperties GetProperties() => _properties;
 
-        public void Stop() => _navMeshAgent.isStopped = true;
+        [ClientRpc]
+        public void MeshFlipRpc() => _navMeshAgent.isStopped = !_navMeshAgent.isStopped;
+
+        public float GetHealth() { return _currentHealth; }
 
         private IEnumerator reload() {
             canShoot = false;
-            Shoot(_currentEnemy);
+            for(int i = 0; i < _properties.ProjectileCount; i++) {
+                ShootRpc(_currentEnemy);
+                yield return new WaitForSeconds(_properties.RPM);
+            }
             yield return new WaitForSeconds(_properties.Reload);
             if(_navMeshAgent.isStopped) {
                 StopAllCoroutines();
@@ -76,7 +90,9 @@ namespace Assets.Scripts.Unit {
             canShoot = true;
         }
 
+        [ServerCallback]
         public virtual void Damage(float amount) { 
+            StartCoroutine(impact());
             if(_currentHealth > amount) { 
                 _currentHealth -= amount; 
             } else {
@@ -84,18 +100,30 @@ namespace Assets.Scripts.Unit {
             } 
         }
 
-        public virtual void Die() { 
+        private IEnumerator impact() {
+            color = Color.white;
+            yield return new WaitForSeconds(0.3f);
+            color = old;
+        }
+
+        [ServerCallback]
+        public virtual void Die() {
             onDeath?.Invoke();
             Destroy(gameObject);
         }
 
-        public void Shoot(PathwalkingUnit target)
+        [ServerCallback]
+        public void ShootRpc(PathwalkingUnit target)
         {
-            Debug.Log("::::");
+            if(target == null) { return; }
             Vector3 direction = target.transform.position - _lookDir.position;
+            direction.y += Random.Range(0, _properties.ArcAngle) / 100;
+            direction.x += Random.Range(-_properties.MaxSpread, _properties.MaxSpread) / 10;
             _lookDir.rotation = Quaternion.LookRotation(direction);
-            var p = _container.InstantiatePrefabForComponent<UnitProjectile>(_properties.UnitProjectile, transform.position, _lookDir.rotation, null, new object[] { _lookDir.forward, this });
 
+            var p = Instantiate(_properties.UnitProjectile, transform.position, _lookDir.rotation);
+            p.Init(_lookDir.forward, this);
+            NetworkServer.Spawn(p.gameObject);
         }
     }
 }

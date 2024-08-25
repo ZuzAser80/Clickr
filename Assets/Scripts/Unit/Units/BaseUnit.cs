@@ -1,38 +1,44 @@
-using Assets.Scripts.Sides;
+using System;
+using Mirror;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts.Unit.Units {
-    public class BaseUnit : MonoBehaviour, IDamagable
+    public class BaseUnit : NetworkBehaviour, IDamagable
     {
-        private float _maxHealth;
-        private float _currentHealth;
-        private CameraFieldSide _side;
-        private UiHandler _handler;
+        [SerializeField] public float MaxHealth;
 
-        private void Awake() {
-            Debug.Log("Awake");
+        [SyncVar(hook = nameof(OnColorChanged))] public Color color;
+
+        private float _maxHealth => MaxHealth;
+        [SyncVar] public float _currentHealth;
+
+        public Action onPlayerLose;
+
+        void OnColorChanged(Color _Old, Color _New)
+        {
+            var playerMaterialClone = new Material(GetComponent<Renderer>().material);
+            playerMaterialClone.color = _New;
+            GetComponent<Renderer>().material = playerMaterialClone;
         }
 
-        [Inject]
-        public void Construct(CameraFieldSide side, UiHandler handler)
-        {
-            _maxHealth = 32;
-            _side = side;
-            _handler = handler;
+        private void Awake() {
+            _currentHealth = _maxHealth;
         }
 
         public void Damage(float amount) {
             if(_currentHealth > amount) {
                 _currentHealth -= amount;
             } else {
+                _currentHealth = 0;
                 Die();
             }
+
         }
 
         public void Die()
         {
-            
+            onPlayerLose?.Invoke();
+            Destroy(this);
         }
     }
 }
