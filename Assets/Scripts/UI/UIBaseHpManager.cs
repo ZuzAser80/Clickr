@@ -11,6 +11,9 @@ public class UIBaseHpManager : NetworkBehaviour {
     [SerializeField] private TextMeshProUGUI textRed;
     [SerializeField] private TextMeshProUGUI textBlue;
 
+    [SerializeField] private GameObject onWinPanel;
+    [SerializeField] private GameObject onLosePanel;
+
     [ClientRpc]
     public void UpdateUI(float hp, float maxHp, bool left) {
         if(left) {
@@ -27,5 +30,13 @@ public class UIBaseHpManager : NetworkBehaviour {
         textRed.text = hp.ToString();
         fillBlue.fillAmount = MathF.Round(enemyHp/maxHp, 2);
         textBlue.text = enemyHp.ToString();
+    }
+
+    public void Win() {
+        onWinPanel.SetActive(true);
+    }
+
+    public void Lost() {
+        onLosePanel.SetActive(true);
     }
 }

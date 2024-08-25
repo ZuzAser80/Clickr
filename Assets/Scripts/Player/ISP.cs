@@ -28,6 +28,15 @@ public abstract class ISP : NetworkBehaviour {
         return baseUnit;
     }
 
+    public virtual void WinCmd() {
+        Debug.Log("Player: " + this + " Won");
+    }
+
+    public virtual void LoseCmd() {
+        Debug.Log("Player: " + this + " LoseCmd");
+        
+    }
+
     public Vector3 GetEnemyBasePos() {
         if(_enemy == null) { return Vector3.zero; }
         return _enemy.spawnPoint.position;

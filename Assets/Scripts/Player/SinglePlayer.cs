@@ -45,6 +45,8 @@ public class SinglePlayer : ISP {
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
+        baseUnit.onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Lost();};
+        _enemy.GetBase().onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Win();};
     }
 
     public override void OnStartClient() { 
@@ -62,15 +64,6 @@ public class SinglePlayer : ISP {
         }
     }
 
-    [Command]
-    public void WinCmd() {
-        Debug.Log("Player: " + this + " Won");
-    }
-    [Command]
-    public void LoseCmd() {
-        Debug.Log("Player: " + this + " LoseCmd");
-        
-    }
     #endregion
 
     private void Update() {
