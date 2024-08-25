@@ -808,7 +808,7 @@ MonoBehaviour:
   - {fileID: 5252859609185934413, guid: 8658bda322b8c421ebda9e02ce19fc77, type: 3}
   - {fileID: 5252859609185934413, guid: b4bc63f9e3a1645cb9e1d0723bbf6e9f, type: 3}
   - {fileID: 5252859609185934413, guid: f5054cb07928141f7b502476a5cce616, type: 3}
-  baseUnitPrefab: {fileID: 2795377674258679671, guid: 1d7c6fa8beed14dcca924f2d7b6519ed, type: 3}
+  baseUnitPrefab: {fileID: 8536325639928330933, guid: 1d7c6fa8beed14dcca924f2d7b6519ed, type: 3}
   spawnPoint: {fileID: 1630508251236648758}
   ui: {fileID: 4702681403822383225}
   _camera: {fileID: 8033856305327618355}

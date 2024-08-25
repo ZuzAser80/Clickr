@@ -28,6 +28,7 @@ namespace Assets.Scripts.Unit {
         [SyncVar] public Color old;
         public Material impactMat;
         private Material oldMat;
+        private Renderer _renderer;
         
 
         private Collider[] res = new Collider[]{};
@@ -38,14 +39,17 @@ namespace Assets.Scripts.Unit {
             _currentHealth = _properties.MaxHealth;
             oldMat = GetComponent<Renderer>().material;
             _navMeshAgent.speed = _properties.MaxSpeed;
+            _renderer = GetComponent<Renderer>();
         }
 
         void OnColorChanged(Color _Old, Color _New)
         {
-            if(_New != Color.white) { old = _New; GetComponent<Renderer>().material = oldMat; } else { GetComponent<Renderer>().material = impactMat; return; }
-            var playerMaterialClone = new Material(GetComponent<Renderer>().material);
+            if(_New != Color.white) { old = _New; _renderer.material = oldMat; } else { GetComponent<Renderer>().material = impactMat; return; }
+            var playerMaterialClone = new Material(_renderer.material);
             playerMaterialClone.color = _New;
-            GetComponent<Renderer>().material = playerMaterialClone;
+            playerMaterialClone.EnableKeyword("_EMISSION");
+            playerMaterialClone.SetColor("_EmissionColor", _New);
+            _renderer.material = playerMaterialClone;
         }
 
         [ServerCallback]

@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 336533465400746355}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.525345, y: 1.5869042, z: -1.4851336}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7339263007327459407}
@@ -161,6 +161,7 @@ MonoBehaviour:
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   detector: {fileID: 4531411291050978115}
+  _currentHealth: 0
   old: {r: 0, g: 0, b: 0, a: 0}
   impactMat: {fileID: 2100000, guid: e37b0032e4c0848ae8f0effea4f32034, type: 2}
 --- !u!114 &8096215061941642075
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 1886517041
+  _assetId: 1029627610
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
