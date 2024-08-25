@@ -8,7 +8,7 @@ public class AI : ISP {
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; count++; StopAllCoroutines(); PutOnCooldown(); }, 
-            delegate { timer += MathF.Round(Time.deltaTime, 3); },
+            delegate { timer += MathF.Round(Time.deltaTime / 2.5f, 3); },
             2.5f
         ));
         StartCoroutine(tryShoot(0.5f));
