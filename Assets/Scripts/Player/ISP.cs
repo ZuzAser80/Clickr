@@ -14,6 +14,8 @@ public abstract class ISP : NetworkBehaviour {
     [SyncVar] public float enemyBaseHp;
     [SyncVar] public bool isLeft;
 
+    [SyncVar] protected int localCount;
+
     [SerializeField] private GameObject config;
     [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private PathwalkingUnit baseUnitPrefab;
@@ -47,6 +49,8 @@ public abstract class ISP : NetworkBehaviour {
         SpawnBase();
     }
 
+    public virtual void UpdateBases() { Debug.Log("UpdateBases"); }
+
     public void UpdateEnemyTimer() {
         if(_enemy != null) { enemyTimer = _enemy.timer;  _enemy.enemyBaseHp = baseHp; }
     }
@@ -59,6 +63,7 @@ public abstract class ISP : NetworkBehaviour {
     [Command]
     public void SpawnBase() {
         FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnitPrefab, out baseUnit);
+        UpdateBases();
     }
 
     [Command]
@@ -76,7 +81,7 @@ public abstract class ISP : NetworkBehaviour {
     [TargetRpc]
     public void AddOne() {
         Debug.Log("ADDED ONE");
-        count++;
+        localCount++;
     }
 
     #endregion

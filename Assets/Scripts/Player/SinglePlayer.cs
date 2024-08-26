@@ -23,7 +23,7 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count++; StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; count+= localCount; localCount = 0; StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
@@ -45,12 +45,18 @@ public class SinglePlayer : ISP {
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
+        
+    }
+
+    public override void UpdateBases()
+    {
         baseUnit.onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Lost();};
-        _enemy.GetBase().onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Win();};
+        _enemy.GetBase().onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Win();}; 
     }
 
     public override void OnStartClient() { 
-        PutOnCooldown(); 
+        PutOnCooldown();
+
     } 
 
     #region Commands

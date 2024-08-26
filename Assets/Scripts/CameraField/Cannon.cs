@@ -45,7 +45,7 @@ public class Cannon : NetworkBehaviour {
     }
 
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, Player player) {
-        _g = Instantiate(config, transform.position, Quaternion.identity);
+        _g = Instantiate(config, transform.position + transform.forward, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
         _p.StartM(player, _dir);
@@ -66,7 +66,7 @@ public class Cannon : NetworkBehaviour {
     }
 
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, ISP player) {
-        _g = Instantiate(config, transform.position, Quaternion.identity);
+        _g = Instantiate(config, transform.position + transform.forward, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
         _p.StartM(player, _dir);
