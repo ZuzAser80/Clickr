@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Steamworks;
 using UnityEngine;
 
@@ -29,10 +30,11 @@ public class SteamFace : MonoBehaviour
     {
         SteamClient.RunCallbacks();
         if(Input.GetKeyDown(KeyCode.X)) {
-            foreach ( InventoryDef def in SteamInventory.Definitions )
-            {
-                Debug.Log( $"{def.Name}" );
-            }
+            Debug.Log(SteamInventory.Items);
+            // foreach ( InventoryDef def in  SteamInventory.Definitions)
+            // {
+            //     Debug.Log( $"{def.Name}" );
+            // }
         }
     }
 
