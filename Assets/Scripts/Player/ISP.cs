@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
@@ -13,6 +14,7 @@ public abstract class ISP : NetworkBehaviour {
     [SyncVar] public float baseHp;
     [SyncVar] public float enemyBaseHp;
     [SyncVar] public bool isLeft;
+    [SyncVar] public bool isOnCooldown = false;
 
     [SyncVar] protected int localCount;
 
@@ -49,7 +51,7 @@ public abstract class ISP : NetworkBehaviour {
         SpawnBase();
     }
 
-    public virtual void UpdateBases() { Debug.Log("UpdateBases"); }
+    public virtual void UpdateBases() { }
 
     public void UpdateEnemyTimer() {
         if(_enemy != null) { enemyTimer = _enemy.timer;  _enemy.enemyBaseHp = baseHp; }
@@ -68,7 +70,15 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public void CmdClick() {
+        StartCoroutine(waitForReload());
+    }
+
+    private IEnumerator waitForReload() {
+        if(isOnCooldown) {
+            yield return new WaitForSeconds(2f);
+        }
         FindObjectOfType<Cannon>().Shoot(config, ref count, this);
+        _enemy.isOnCooldown = true;
     }
 
     #region RPCs
@@ -80,7 +90,6 @@ public abstract class ISP : NetworkBehaviour {
 
     [TargetRpc]
     public void AddOne() {
-        Debug.Log("ADDED ONE");
         localCount++;
     }
 

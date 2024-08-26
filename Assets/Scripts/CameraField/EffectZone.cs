@@ -22,7 +22,6 @@ public class EffectZone : NetworkBehaviour {
             }
         } else {
             if(number % 2 == 0) {
-                Debug.Log(":::: " + _.singleOwner);
                 _.singleOwner.SpawnUnit(number / 2);
             } else {
                 _.singleOwner.AddOne();

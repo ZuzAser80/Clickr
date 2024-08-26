@@ -24,6 +24,7 @@ public class AI : ISP {
     } 
 
     public IEnumerator tryShoot(float seconds) {
+        //if(isOnCooldown) {seconds += 5;}
         yield return new WaitForSeconds(seconds);
         CmdClick();
         StartCoroutine(tryShoot(seconds));
