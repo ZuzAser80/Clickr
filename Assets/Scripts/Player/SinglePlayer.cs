@@ -23,7 +23,7 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count+= localCount; localCount = 0; StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; count += localCount + 1; localCount = 0; StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
