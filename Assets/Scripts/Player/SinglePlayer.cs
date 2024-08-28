@@ -14,9 +14,11 @@ public class SinglePlayer : ISP {
     [SerializeField] private Transform cameraHolder;
     [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float cameraSpeed = 1f;
+    [SerializeField] private AudioClip click;
 
     public Material material;
 
+    [SerializeField] private AudioSource source;
     private UIReciever _reciever;
     private float rotationX;
 
@@ -78,6 +80,7 @@ public class SinglePlayer : ISP {
         CmdUpdateUI();
         _reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
+            source.PlayOneShot(click);
             CmdClick();
         }
         // Camera rotation

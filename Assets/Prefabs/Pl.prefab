@@ -271,7 +271,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2807904659068072658}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: PlzHandleClickRpc
+        m_MethodName: CmdClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

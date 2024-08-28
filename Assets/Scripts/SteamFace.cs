@@ -6,10 +6,20 @@ using UnityEngine;
 
 public class SteamFace : MonoBehaviour
 {
+    [SerializeField] private AudioClip onMenuButtonClick;
+
+    private AudioSource _source;
+
+    public void PlayClick() {
+        _source.PlayOneShot(onMenuButtonClick);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(this);
+
+        _source = GetComponent<AudioSource>();
 
         try
         {
@@ -31,6 +41,8 @@ public class SteamFace : MonoBehaviour
         SteamClient.RunCallbacks();
         if(Input.GetKeyDown(KeyCode.X)) {
             Debug.Log(SteamInventory.Items);
+            // Debug.Log();
+            // SteamInventory.TriggerItemDropAsync(1)
             // foreach ( InventoryDef def in  SteamInventory.Definitions)
             // {
             //     Debug.Log( $"{def.Name}" );
