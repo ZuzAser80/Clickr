@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 using Steamworks;
 using UnityEngine;
 
 public class SteamFace : MonoBehaviour
 {
     [SerializeField] private AudioClip onMenuButtonClick;
+
+    public static SteamFace instance;
+
+    public bool shouldShow;
 
     private AudioSource _source;
 
@@ -17,7 +22,9 @@ public class SteamFace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(instance != null) { Destroy(this); return; }
         DontDestroyOnLoad(this);
+        instance = this;
 
         _source = GetComponent<AudioSource>();
 
@@ -38,21 +45,21 @@ public class SteamFace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(instance != null) { return; }
         SteamClient.RunCallbacks();
-        if(Input.GetKeyDown(KeyCode.X)) {
-            Debug.Log(SteamInventory.Items);
-            // Debug.Log();
-            // SteamInventory.TriggerItemDropAsync(1)
-            // foreach ( InventoryDef def in  SteamInventory.Definitions)
-            // {
-            //     Debug.Log( $"{def.Name}" );
-            // }
-        }
+        // if(Input.GetKeyDown(KeyCode.X)) {
+        //     Debug.Log(SteamInventory.Items);
+        //     // Debug.Log();
+        //     // SteamInventory.TriggerItemDropAsync(1)
+        //     // foreach ( InventoryDef def in  SteamInventory.Definitions)
+        //     // {
+        //     //     Debug.Log( $"{def.Name}" );
+        //     // }
+        // }
     }
 
     private void OnApplicationQuit() {
        SteamClient.Shutdown();
     }
 
-    public void LeaveGame() => Application.Quit();
 }

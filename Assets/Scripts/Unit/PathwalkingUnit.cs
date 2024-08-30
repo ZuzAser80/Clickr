@@ -19,6 +19,10 @@ namespace Assets.Scripts.Unit {
 
         [SerializeField] private Collider detector;
 
+        [SerializeField] private AudioClip fireClip;
+        [SerializeField] private AudioClip onDeathClip;
+
+
         private NavMeshAgent _navMeshAgent;
 
         [SerializeField] private float _currentHealth;
@@ -29,11 +33,13 @@ namespace Assets.Scripts.Unit {
         public Material impactMat;
         private Material oldMat;
         private Renderer _renderer;
+        private AudioSource source;
         
 
         private Collider[] res = new Collider[]{};
 
         private void Awake() {
+            source = GetComponent<AudioSource>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
             if(transform.childCount > 0) { _lookDir = transform.GetChild(0); }
             _currentHealth = _properties.MaxHealth;
@@ -50,6 +56,11 @@ namespace Assets.Scripts.Unit {
             playerMaterialClone.EnableKeyword("_EMISSION");
             playerMaterialClone.SetColor("_EmissionColor", _New);
             _renderer.material = playerMaterialClone;
+            for(int i = 0; i < transform.childCount; i++) {
+                if(transform.GetChild(i).TryGetComponent(out Renderer renderer)) {
+                    renderer.material = playerMaterialClone;
+                }
+            }
         }
 
         [ServerCallback]
@@ -108,6 +119,7 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         public virtual void Die() {
+            if (onDeathClip != null) { source.PlayOneShot(onDeathClip); }
             onDeath?.Invoke();
             Destroy(gameObject);
         }
@@ -120,6 +132,8 @@ namespace Assets.Scripts.Unit {
             direction.y += Random.Range(0, _properties.ArcAngle) / 100;
             direction.x += Random.Range(-_properties.MaxSpread, _properties.MaxSpread) / 10;
             _lookDir.rotation = Quaternion.LookRotation(direction);
+
+            source.PlayOneShot(fireClip);
 
             var p = Instantiate(_properties.UnitProjectile, transform.position, _lookDir.rotation);
             p.Init(_lookDir.forward, this);

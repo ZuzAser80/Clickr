@@ -214,9 +214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 0
-  runInBackground: 1
+  runInBackground: 0
   headlessStartMode: 1
-  editorAutoStart: 1
+  editorAutoStart: 0
   sendRate: 60
   autoStartServerBuild: 0
   autoConnectClientBuild: 0
@@ -224,8 +224,8 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/AIFight.unity
   transport: {fileID: 4459335}
   networkAddress: localhost
-  maxConnections: 1
-  disconnectInactiveConnections: 0
+  maxConnections: 100
+  disconnectInactiveConnections: 1
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 6972673697824355664, guid: 1932d620f0e7943bbbfaabe6f06e7aa3, type: 3}

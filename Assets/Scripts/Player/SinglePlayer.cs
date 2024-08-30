@@ -5,7 +5,9 @@ using Assets.Scripts.UI;
 using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
 using Mirror;
+using Steamworks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SinglePlayer : ISP {
 
@@ -15,6 +17,12 @@ public class SinglePlayer : ISP {
     [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float cameraSpeed = 1f;
     [SerializeField] private AudioClip click;
+    [SerializeField] private AudioClip onWin;
+    [SerializeField] private AudioClip onLose;
+    [SerializeField] private GameObject helpPanel;
+    [SerializeField] private GameObject quitPanel;
+    [SerializeField] private GameObject afdg;
+    [SerializeField] private GameObject afgd;
 
     public Material material;
 
@@ -30,6 +38,22 @@ public class SinglePlayer : ISP {
             3.5f
         ));
     }
+
+    // public float getR() {
+
+    // }
+
+    public void Click() {
+        FindObjectOfType<SteamFace>().PlayClick();
+    }
+
+    public void Restart() { NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+
+    public void Quit() { NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(0); }
+
+    public void FlipGOState(GameObject go) {
+        go.SetActive(!go.activeSelf);
+    }  
 
     public IEnumerator wait(Action action, Action update, float seconds) {
         for (float i = 0; i < seconds;) {
@@ -47,7 +71,23 @@ public class SinglePlayer : ISP {
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
+        if(FindObjectOfType<SteamFace>().shouldShow) {
+            helpPanel.SetActive(true);
+        }
         
+    }
+
+    public override void WinCmd()
+    {
+        source.PlayOneShot(onWin);
+        base.WinCmd();
+    }
+
+    public override void LoseCmd()
+    {
+        SteamInventory.TriggerItemDropAsync(0);
+        source.PlayOneShot(onLose);
+        base.LoseCmd();
     }
 
     public override void UpdateBases()
@@ -74,8 +114,12 @@ public class SinglePlayer : ISP {
 
     #endregion
 
+    public void Pause() {
+        Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+    }
+
     private void Update() {
-        if(!isLocalPlayer) { return; }
+        if(!isLocalPlayer || Time.timeScale == 0) { return; }
         UpdateEnemyTimer();
         CmdUpdateUI();
         _reciever.UpdateUIRpc(timer, enemyTimer, count);
