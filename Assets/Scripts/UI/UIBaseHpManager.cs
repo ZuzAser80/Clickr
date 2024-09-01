@@ -2,6 +2,7 @@ using System;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIBaseHpManager : NetworkBehaviour {
@@ -39,4 +40,18 @@ public class UIBaseHpManager : NetworkBehaviour {
     public void Lost() {
         onLosePanel.SetActive(true);
     }
+
+    public void Switch(int buildIndex) {
+        SceneManager.LoadScene(buildIndex);
+    }
+
+    public void FlipGOState(GameObject go) {
+        go.SetActive(!go.activeSelf);
+    }  
+
+    public void Click() {
+        FindObjectOfType<SteamFace>().PlayClick();
+    }
+
+    public void Restart() => FindObjectOfType<SinglePlayer>().Restart();
 }
