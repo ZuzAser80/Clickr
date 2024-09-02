@@ -30,7 +30,7 @@ public class SteamFace : MonoBehaviour
 
         try
         {
-            SteamClient.Init(480);
+            SteamClient.Init(3202880);
             Debug.Log(SteamClient.Name);
         }
         catch ( System.Exception e )

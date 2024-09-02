@@ -332,6 +332,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 854178081}
+        m_TargetAssemblyTypeName: SwitchToSceneBI, Assembly-CSharp
+        m_MethodName: FlipGOState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 542734604}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &39207060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,6 +1605,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 854178081}
+        m_TargetAssemblyTypeName: SwitchToSceneBI, Assembly-CSharp
+        m_MethodName: FlipGOState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 542734604}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &592985946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2686,6 +2710,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 854178081}
+        m_TargetAssemblyTypeName: SwitchToSceneBI, Assembly-CSharp
+        m_MethodName: FlipGOState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 542734604}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1283288660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3470,6 +3506,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 854178081}
+        m_TargetAssemblyTypeName: SwitchToSceneBI, Assembly-CSharp
+        m_MethodName: FlipGOState
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 542734604}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

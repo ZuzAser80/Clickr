@@ -37,7 +37,7 @@ public class Player : NetworkBehaviour {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count++; StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; count++; StopAllCoroutines(); if(count < 1) { PutOnCooldown(); } }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
@@ -91,6 +91,9 @@ public class Player : NetworkBehaviour {
     [Command]
     public virtual void CmdClick() {
         FindObjectOfType<Cannon>().Shoot(config, ref count, this);
+        if(count < 1) {
+            PutOnCooldown();
+        }
     }
     
     [Command]

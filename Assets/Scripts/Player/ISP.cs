@@ -69,7 +69,7 @@ public abstract class ISP : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdClick() {
+    public virtual void CmdClick() {
         StartCoroutine(waitForReload());
     }
 

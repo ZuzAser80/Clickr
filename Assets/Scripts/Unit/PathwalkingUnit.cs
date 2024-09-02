@@ -9,7 +9,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Unit {
-    [RequireComponent(typeof(NavMeshAgent))]
+    //[RequireComponent(typeof(NavMeshAgent))]
     public class PathwalkingUnit : NetworkBehaviour, IDamagable, IShooter
     {
         [SerializeField] protected UnitProperties _properties;
@@ -40,11 +40,14 @@ namespace Assets.Scripts.Unit {
 
         private void Awake() {
             source = GetComponent<AudioSource>();
+            
             _navMeshAgent = GetComponent<NavMeshAgent>();
             if(transform.childCount > 0) { _lookDir = transform.GetChild(0); }
             _currentHealth = _properties.MaxHealth;
             oldMat = GetComponent<Renderer>().material;
-            _navMeshAgent.speed = _properties.MaxSpeed;
+            if(_navMeshAgent != null) {
+                _navMeshAgent.speed = _properties.MaxSpeed;
+            }
             _renderer = GetComponent<Renderer>();
         }
 
@@ -78,12 +81,12 @@ namespace Assets.Scripts.Unit {
         }
 
         [ClientRpc]
-        public virtual void StartPathfindRpc(Vector3 objective) => _navMeshAgent.SetDestination(objective);
+        public virtual void StartPathfindRpc(Vector3 objective) { if(_navMeshAgent == null) { return; } _navMeshAgent.SetDestination(objective); }
 
         public UnitProperties GetProperties() => _properties;
 
         [ClientRpc]
-        public void MeshFlipRpc() => _navMeshAgent.isStopped = !_navMeshAgent.isStopped;
+        public void MeshFlipRpc() { if(_navMeshAgent == null) { return; } _navMeshAgent.isStopped = !_navMeshAgent.isStopped; }
 
         public float GetHealth() { return _currentHealth; }
 
@@ -94,7 +97,7 @@ namespace Assets.Scripts.Unit {
                 yield return new WaitForSeconds(_properties.RPM);
             }
             yield return new WaitForSeconds(_properties.Reload);
-            if(_navMeshAgent.isStopped) {
+            if(_navMeshAgent != null && _navMeshAgent.isStopped) {
                 StopAllCoroutines();
                 StartCoroutine(reload());
             }

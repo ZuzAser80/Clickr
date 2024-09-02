@@ -33,15 +33,19 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count += localCount + 1; localCount = 0; StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; count += localCount + 1; localCount = 0; StopAllCoroutines(); if(count < 1) { PutOnCooldown(); } }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
     }
 
-    // public float getR() {
-
-    // }
+    public override void CmdClick()
+    {
+        base.CmdClick();
+        if(count < 1) {
+            PutOnCooldown();
+        }
+    }
 
     public void Click() {
         FindObjectOfType<SteamFace>().PlayClick();
