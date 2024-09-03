@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5128482848948280325}
   - component: {fileID: 1626677311268312465}
   - component: {fileID: 6937578625605099674}
-  - component: {fileID: 9062409941496900060}
   m_Layer: 0
   m_Name: cannon_cart
   m_TagString: Untagged
@@ -85,27 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9062409941496900060
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72834862273098851}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0162027, y: 0.89821965, z: 2.5813274}
-  m_Center: {x: 0.0000036656857, y: -0.24440107, z: -1.2906642}
 --- !u!1 &336533465400746355
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +103,7 @@ GameObject:
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -218,7 +196,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &2181791566911632528
 NavMeshAgent:
@@ -265,7 +243,7 @@ MonoBehaviour:
     RPM: 0
     ArcAngle: 4
     MaxSpread: 0
-    UnitProjectile: {fileID: 6671574179125943627, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
+    UnitProjectile: {fileID: 6671574179125943627, guid: 833ecf33e69dd469891fc5ca44d918e5, type: 3}
     Reload: 5
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -330,7 +308,6 @@ GameObject:
   - component: {fileID: 2179203442413015727}
   - component: {fileID: 4332736405629106887}
   - component: {fileID: 5030600196001851082}
-  - component: {fileID: 1615383533937015641}
   m_Layer: 0
   m_Name: cannon_body
   m_TagString: Untagged
@@ -404,27 +381,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1615383533937015641
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918608508317575434}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.69164515, y: 1.5644851, z: 3.7409465}
-  m_Center: {x: -0.000523597, y: 0.57644176, z: 1.7386016}
 --- !u!1 &2796007524884565154
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +392,6 @@ GameObject:
   - component: {fileID: 7260058543697664630}
   - component: {fileID: 5057515991139590782}
   - component: {fileID: 2915515951038779224}
-  - component: {fileID: 1094267159073093809}
   m_Layer: 0
   m_Name: cannon_wheels
   m_TagString: Untagged
@@ -509,27 +464,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1094267159073093809
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2796007524884565154}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.9269022, y: 0.9880328, z: 0.9880328}
-  m_Center: {x: 0.00032819808, y: -0.000000044703484, z: -0.0000007599592}
 --- !u!1 &3086002978001692318
 GameObject:
   m_ObjectHideFlags: 0

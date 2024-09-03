@@ -70,15 +70,7 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public virtual void CmdClick() {
-        StartCoroutine(waitForReload());
-    }
-
-    private IEnumerator waitForReload() {
-        if(isOnCooldown) {
-            yield return new WaitForSeconds(2f);
-        }
         FindObjectOfType<Cannon>().Shoot(config, ref count, this);
-        _enemy.isOnCooldown = true;
     }
 
     #region RPCs

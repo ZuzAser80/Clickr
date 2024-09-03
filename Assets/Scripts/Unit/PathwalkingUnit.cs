@@ -69,10 +69,10 @@ namespace Assets.Scripts.Unit {
         [ServerCallback]
         public void Detect(PathwalkingUnit unit) { 
             _currentEnemy = unit;
-            MeshFlipRpc();
+            StopRpc();
             _currentEnemy.onDeath += delegate { 
                 if(this == null) { return; }
-                MeshFlipRpc();
+                ContinueRpc();
                 _currentEnemy = null;
             };
             if(canShoot) {
@@ -86,7 +86,10 @@ namespace Assets.Scripts.Unit {
         public UnitProperties GetProperties() => _properties;
 
         [ClientRpc]
-        public void MeshFlipRpc() { if(_navMeshAgent == null) { return; } _navMeshAgent.isStopped = !_navMeshAgent.isStopped; }
+        public void ContinueRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = true; }  }
+
+        [ClientRpc]
+        public void StopRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = true; }  }
 
         public float GetHealth() { return _currentHealth; }
 
@@ -96,7 +99,7 @@ namespace Assets.Scripts.Unit {
                 ShootRpc(_currentEnemy);
                 yield return new WaitForSeconds(_properties.RPM);
             }
-            yield return new WaitForSeconds(_properties.Reload);
+            yield return new WaitForSeconds(_properties.Reload + Random.Range(0, _properties.Reload *0.1f));
             if(_navMeshAgent != null && _navMeshAgent.isStopped) {
                 StopAllCoroutines();
                 StartCoroutine(reload());
@@ -136,8 +139,8 @@ namespace Assets.Scripts.Unit {
             direction.x += Random.Range(-_properties.MaxSpread, _properties.MaxSpread) / 10;
             _lookDir.rotation = Quaternion.LookRotation(direction);
 
-            source.PlayOneShot(fireClip);
-
+            if(fireClip != null && source != null) { source.PlayOneShot(fireClip); }
+            
             var p = Instantiate(_properties.UnitProjectile, transform.position, _lookDir.rotation);
             p.Init(_lookDir.forward, this);
             NetworkServer.Spawn(p.gameObject);

@@ -156,7 +156,7 @@ MonoBehaviour:
     RPM: 0.4
     ArcAngle: 4
     MaxSpread: 0
-    UnitProjectile: {fileID: 6671574179125943627, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
+    UnitProjectile: {fileID: 6671574179125943627, guid: d6f4525a6050e4bb7bd7b0aa16e1d640, type: 3}
     Reload: 5
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -279,7 +279,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  unit: {fileID: 0}
+  unit: {fileID: 5252859609185934413}
 --- !u!1 &6291379106801290640
 GameObject:
   m_ObjectHideFlags: 0

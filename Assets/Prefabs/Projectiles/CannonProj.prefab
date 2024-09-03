@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -4279881283131392463}
   - component: {fileID: 2379642551734753082}
   m_Layer: 0
-  m_Name: Cube 1
+  m_Name: CannonProj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,11 +274,12 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  StartSpeed: 20
+  StartSpeed: 60
   Lifetime: 5
   Explode: 0
   ExplosionRadius: 0
   Damage: 10
+  explosion: {fileID: 0}
 --- !u!114 &-4279881283131392463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 3846153121
+  _assetId: 2022371171
   serverOnly: 0
   visibility: 0
   hasSpawned: 0

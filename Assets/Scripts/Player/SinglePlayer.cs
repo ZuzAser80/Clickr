@@ -33,7 +33,7 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count += localCount + 1; localCount = 0; StopAllCoroutines(); if(count < 1) { PutOnCooldown(); } }, 
+            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
@@ -58,6 +58,8 @@ public class SinglePlayer : ISP {
     public void FlipGOState(GameObject go) {
         go.SetActive(!go.activeSelf);
     }  
+
+    public void DisableGO(GameObject go) => go.SetActive(false);
 
     public IEnumerator wait(Action action, Action update, float seconds) {
         for (float i = 0; i < seconds;) {
@@ -126,7 +128,7 @@ public class SinglePlayer : ISP {
         if(!isLocalPlayer || Time.timeScale == 0) { return; }
         UpdateEnemyTimer();
         CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, count);
+        _reciever.UpdateUIRpc(timer, enemyTimer, (count + localCount));
         if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
             CmdClick();

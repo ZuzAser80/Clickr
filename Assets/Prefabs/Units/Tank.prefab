@@ -259,7 +259,7 @@ MonoBehaviour:
     RPM: 0
     ArcAngle: 4
     MaxSpread: 0
-    UnitProjectile: {fileID: 6671574179125943627, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
+    UnitProjectile: {fileID: 6671574179125943627, guid: 70ed672939de746ee95df755d6f52fa8, type: 3}
     Reload: 5
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
