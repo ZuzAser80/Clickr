@@ -17,7 +17,8 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         private void OnTriggerEnter(Collider other) {
-            if(!other.TryGetComponent(out PathwalkingUnit unit) || unit.color == _unit.color) { return; }
+            if(!other.TryGetComponent(out PathwalkingUnit unit) && other.gameObject.layer==LayerMask.NameToLayer("Ground")) { Destroy(gameObject); return; }
+            if(unit == null || unit.color == _unit.color) { return; }
             unit.Damage(Damage);
             Destroy(gameObject);
         }
