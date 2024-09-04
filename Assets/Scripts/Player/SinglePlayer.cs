@@ -80,7 +80,8 @@ public class SinglePlayer : ISP {
         if(FindObjectOfType<SteamFace>().shouldShow) {
             helpPanel.SetActive(true);
         }
-        
+        Pause();
+
     }
 
     public override void WinCmd()
