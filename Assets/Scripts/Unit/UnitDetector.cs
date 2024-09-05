@@ -13,8 +13,8 @@ namespace Assets.Scripts.Unit {
             GetComponent<SphereCollider>().radius = unit.GetProperties().SpotRadius;
         }
 
-        private void OnTriggerStay(Collider other) {
-            if(!other.TryGetComponent(out PathwalkingUnit u) || u.color == unit.color) { return; }
+        private void OnTriggerEnter(Collider other) {
+            if(!other.TryGetComponent(out PathwalkingUnit u) || u.old == unit.old) { return; }
             unit.Detect(u);
         }
     }

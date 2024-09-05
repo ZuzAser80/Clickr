@@ -20,9 +20,8 @@ public class SinglePlayer : ISP {
     [SerializeField] private AudioClip onWin;
     [SerializeField] private AudioClip onLose;
     [SerializeField] private GameObject helpPanel;
-    [SerializeField] private GameObject quitPanel;
-    [SerializeField] private GameObject afdg;
-    [SerializeField] private GameObject afgd;
+    [SerializeField] private float leftX;
+    [SerializeField] private float rightX;
 
     public Material material;
 
@@ -48,7 +47,11 @@ public class SinglePlayer : ISP {
     }
 
     public void Click() {
-        FindObjectOfType<SteamFace>().PlayClick();
+        SteamFace.instance.PlayClick();
+    }
+
+    public void SwitchShouldShow(bool flag) {
+        SteamFace.instance.shouldShow = flag;
     }
 
     public void Restart() { NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
@@ -77,7 +80,7 @@ public class SinglePlayer : ISP {
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
-        if(FindObjectOfType<SteamFace>().shouldShow) {
+        if(SteamFace.instance.shouldShow) {
             helpPanel.SetActive(true);
         }
         Pause();
@@ -135,7 +138,15 @@ public class SinglePlayer : ISP {
             CmdClick();
         }
         // Camera rotation
-        cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+        if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {
+            cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+        } else if(Input.GetAxis("Horizontal") < 0 && cameraHolder.position.x > leftX) {
+            cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+        }
+
+        // if(!(cameraHolder.position.x < leftX && Input.GetAxis("Horizontal") < 0) && !(cameraHolder.position.x < rightX && Input.GetAxis("Horizontal") > 0)) {
+        //     cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+        // }
         
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotationX = Mathf.Clamp(rotationX, -45, 45);

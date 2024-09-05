@@ -274,11 +274,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  StartSpeed: 60
-  Lifetime: 5
-  Explode: 0
-  ExplosionRadius: 0
-  Damage: 10
+  StartSpeed: 30
+  Lifetime: 10
+  Explode: 1
+  ExplosionRadius: 20
+  Damage: 20
   explosion: {fileID: 0}
 --- !u!114 &-4279881283131392463
 MonoBehaviour:

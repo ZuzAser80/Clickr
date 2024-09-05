@@ -149,13 +149,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _properties:
-    MaxHealth: 150
+    MaxHealth: 10
     MaxSpeed: 3
-    SpotRadius: 4
+    SpotRadius: 12
     ProjectileCount: 5
     RPM: 0.4
-    ArcAngle: 4
-    MaxSpread: 0
+    ArcAngle: 550
+    MaxSpread: 50
     UnitProjectile: {fileID: 6671574179125943627, guid: d6f4525a6050e4bb7bd7b0aa16e1d640, type: 3}
     Reload: 5
     side: {r: 0, g: 0, b: 0, a: 0}

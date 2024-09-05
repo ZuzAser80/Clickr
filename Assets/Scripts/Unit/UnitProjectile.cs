@@ -26,9 +26,11 @@ namespace Assets.Scripts.Unit {
         [ServerCallback]
         private void OnDestroy() {
             if(Explode) { 
-                var r = Instantiate(explosion, transform.position, Quaternion.identity);
-                Destroy(r, 0.5f);
-                NetworkServer.Spawn(r);
+                if(explosion != null) {
+                    var r = Instantiate(explosion, transform.position, Quaternion.identity);
+                    Destroy(r, 0.5f);
+                    NetworkServer.Spawn(r);
+                }
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
                     if(x.TryGetComponent(out IDamagable dmg)) {  

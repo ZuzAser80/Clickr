@@ -5011,9 +5011,8 @@ MonoBehaviour:
   onWin: {fileID: 8300000, guid: ee1813d7f70e2443991057651e882ebc, type: 3}
   onLose: {fileID: 8300000, guid: 76a354728622f4bfbb7358da1f31e534, type: 3}
   helpPanel: {fileID: 2376267708511788059}
-  quitPanel: {fileID: 0}
-  afdg: {fileID: 0}
-  afgd: {fileID: 0}
+  leftX: -18
+  rightX: 90
   material: {fileID: 2100000, guid: bd951aa4842a64c5c8317339f4bd8059, type: 2}
   source: {fileID: 3062416275412234007}
 --- !u!1 &7100147550329647608

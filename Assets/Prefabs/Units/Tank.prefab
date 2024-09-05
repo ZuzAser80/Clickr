@@ -254,11 +254,11 @@ MonoBehaviour:
   _properties:
     MaxHealth: 100
     MaxSpeed: 3
-    SpotRadius: 4
+    SpotRadius: 15
     ProjectileCount: 1
     RPM: 0
-    ArcAngle: 4
-    MaxSpread: 0
+    ArcAngle: 550
+    MaxSpread: 50
     UnitProjectile: {fileID: 6671574179125943627, guid: 70ed672939de746ee95df755d6f52fa8, type: 3}
     Reload: 5
     side: {r: 0, g: 0, b: 0, a: 0}

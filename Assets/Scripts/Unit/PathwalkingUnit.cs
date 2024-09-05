@@ -66,7 +66,7 @@ namespace Assets.Scripts.Unit {
             }
         }
 
-        [ServerCallback]
+        //[ServerCallback]
         public void Detect(PathwalkingUnit unit) { 
             _currentEnemy = unit;
             StopRpc();
@@ -125,7 +125,7 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         public virtual void Die() {
-            if (onDeathClip != null) { source.PlayOneShot(onDeathClip); }
+            if (onDeathClip != null && source != null) { source.PlayOneShot(onDeathClip); }
             onDeath?.Invoke();
             Destroy(gameObject);
         }

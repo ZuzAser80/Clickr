@@ -150,12 +150,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _properties:
-    MaxHealth: 100
+    MaxHealth: 10
     MaxSpeed: 3
-    SpotRadius: 18
+    SpotRadius: 12
     ProjectileCount: 1
     RPM: 0
-    ArcAngle: 450
+    ArcAngle: 550
     MaxSpread: 50
     UnitProjectile: {fileID: 6671574179125943627, guid: c8a561a9f3eae41e49ffdb34abce5ffd, type: 3}
     Reload: 5

@@ -140,7 +140,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _properties:
-    MaxHealth: 100
+    MaxHealth: 1000
     MaxSpeed: 0
     SpotRadius: 0
     ProjectileCount: 0
