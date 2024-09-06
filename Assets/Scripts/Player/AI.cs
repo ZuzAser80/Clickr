@@ -7,11 +7,11 @@ public class AI : ISP {
 
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; count += localCount + 1; localCount = 0; StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 2.5f, 3); },
             2.5f
         ));
-        StartCoroutine(tryShoot(0.5f));
+        StartCoroutine(tryShoot(2.5f));
     }
 
     public override void OnStartAuthority()

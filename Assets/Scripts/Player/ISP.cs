@@ -70,7 +70,7 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public virtual void CmdClick() {
-        FindObjectOfType<Cannon>().Shoot(config, ref count, this);
+        FindObjectOfType<Cannon>().Shoot(config, this);
     }
 
     #region RPCs

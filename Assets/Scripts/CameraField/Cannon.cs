@@ -53,7 +53,8 @@ public class Cannon : NetworkBehaviour {
         NetworkServer.Spawn(_g);
     }
 
-    public void Shoot(GameObject config, ref int count, ISP player) {
+    public void Shoot(GameObject config, ISP player) {
+        var count = player.count;
         if (count % 2 != 0) { ShootInDir(transform.right, 0, config, player); }
         _ = count > 1 ? (count <= 8 ? Mathf.Floor(count / 2) : 4) : 0;
         for (int i = 1;  i <= _; i++) {

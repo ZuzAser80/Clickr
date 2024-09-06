@@ -12,7 +12,7 @@ namespace Assets.Scripts.Unit {
         public float Damage;
         public GameObject explosion;
 
-        private Collider[] res;
+        private Collider[] res = new Collider[30];
         private PathwalkingUnit _unit;
 
         [ServerCallback]
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Unit {
                 }
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
-                    if(x.TryGetComponent(out IDamagable dmg)) {  
+                    if(x != null && x.TryGetComponent(out IDamagable dmg)) {  
                         dmg.Damage(Damage);
                     }
                 });

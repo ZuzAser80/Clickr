@@ -54,9 +54,9 @@ public class SinglePlayer : ISP {
         SteamFace.instance.shouldShow = flag;
     }
 
-    public void Restart() { NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+    public void Restart() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
 
-    public void Quit() { NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(0); }
+    public void Quit() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(0); }
 
     public void FlipGOState(GameObject go) {
         go.SetActive(!go.activeSelf);
@@ -80,10 +80,10 @@ public class SinglePlayer : ISP {
         _reciever = ui.GetComponentInChildren<UIReciever>();   
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
+        Pause();
         if(SteamFace.instance.shouldShow) {
             helpPanel.SetActive(true);
         }
-        Pause();
 
     }
 
@@ -143,10 +143,6 @@ public class SinglePlayer : ISP {
         } else if(Input.GetAxis("Horizontal") < 0 && cameraHolder.position.x > leftX) {
             cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
         }
-
-        // if(!(cameraHolder.position.x < leftX && Input.GetAxis("Horizontal") < 0) && !(cameraHolder.position.x < rightX && Input.GetAxis("Horizontal") > 0)) {
-        //     cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
-        // }
         
         rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
         rotationX = Mathf.Clamp(rotationX, -45, 45);
