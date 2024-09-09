@@ -22,7 +22,6 @@ namespace Assets.Scripts.Unit {
         [SerializeField] private AudioClip fireClip;
         [SerializeField] private AudioClip onDeathClip;
 
-
         private NavMeshAgent _navMeshAgent;
 
         [SerializeField] private float _currentHealth;
@@ -53,7 +52,15 @@ namespace Assets.Scripts.Unit {
 
         void OnColorChanged(Color _Old, Color _New)
         {
-            if(_New != Color.white) { old = _New; _renderer.material = oldMat; } else { GetComponent<Renderer>().material = impactMat; return; }
+            if(_New != Color.white) { old = _New; _renderer.material = oldMat; } else { 
+                GetComponent<Renderer>().material = impactMat; 
+                for(int i = 0; i < transform.childCount; i++) {
+                    if(transform.GetChild(i).TryGetComponent(out Renderer renderer)) {
+                        renderer.material = impactMat;
+                    }
+                }
+                return; 
+            }
             var playerMaterialClone = new Material(_renderer.material);
             playerMaterialClone.color = _New;
             playerMaterialClone.EnableKeyword("_EMISSION");
@@ -86,7 +93,7 @@ namespace Assets.Scripts.Unit {
         public UnitProperties GetProperties() => _properties;
 
         [ClientRpc]
-        public void ContinueRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = true; }  }
+        public void ContinueRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = false; }  }
 
         [ClientRpc]
         public void StopRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = true; }  }
@@ -123,11 +130,19 @@ namespace Assets.Scripts.Unit {
             color = old;
         }
 
+        private IEnumerator deathImpact() {
+            color = Color.white;
+            yield return new WaitForSeconds(0.3f);
+            color = old / 2;
+            yield return new WaitForSeconds(0.2f);
+            Destroy(gameObject);
+        }
+
         [ServerCallback]
         public virtual void Die() {
             if (onDeathClip != null && source != null) { source.PlayOneShot(onDeathClip); }
             onDeath?.Invoke();
-            Destroy(gameObject);
+            StartCoroutine(deathImpact());
         }
 
         [ServerCallback]

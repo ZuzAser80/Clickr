@@ -34,10 +34,12 @@ public class UIBaseHpManager : NetworkBehaviour {
     }
 
     public void Win() {
+        FindObjectOfType<SinglePlayer>().WinCmd();
         onWinPanel.SetActive(true);
     }
 
     public void Lost() {
+        FindObjectOfType<SinglePlayer>().LoseCmd();
         onLosePanel.SetActive(true);
     }
 

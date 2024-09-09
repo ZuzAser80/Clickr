@@ -11,7 +11,9 @@ namespace Assets.Scripts.Unit {
         public float ExplosionRadius;
         public float Damage;
         public GameObject explosion;
+        [SerializeField] private AudioClip explos;
 
+        private AudioSource source;
         private Collider[] res = new Collider[30];
         private PathwalkingUnit _unit;
 
@@ -27,13 +29,15 @@ namespace Assets.Scripts.Unit {
         private void OnDestroy() {
             if(Explode) { 
                 if(explosion != null) {
+                    explosion.GetComponent<UnitExplosion>().rad = (int)ExplosionRadius;
                     var r = Instantiate(explosion, transform.position, Quaternion.identity);
+                    source.PlayOneShot(explos);
                     Destroy(r, 0.5f);
                     NetworkServer.Spawn(r);
                 }
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
                 res.ToList().ForEach(x => { 
-                    if(x != null && x.TryGetComponent(out IDamagable dmg)) {  
+                    if(x != null && x.TryGetComponent(out IDamagable dmg) && (Object)dmg != _unit) {  
                         dmg.Damage(Damage);
                     }
                 });
@@ -44,6 +48,7 @@ namespace Assets.Scripts.Unit {
         public void Init(Vector3 startDirection, PathwalkingUnit owner) {
             _unit = owner;
             GetComponent<Rigidbody>().velocity = startDirection * StartSpeed;
+            source = GetComponent<AudioSource>();
             Destroy(gameObject, Lifetime);
         }
 

@@ -20,6 +20,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip onWin;
     [SerializeField] private AudioClip onLose;
+    [SerializeField] private AudioClip onStartGame;
     [SerializeField] private GameObject helpPanel;
     [SerializeField] private float leftX;
     [SerializeField] private float rightX;
@@ -96,18 +97,19 @@ public class SinglePlayer : ISP {
         if(SteamFace.instance.shouldShow) {
             helpPanel.SetActive(true);
         }
+        source.PlayOneShot(onStartGame);
 
     }
 
     public override void WinCmd()
     {
+        SteamInventory.TriggerItemDropAsync(0);
         source.PlayOneShot(onWin);
         base.WinCmd();
     }
 
     public override void LoseCmd()
     {
-        SteamInventory.TriggerItemDropAsync(0);
         source.PlayOneShot(onLose);
         base.LoseCmd();
     }
