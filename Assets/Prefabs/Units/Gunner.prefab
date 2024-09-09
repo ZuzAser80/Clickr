@@ -30,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 212166623697140507}
+  - {fileID: 6602785561271822402}
   m_Father: {fileID: 3175349501337861152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &212166623697495867
@@ -177,7 +178,6 @@ Transform:
   m_Children:
   - {fileID: 7339263007327459407}
   - {fileID: 5141964427592315872}
-  - {fileID: 6602785561271822402}
   - {fileID: 2024005680739783253}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -360,7 +360,7 @@ AudioSource:
   m_GameObject: {fileID: 336533465400746355}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5831419042788286770, guid: b019ac85539824216a6f479e239d0436, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -579,7 +579,7 @@ Transform:
   m_LocalScale: {x: 15.119666, y: 15.11967, z: 15.119671}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3175349501337861152}
+  m_Father: {fileID: 2024005680739783253}
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 90}
 --- !u!33 &6618511623761813084
 MeshFilter:

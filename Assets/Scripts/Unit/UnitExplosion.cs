@@ -8,7 +8,7 @@ public class UnitExplosion : MonoBehaviour {
     
     private void Start() {
         GetComponent<Renderer>().material.color = Color.white;
-        transform.localScale *= rad;
+        transform.localScale *= rad*2;
         StartCoroutine(clr());
     }
 

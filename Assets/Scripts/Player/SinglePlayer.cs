@@ -67,7 +67,7 @@ public class SinglePlayer : ISP {
         SteamFace.instance.shouldShow = flag;
     }
 
-    public void Restart() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+    public void Restart() { Debug.Log("Restart"); Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
 
     public void Quit() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(0); }
 

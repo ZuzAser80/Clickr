@@ -55,5 +55,5 @@ public class UIBaseHpManager : NetworkBehaviour {
         FindObjectOfType<SteamFace>().PlayClick();
     }
 
-    public void Restart() => FindObjectOfType<SinglePlayer>().Restart();
+    public void Restart() { Debug.Log("NIGGER"); FindObjectOfType<SinglePlayer>().Restart(); } 
 }

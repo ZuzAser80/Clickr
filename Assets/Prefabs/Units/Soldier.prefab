@@ -39,7 +39,6 @@ Transform:
   m_Children:
   - {fileID: 7339263007327459407}
   - {fileID: 5141964427592315872}
-  - {fileID: 2572919391711913245}
   - {fileID: 6900386645461930818}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -164,7 +163,7 @@ MonoBehaviour:
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   detector: {fileID: 4531411291050978115}
-  fireClip: {fileID: 8300000, guid: 7a46f23125ffd406483cff19c29ae529, type: 3}
+  fireClip: {fileID: 8300000, guid: 0c110f3329ca7464fbd3671b579ff3ba, type: 3}
   onDeathClip: {fileID: 0}
   _currentHealth: 0
   old: {r: 0, g: 0, b: 0, a: 0}
@@ -420,10 +419,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: -0.283, y: 0, z: 0.514}
-  m_LocalScale: {x: 12.80941, y: 12.809404, z: 12.809404}
+  m_LocalScale: {x: 12.80941, y: 12.809405, z: 12.809405}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3175349501337861152}
+  m_Father: {fileID: 6900386645461930818}
   m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 180}
 --- !u!33 &2581464811904457495
 MeshFilter:
@@ -576,6 +575,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6668914997772566447}
+  - {fileID: 2572919391711913245}
   m_Father: {fileID: 3175349501337861152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6291379106801290640
