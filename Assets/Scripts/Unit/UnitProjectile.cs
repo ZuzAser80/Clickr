@@ -14,6 +14,7 @@ namespace Assets.Scripts.Unit {
         [SerializeField] private AudioClip explos;
 
         private AudioSource source;
+        private float c = 0;
         private Collider[] res = new Collider[30];
         private PathwalkingUnit _unit;
 
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         private void OnDestroy() {
-            if(Explode) { 
+            if(Explode && c > 1) { 
                 if(explosion != null) {
                     explosion.GetComponent<UnitExplosion>().rad = (int)ExplosionRadius;
                     var r = Instantiate(explosion, transform.position, Quaternion.identity);
@@ -44,12 +45,17 @@ namespace Assets.Scripts.Unit {
             }
         }
 
+        private void Update() {
+            c += Time.deltaTime;
+        }
+
         [ServerCallback]
         public void Init(Vector3 startDirection, PathwalkingUnit owner) {
             _unit = owner;
             GetComponent<Rigidbody>().velocity = startDirection * StartSpeed;
             source = GetComponent<AudioSource>();
             Destroy(gameObject, Lifetime);
+            c = 0;
         }
 
         private void OnDrawGizmos() {
