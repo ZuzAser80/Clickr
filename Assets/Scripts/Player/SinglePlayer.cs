@@ -49,8 +49,9 @@ public class SinglePlayer : ISP {
             PutOnCooldown();
         }
         StartCoroutine(countCd());
-        
-        
+        if(FindObjectOfType<AI>().count == 0) {
+            FindObjectOfType<AI>().AddOne();
+        }
     }
 
     private IEnumerator countCd() {

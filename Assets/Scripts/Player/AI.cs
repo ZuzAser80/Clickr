@@ -13,7 +13,7 @@ public class AI : ISP {
             delegate { timer += MathF.Round(Time.deltaTime / 2.5f, 3); },
             2.5f
         ));
-        StartCoroutine(tryShoot(2.5f + m));
+        StartCoroutine(tryShoot(3f + m));
     }
 
     public override void OnStartAuthority()
