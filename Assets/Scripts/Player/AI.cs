@@ -27,7 +27,7 @@ public class AI : ISP {
     } 
 
     private IEnumerator addMore() {
-        m += 0.1f;
+        m += 0.5f;
         yield return new WaitForSeconds(120);
         StartCoroutine(addMore());
     }
