@@ -36,8 +36,8 @@ public class SinglePlayer : ISP {
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
-            delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
-            3.5f
+            delegate { timer += MathF.Round(Time.deltaTime / 1.5f, 3); },
+            1.5f
         ));
     }
 
@@ -138,7 +138,7 @@ public class SinglePlayer : ISP {
         UpdateEnemyTimer();
         CmdUpdateUI();
         _reciever.UpdateUIRpc(timer, enemyTimer, (count + localCount));
-        if(Input.GetKeyDown(KeyCode.Space) && button.interactable) {
+        if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
             CmdClick();
         }
