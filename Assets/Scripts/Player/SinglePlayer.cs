@@ -16,7 +16,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform cameraHolder;
     [SerializeField] private float lookSpeed = 2f;
-    [SerializeField] private float cameraSpeed = 1f;
+    [SerializeField] private float cameraSpeed = 2.5f;
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip onWin;
     [SerializeField] private AudioClip onLose;
@@ -35,7 +35,7 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); button.interactable = true; PutOnCooldown(); }, 
+            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 3.5f, 3); },
             3.5f
         ));
@@ -47,13 +47,7 @@ public class SinglePlayer : ISP {
         if(count < 1) {
             PutOnCooldown();
         }
-        StartCoroutine(countCd());
-    }
-
-    private IEnumerator countCd() {
-        button.interactable = false;
-        yield return new WaitForSeconds(1.2f); // ждем 10 сек
-        button.interactable = true;
+        //StartCoroutine(countCd());
     }
 
     public void Click() {
@@ -147,7 +141,6 @@ public class SinglePlayer : ISP {
         if(Input.GetKeyDown(KeyCode.Space) && button.interactable) {
             source.PlayOneShot(click);
             CmdClick();
-            StartCoroutine(countCd());
         }
         // Camera rotation
         if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {
@@ -156,9 +149,9 @@ public class SinglePlayer : ISP {
             cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
         }
         
-        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-        rotationX = Mathf.Clamp(rotationX, -45, 45);
-        _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        cameraHolder.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
+        // rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        // rotationX = Mathf.Clamp(rotationX, -45, 45);
+        // _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        // cameraHolder.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
     }
 }
