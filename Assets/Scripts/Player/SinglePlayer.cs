@@ -39,15 +39,23 @@ public class SinglePlayer : ISP {
             delegate { timer += MathF.Round(Time.deltaTime / 1.5f, 3); },
             1.5f
         ));
+        StartCoroutine(tryShoot(3));
     }
 
     public override void CmdClick()
     {
-        base.CmdClick();
         if(count < 1) {
+            count = 1;
             PutOnCooldown();
         }
-        //StartCoroutine(countCd());
+        base.CmdClick();
+        
+    }
+
+    public IEnumerator tryShoot(float seconds) {
+        yield return new WaitForSeconds(seconds);
+        CmdClick();
+        StartCoroutine(tryShoot(seconds));
     }
 
     public void Click() {

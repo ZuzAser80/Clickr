@@ -39,6 +39,8 @@ public class ProjectileConfig : NetworkBehaviour
     public void HandleColor(Color o, Color n) {
         color = n;
         _renderer.color = color;
+        _renderer.material.EnableKeyword("_EMISSION");
+        _renderer.material.SetColor("_EmissionColor", color);
     }
 
     // fumble

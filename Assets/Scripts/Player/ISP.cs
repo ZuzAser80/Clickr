@@ -21,6 +21,8 @@ public abstract class ISP : NetworkBehaviour {
     [SerializeField] private GameObject config;
     [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private PathwalkingUnit baseUnitPrefab;
+    [SerializeField] private List<int> maxReq = new List<int>();
+    [SerializeField] private List<int> curReq = new List<int>();
 
     public Transform spawnPoint;
     protected ISP  _enemy;
@@ -59,7 +61,13 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public void CmdSpawnUnit(int index) {
-        FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
+        if(curReq.Count < index || maxReq.Count < index) { return; }
+        if (curReq[index] < maxReq[index]-1) {
+            curReq[index]++;
+        } else {
+            curReq[index] = 0;
+            FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
+        }
     }
 
     [Command]
@@ -77,6 +85,7 @@ public abstract class ISP : NetworkBehaviour {
 
     [TargetRpc]
     public void SpawnUnit(int index) {
+
         CmdSpawnUnit(index);
     } 
 
