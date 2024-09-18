@@ -6,6 +6,7 @@ using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
 using Mirror;
 using Steamworks;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private float leftX;
     [SerializeField] private float rightX;
     [SerializeField] private Button button;
+    [SerializeField] private GameObject plusOne;
 
     public Material material;
 
@@ -42,6 +44,7 @@ public class SinglePlayer : ISP {
         StartCoroutine(tryShoot(3));
     }
 
+    [Command]
     public override void CmdClick()
     {
         if(count < 1) {
@@ -49,7 +52,8 @@ public class SinglePlayer : ISP {
             PutOnCooldown();
         }
         base.CmdClick();
-        
+        var v = Instantiate(plusOne, button.transform);
+        v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
     }
 
     public IEnumerator tryShoot(float seconds) {

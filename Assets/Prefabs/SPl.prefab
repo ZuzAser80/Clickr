@@ -3427,7 +3427,7 @@ Transform:
   m_GameObject: {fileID: 5278393982913745137}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.5, y: 10, z: -15}
+  m_LocalPosition: {x: 100, y: 10, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5017,6 +5017,7 @@ MonoBehaviour:
   leftX: -18
   rightX: 90
   button: {fileID: 4178692844081224963}
+  plusOne: {fileID: 7503147248536797693, guid: 835221019f4e64e74a19e70eeb3045a1, type: 3}
   material: {fileID: 2100000, guid: bd951aa4842a64c5c8317339f4bd8059, type: 2}
   source: {fileID: 3062416275412234007}
 --- !u!1 &7100147550329647608
