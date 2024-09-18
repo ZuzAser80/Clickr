@@ -3427,7 +3427,7 @@ Transform:
   m_GameObject: {fileID: 5278393982913745137}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 10, z: -15}
+  m_LocalPosition: {x: 100, y: 27, z: -35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4114,7 +4114,7 @@ Transform:
   m_GameObject: {fileID: 5797646723173089734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -25, z: 20}
+  m_LocalPosition: {x: 0, y: -27.5, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4401,7 +4401,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5007,17 +5007,19 @@ MonoBehaviour:
   ui: {fileID: 4702681403822383225}
   _camera: {fileID: 8033856305327618355}
   cameraHolder: {fileID: 101799242025128296}
-  lookSpeed: 2
+  lookSpeed: 10
+  panSpeed: 80
   cameraSpeed: 1
   click: {fileID: 8300000, guid: bcfbbebc935c04a93b69e88cb3033ac8, type: 3}
   onWin: {fileID: 8300000, guid: ee1813d7f70e2443991057651e882ebc, type: 3}
   onLose: {fileID: 8300000, guid: 76a354728622f4bfbb7358da1f31e534, type: 3}
   onStartGame: {fileID: 8300000, guid: 6eecb3474b1e04defb50470d97a57ed1, type: 3}
   helpPanel: {fileID: 2376267708511788059}
-  leftX: -18
-  rightX: 90
+  leftX: -45
+  rightX: 120
   button: {fileID: 4178692844081224963}
   plusOne: {fileID: 7503147248536797693, guid: 835221019f4e64e74a19e70eeb3045a1, type: 3}
+  ZoomSpeedMouse: 2
   material: {fileID: 2100000, guid: bd951aa4842a64c5c8317339f4bd8059, type: 2}
   source: {fileID: 3062416275412234007}
 --- !u!1 &7100147550329647608

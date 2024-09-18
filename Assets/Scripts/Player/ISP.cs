@@ -21,8 +21,8 @@ public abstract class ISP : NetworkBehaviour {
     [SerializeField] private GameObject config;
     [SerializeField] private List<PathwalkingUnit> spawnables = new List<PathwalkingUnit>();
     [SerializeField] private PathwalkingUnit baseUnitPrefab;
-    [SerializeField] private List<int> maxReq = new List<int>();
-    [SerializeField] private List<int> curReq = new List<int>();
+    [SerializeField] protected List<int> maxReq = new List<int>();
+    [SerializeField] protected List<int> curReq = new List<int>();
 
     public Transform spawnPoint;
     protected ISP  _enemy;

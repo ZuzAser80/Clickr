@@ -129,7 +129,7 @@ public class Player : NetworkBehaviour {
     private void Update() {
         if(!isLocalPlayer) { return; }
         CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, count);
+        //_reciever.UpdateUIRpc(timer, enemyTimer, count);
         if(Input.GetKeyDown(KeyCode.Space)) {
             CmdClick();
         }

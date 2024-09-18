@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class UIBaseHpManager : NetworkBehaviour {
 
     [SerializeField] private GameObject onWinPanel;
     [SerializeField] private GameObject onLosePanel;
+    [SerializeField] private List<TextMeshProUGUI> tmp = new List<TextMeshProUGUI>();
 
     [ClientRpc]
     public void UpdateUI(float hp, float maxHp, bool left) {
@@ -26,11 +28,12 @@ public class UIBaseHpManager : NetworkBehaviour {
         }
     }
 
-    public void UpdateUISingle(float hp, float enemyHp, float maxHp) {
+    public void UpdateUISingle(float hp, float enemyHp, float maxHp, List<int> curReq, List<int> maxReq) {
         fillRed.fillAmount = MathF.Round(hp/maxHp, 2);
         textRed.text = hp.ToString();
         fillBlue.fillAmount = MathF.Round(enemyHp/maxHp, 2);
         textBlue.text = enemyHp.ToString();
+        tmp.ForEach(x => x.text = (maxReq[tmp.IndexOf(x)] - curReq[tmp.IndexOf(x)]).ToString());
     }
 
     public void Win() {
@@ -55,5 +58,5 @@ public class UIBaseHpManager : NetworkBehaviour {
         FindObjectOfType<SteamFace>().PlayClick();
     }
 
-    public void Restart() { Debug.Log("NIGGER"); FindObjectOfType<SinglePlayer>().Pause(); FindObjectOfType<SinglePlayer>().Restart(); } 
+    public void Restart() { FindObjectOfType<SinglePlayer>().Pause(); FindObjectOfType<SinglePlayer>().Restart(); } 
 }

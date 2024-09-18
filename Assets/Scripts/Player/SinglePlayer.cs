@@ -17,6 +17,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform cameraHolder;
     [SerializeField] private float lookSpeed = 2f;
+    [SerializeField] private float panSpeed = 20f;
     [SerializeField] private float cameraSpeed = 2.5f;
     [SerializeField] private AudioClip click;
     [SerializeField] private AudioClip onWin;
@@ -27,6 +28,11 @@ public class SinglePlayer : ISP {
     [SerializeField] private float rightX;
     [SerializeField] private Button button;
     [SerializeField] private GameObject plusOne;
+	[SerializeField] private float ZoomSpeedMouse = .5f;
+
+	private bool zoomActive;
+    private bool panActive;
+	private Vector3 lastPanPosition;
 
     public Material material;
 
@@ -38,10 +44,10 @@ public class SinglePlayer : ISP {
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
-            delegate { timer += MathF.Round(Time.deltaTime / 1.5f, 3); },
-            1.5f
+            delegate { timer += MathF.Round(Time.deltaTime / 2.5f, 3); },
+            2.5f
         ));
-        StartCoroutine(tryShoot(3));
+        StartCoroutine(tryShoot(2.5f));
     }
 
     [Command]
@@ -54,6 +60,10 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
+        if(UnityEngine.Random.Range(0f, 1f) > 0.65f) {
+            FindObjectOfType<AI>().AddOne();
+            FindObjectOfType<AI>().CmdClick();
+        }
     }
 
     public IEnumerator tryShoot(float seconds) {
@@ -134,7 +144,7 @@ public class SinglePlayer : ISP {
         if(_enemy != null) {  
             _enemy.enemyTimer = timer; 
             if(_enemy.GetBase() != null) {
-                FindObjectOfType<UIBaseHpManager>().UpdateUISingle(baseUnit.GetHealth(), _enemy.GetBase().GetHealth(), baseUnit.GetProperties().MaxHealth);
+                FindObjectOfType<UIBaseHpManager>().UpdateUISingle(baseUnit.GetHealth(), _enemy.GetBase().GetHealth(), baseUnit.GetProperties().MaxHealth, curReq, maxReq);
             }   
         }
     }
@@ -161,9 +171,43 @@ public class SinglePlayer : ISP {
             cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
         }
         
-        // rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-        // rotationX = Mathf.Clamp(rotationX, -45, 45);
-        // _camera.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        // cameraHolder.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); 
+        if (Input.GetMouseButtonDown(0)) {
+			panActive = true;
+			lastPanPosition = Input.mousePosition;
+		} else if (Input.GetMouseButtonUp(0)) {
+			panActive = false;
+		} else if (Input.GetMouseButton(0)) {
+			PanCamera(Input.mousePosition);
+		}
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+		zoomActive = true;
+		ZoomCamera(scroll, ZoomSpeedMouse);
+		zoomActive = false;
+
     }
+
+	void ZoomCamera(float offset, float speed) {
+		if (!zoomActive || offset == 0) {
+			return;
+		}
+
+		cameraHolder.GetComponentInChildren<Camera>().fieldOfView = Mathf.Clamp(cameraHolder.GetComponentInChildren<Camera>().fieldOfView - (offset * speed), 10f, 85f);
+	}
+
+    void PanCamera(Vector3 newPanPosition) {
+		if (!panActive) {
+			return;
+		}
+
+		Vector3 offset = Camera.main.ScreenToViewportPoint(lastPanPosition - newPanPosition);
+		Vector3 move = new Vector3(offset.x * panSpeed, 0, 0);
+        if(offset.x > 0 && cameraHolder.position.x < rightX) {
+    		cameraHolder.Translate(move, Space.World);  
+        } else if(offset.x < 0 && cameraHolder.position.x > leftX) {
+	    	cameraHolder.Translate(move, Space.World);
+        }
+
+		lastPanPosition = newPanPosition;
+	}
 }
