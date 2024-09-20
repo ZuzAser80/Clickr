@@ -54,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8999014768493479651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -280,6 +280,7 @@ MonoBehaviour:
   ExplosionRadius: 0
   Damage: 10
   explosion: {fileID: 0}
+  explos: {fileID: 0}
 --- !u!114 &-4279881283131392463
 MonoBehaviour:
   m_ObjectHideFlags: 0

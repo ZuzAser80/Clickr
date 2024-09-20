@@ -26,6 +26,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private GameObject helpPanel;
     [SerializeField] private float leftX;
     [SerializeField] private float rightX;
+    [SerializeField] private float maxForward;
     [SerializeField] private Button button;
     [SerializeField] private GameObject plusOne;
 	[SerializeField] private float ZoomSpeedMouse = .5f;
@@ -44,10 +45,10 @@ public class SinglePlayer : ISP {
     private void PutOnCooldown() {
         StartCoroutine(wait(
             delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
-            delegate { timer += MathF.Round(Time.deltaTime / 2.5f, 3); },
-            2.5f
+            delegate { timer += MathF.Round(Time.deltaTime / 4f, 3); },
+            4f
         ));
-        StartCoroutine(tryShoot(2.5f));
+        
     }
 
     [Command]
@@ -60,7 +61,7 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
-        if(UnityEngine.Random.Range(0f, 1f) > 0.65f) {
+        if(UnityEngine.Random.Range(0f, 1f) > 0.5f) {
             FindObjectOfType<AI>().AddOne();
             FindObjectOfType<AI>().CmdClick();
         }
@@ -111,7 +112,7 @@ public class SinglePlayer : ISP {
             helpPanel.SetActive(true);
         }
         source.PlayOneShot(onStartGame);
-
+    StartCoroutine(tryShoot(4f));
     }
 
     public override void WinCmd()
@@ -170,6 +171,12 @@ public class SinglePlayer : ISP {
         } else if(Input.GetAxis("Horizontal") < 0 && cameraHolder.position.x > leftX) {
             cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
         }
+
+        if(Input.GetAxis("Vertical") > 0 && cameraHolder.position.z < maxForward) {
+            cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
+        } else if(Input.GetAxis("Vertical") < 0 && cameraHolder.position.z > -35) {
+            cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
+        }
         
         if (Input.GetMouseButtonDown(0)) {
 			panActive = true;
@@ -192,6 +199,8 @@ public class SinglePlayer : ISP {
 			return;
 		}
 
+        ZoomSpeedMouse = PlayerPrefs.GetFloat("ZoomSpeedMouse") + 0.5f;
+
 		cameraHolder.GetComponentInChildren<Camera>().fieldOfView = Mathf.Clamp(cameraHolder.GetComponentInChildren<Camera>().fieldOfView - (offset * speed), 10f, 85f);
 	}
 
@@ -202,10 +211,17 @@ public class SinglePlayer : ISP {
 
 		Vector3 offset = Camera.main.ScreenToViewportPoint(lastPanPosition - newPanPosition);
 		Vector3 move = new Vector3(offset.x * panSpeed, 0, 0);
+        if(offset == Vector3.zero) { return; }
         if(offset.x > 0 && cameraHolder.position.x < rightX) {
-    		cameraHolder.Translate(move, Space.World);  
+    		cameraHolder.Translate(move);  
         } else if(offset.x < 0 && cameraHolder.position.x > leftX) {
-	    	cameraHolder.Translate(move, Space.World);
+	    	cameraHolder.Translate(move);
+        }
+
+        if(offset.y > 0 && cameraHolder.position.z < maxForward) {
+            cameraHolder.Translate(new Vector3(0, 0, offset.y * panSpeed));
+        } else if(offset.y < 0 && cameraHolder.position.z > -35) {
+            cameraHolder.Translate(new Vector3(0, 0, offset.y * panSpeed));
         }
 
 		lastPanPosition = newPanPosition;

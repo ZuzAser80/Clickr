@@ -10,16 +10,16 @@ public class SetVolume : MonoBehaviour {
 
     [SerializeField] private Slider music;
     [SerializeField] private Slider effects;
+    [SerializeField] private Slider zoomSpeed;
 
     public void UpdateSlider() {
-        //Debug.Log(" : " + PlayerPrefs.GetFloat("MusicVolume") + " : " + PlayerPrefs.GetFloat("EffectVolume"));
         music.value = PlayerPrefs.GetFloat("MusicVolume", 1);
         effects.value = PlayerPrefs.GetFloat("EffectVolume", 1);
+        zoomSpeed.value = PlayerPrefs.GetFloat("ZoomSpeedMouse", 0);
     }
 
     public void SetLevelM (float sliderValue)
     {
-        //Debug.Log("SetLevelM");
         mixer.SetFloat("Music", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("MusicVolume", sliderValue);
         PlayerPrefs.Save();
@@ -27,9 +27,13 @@ public class SetVolume : MonoBehaviour {
 
     public void SetLevelE (float sliderValue)
     {
-        //Debug.Log("SetLevelE");
         mixer.SetFloat("Effect", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("EffectVolume", sliderValue);
+        PlayerPrefs.Save();
+    }
+
+    public void SetSens (float sliderValue) {
+        PlayerPrefs.SetFloat("ZoomSpeedMouse", sliderValue);
         PlayerPrefs.Save();
     }
 }
