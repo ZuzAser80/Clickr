@@ -52,8 +52,8 @@ public class ProjectileConfig : NetworkBehaviour
     }
 
     [Server]
-    public void StartM(ISP player, Vector3 startVelocity) {
-        _startVelocity = startVelocity;
+    public void StartM(ISP player, Vector3 startVelocity, float speed) {
+        _startVelocity = startVelocity * speed;
         singleOwner = player;
         StartCoroutine(startMove());
     }

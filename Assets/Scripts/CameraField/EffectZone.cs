@@ -21,10 +21,16 @@ public class EffectZone : NetworkBehaviour {
                 _.owner.AddOne();
             }
         } else {
+            if(_.singleOwner.GetType() == typeof(SinglePlayer)) { ((SinglePlayer)_.singleOwner).AddC(); }
+            if(number == 18) {
+                _.singleOwner.SpawnUnit(0); 
+                _.singleOwner.SpawnUnit(0); 
+                _.singleOwner.SpawnUnit(0); 
+                _.singleOwner.SpawnUnit(0); 
+                return;
+            }
             if(number % 2 == 0) {
                 _.singleOwner.SpawnUnit((int)number / 2); 
-            } else {
-                _.singleOwner.AddOne();
             }
         }
     }

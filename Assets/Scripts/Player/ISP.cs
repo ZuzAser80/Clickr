@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class ISP : NetworkBehaviour {
 
     [SyncVar] public Color color;
-    [SyncVar] public int count;
+    [SyncVar] public int count = 0;
     [SyncVar] public float timer;
     [SyncVar] public float enemyTimer;
     [SyncVar] public float baseHp;
@@ -27,6 +27,7 @@ public abstract class ISP : NetworkBehaviour {
     public Transform spawnPoint;
     protected ISP  _enemy;
     protected PathwalkingUnit baseUnit;
+    protected float proj_speed = 1f;
 
     public void SetEnemy(ISP _) { _enemy = _; }
 
@@ -78,7 +79,7 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public virtual void CmdClick() {
-        FindObjectOfType<Cannon>().Shoot(config, ref count,  this);
+        FindObjectOfType<Cannon>().Shoot(config, this, proj_speed);
     }
 
     #region RPCs

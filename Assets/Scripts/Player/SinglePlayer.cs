@@ -34,6 +34,8 @@ public class SinglePlayer : ISP {
 	private bool zoomActive;
     private bool panActive;
 	private Vector3 lastPanPosition;
+    private float nig = 0;
+    private int c = 10;
 
     public Material material;
 
@@ -54,6 +56,14 @@ public class SinglePlayer : ISP {
     [Command]
     public override void CmdClick()
     {
+        if(nig < 0.3f || c == 0) { return; }
+        nig = 0;
+        c -= 1;
+        if (proj_speed <= 0.5f) {
+            proj_speed = 1;
+        } else {
+            proj_speed -= 0.05f;
+        }
         if(count < 1) {
             count = 1;
             PutOnCooldown();
@@ -61,10 +71,10 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
-        if(UnityEngine.Random.Range(0f, 1f) > 0.5f) {
-            FindObjectOfType<AI>().AddOne();
-            FindObjectOfType<AI>().CmdClick();
-        }
+        // if(UnityEngine.Random.Range(0f, 1f) > 0.5f) {
+        //     FindObjectOfType<AI>().AddOne();
+        //     FindObjectOfType<AI>().CmdClick();
+        // }
     }
 
     public IEnumerator tryShoot(float seconds) {
@@ -139,6 +149,10 @@ public class SinglePlayer : ISP {
 
     } 
 
+    public void AddC() {
+        c++;
+    }
+
     #region Commands
 
     public virtual void CmdUpdateUI() {
@@ -159,8 +173,9 @@ public class SinglePlayer : ISP {
     private void Update() {
         if(!isLocalPlayer || Time.timeScale == 0) { return; }
         UpdateEnemyTimer();
+        nig += Time.deltaTime;
         CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, (count + localCount));
+        _reciever.UpdateUIRpc(timer, enemyTimer, c);
         if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
             CmdClick();
