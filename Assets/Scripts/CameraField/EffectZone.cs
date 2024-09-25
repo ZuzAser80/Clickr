@@ -21,7 +21,7 @@ public class EffectZone : NetworkBehaviour {
                 _.owner.AddOne();
             }
         } else {
-            if(_.singleOwner.GetType() == typeof(SinglePlayer)) { ((SinglePlayer)_.singleOwner).AddC(); }
+            _.singleOwner.AddC();
             if(number == 18) {
                 _.singleOwner.SpawnUnit(0); 
                 _.singleOwner.SpawnUnit(0); 
