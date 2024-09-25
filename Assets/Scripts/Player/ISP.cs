@@ -28,6 +28,11 @@ public abstract class ISP : NetworkBehaviour {
     protected ISP  _enemy;
     protected PathwalkingUnit baseUnit;
     protected float proj_speed = 1f;
+    protected int c = 10;
+
+    public void AddC() {
+        c++;
+    }
 
     public void SetEnemy(ISP _) { _enemy = _; }
 

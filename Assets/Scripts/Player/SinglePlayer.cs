@@ -35,7 +35,6 @@ public class SinglePlayer : ISP {
     private bool panActive;
 	private Vector3 lastPanPosition;
     private float nig = 0;
-    private int c = 10;
 
     public Material material;
 
@@ -71,10 +70,10 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
-        // if(UnityEngine.Random.Range(0f, 1f) > 0.5f) {
-        //     FindObjectOfType<AI>().AddOne();
-        //     FindObjectOfType<AI>().CmdClick();
-        // }
+        if(UnityEngine.Random.Range(0f, 1f) > 0.75f) {
+            FindObjectOfType<AI>().AddOne();
+            FindObjectOfType<AI>().CmdClick();
+        }
     }
 
     public IEnumerator tryShoot(float seconds) {
@@ -148,10 +147,6 @@ public class SinglePlayer : ISP {
         PutOnCooldown();
 
     } 
-
-    public void AddC() {
-        c++;
-    }
 
     #region Commands
 

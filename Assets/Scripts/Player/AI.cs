@@ -13,7 +13,7 @@ public class AI : ISP {
             delegate { timer += MathF.Round(Time.deltaTime / 4f, 3); },
             4f
         ));
-        StartCoroutine(tryShoot(4f + m));
+        StartCoroutine(tryShoot(1f + m));
     }
 
     public override void OnStartAuthority()
@@ -34,6 +34,7 @@ public class AI : ISP {
 
     public IEnumerator tryShoot(float seconds) {
         //if(isOnCooldown) {seconds += 5;}
+        if(c == 0) { StartCoroutine(tryShoot(seconds)); yield return null; }
         yield return new WaitForSeconds(seconds);
         CmdClick();
         StartCoroutine(tryShoot(seconds));
