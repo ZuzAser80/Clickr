@@ -6,6 +6,7 @@ using UnityEngine;
 public class AI : ISP {
 
     private float m = 0;
+    private float n = 0;
 
     public void PutOnCooldown() {
         StartCoroutine(wait(
@@ -13,7 +14,7 @@ public class AI : ISP {
             delegate { timer += MathF.Round(Time.deltaTime / 4f, 3); },
             4f
         ));
-        StartCoroutine(tryShoot(1f + m));
+        StartCoroutine(tryShoot(2f + m));
     }
 
     public override void OnStartAuthority()
@@ -32,8 +33,14 @@ public class AI : ISP {
         StartCoroutine(addMore());
     }
 
+    public override void CmdClick()
+    {
+        if(n < 2f) { return; }
+        n = 0;
+        base.CmdClick();
+    }
+
     public IEnumerator tryShoot(float seconds) {
-        //if(isOnCooldown) {seconds += 5;}
         if(c == 0) { StartCoroutine(tryShoot(seconds)); yield return null; }
         yield return new WaitForSeconds(seconds);
         CmdClick();
@@ -47,5 +54,9 @@ public class AI : ISP {
             i += Time.deltaTime;
         }
         action?.Invoke();
+    }
+
+    private void Update() {
+        n+=Time.deltaTime;
     }
 }

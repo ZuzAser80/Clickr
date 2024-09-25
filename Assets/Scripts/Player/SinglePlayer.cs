@@ -71,7 +71,7 @@ public class SinglePlayer : ISP {
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
         if(UnityEngine.Random.Range(0f, 1f) > 0.75f) {
-            FindObjectOfType<AI>().AddOne();
+            //FindObjectOfType<AI>().AddOne();
             FindObjectOfType<AI>().CmdClick();
         }
     }

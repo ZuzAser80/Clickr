@@ -84,7 +84,7 @@ public abstract class ISP : NetworkBehaviour {
 
     [Command]
     public virtual void CmdClick() {
-        if(c==0) {return;}
+        if(c<0) {return;}
         FindObjectOfType<Cannon>().Shoot(config, this, proj_speed);
     }
 
