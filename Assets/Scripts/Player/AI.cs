@@ -14,7 +14,7 @@ public class AI : ISP {
             delegate { timer += MathF.Round(Time.deltaTime / 4f, 3); },
             4f
         ));
-        StartCoroutine(tryShoot(2f + m));
+        StartCoroutine(tryShoot(2.5f + m));
     }
 
     public override void OnStartAuthority()
@@ -35,6 +35,8 @@ public class AI : ISP {
 
     public override void CmdClick()
     {
+        if(n < 2) { return; }
+        n = 0;
         base.CmdClick();
     }
 
