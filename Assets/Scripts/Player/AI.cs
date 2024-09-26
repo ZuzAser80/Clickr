@@ -35,15 +35,14 @@ public class AI : ISP {
 
     public override void CmdClick()
     {
-        if(n < 2f) { return; }
-        n = 0;
         base.CmdClick();
     }
 
     public IEnumerator tryShoot(float seconds) {
-        if(c == 0) { StartCoroutine(tryShoot(seconds)); yield return null; }
+        if(c == 0) { StopCoroutine(tryShoot(seconds)); StartCoroutine(tryShoot(seconds)); yield return null; }
         yield return new WaitForSeconds(seconds);
         CmdClick();
+        StopCoroutine(tryShoot(seconds));
         StartCoroutine(tryShoot(seconds));
     }
 
