@@ -8,6 +8,10 @@ public class AbstractMover : MonoBehaviour {
     [SerializeField] private List<MoverNode> nodes = new List<MoverNode>();
     [SerializeField] private bool startAwake = true;
 
+    [SerializeField] private bool rotateConstantly = false;
+    [SerializeField] private float rotationSpeed = 1f;
+    [SerializeField] private int rotationDir = 1;
+
     public Action StartMoving;
     private Vector3 _i;
 
@@ -16,13 +20,18 @@ public class AbstractMover : MonoBehaviour {
     }
 
     private void Start() {
-        if(startAwake) { StartCoroutine(moveList(nodes)); }
+        if(startAwake && nodes.Count > 0) { StartCoroutine(moveList(nodes)); }
     }
 
     private IEnumerator moveList(List<MoverNode> nodes) {
         foreach(var node in nodes) {
             yield return move(node);
         }
+    }
+
+    private void Update() {
+        if(!rotateConstantly || Time.timeScale == 0) { return; }
+        transform.eulerAngles = transform.eulerAngles + new Vector3(0, 0, rotationDir * rotationSpeed);
     }
 
     private IEnumerator move(MoverNode target) {
@@ -45,6 +54,7 @@ public class AbstractMover : MonoBehaviour {
 [Serializable]
 public class MoverNode {
     public Vector2 Pos;
+    public Quaternion Rotation;
     public float CooldownOnReached;
     [Header("Скорость")]
     public float MoveSpeed = 1;
