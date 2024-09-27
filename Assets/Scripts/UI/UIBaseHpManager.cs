@@ -33,7 +33,11 @@ public class UIBaseHpManager : NetworkBehaviour {
         textRed.text = hp.ToString();
         fillBlue.fillAmount = MathF.Round(enemyHp/maxHp, 2);
         textBlue.text = enemyHp.ToString();
-        tmp.ForEach(x => x.text = (maxReq[tmp.IndexOf(x)] - curReq[tmp.IndexOf(x)]).ToString());
+        tmp.ForEach(x => {
+            if(x != null && maxReq.Count >= tmp.IndexOf(x) && curReq.Count >= tmp.IndexOf(x)) { 
+                x.text = (maxReq[tmp.IndexOf(x)] - curReq[tmp.IndexOf(x)]).ToString();
+            }
+        });
     }
 
     public void Win() {
