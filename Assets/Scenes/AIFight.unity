@@ -1133,7 +1133,7 @@ MonoBehaviour:
   - Pos: {x: 0, y: 33}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     CooldownOnReached: 0
-    MoveSpeed: 0.01
+    MoveSpeed: 0.1
   startAwake: 1
   rotateConstantly: 0
   rotationSpeed: 1
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   nodes: []
   startAwake: 1
   rotateConstantly: 1
-  rotationSpeed: 1
+  rotationSpeed: 0.8
   rotationDir: 1
 --- !u!61 &238379778
 BoxCollider2D:
@@ -4914,7 +4914,7 @@ MonoBehaviour:
   nodes: []
   startAwake: 1
   rotateConstantly: 1
-  rotationSpeed: 1
+  rotationSpeed: 0.8
   rotationDir: -1
 --- !u!61 &1020407108
 BoxCollider2D:
