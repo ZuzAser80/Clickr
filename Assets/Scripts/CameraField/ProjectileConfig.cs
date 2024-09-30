@@ -53,6 +53,7 @@ public class ProjectileConfig : NetworkBehaviour
 
     [Server]
     public void StartM(ISP player, Vector3 startVelocity, float speed) {
+        //Debug.Log(player + " :: " + speed);
         _startVelocity = startVelocity * speed;
         singleOwner = player;
         StartCoroutine(startMove());

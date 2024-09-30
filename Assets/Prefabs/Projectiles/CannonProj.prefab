@@ -275,7 +275,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  StartSpeed: 20
+  StartSpeed: 15
   Lifetime: 10
   Explode: 1
   ExplosionRadius: 5
