@@ -15,10 +15,10 @@ public class UnitExplosion : MonoBehaviour {
     }
 
     private IEnumerator clr() {
-        if(a < -50) { sys.Play(); if(sys.isPlaying) { Destroy(this); yield return null; }}
+        if(a < -50) { if(!sys.isPlaying) {sys.Play();} else { Destroy(this, 2); yield return null; }}
         GetComponent<Renderer>().material.color = new Color(255, 255, 255, a);
         a -= 25f;
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(1f);
         StartCoroutine(clr());
     }
 }
