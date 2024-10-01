@@ -35,6 +35,8 @@ public class AI : ISP {
 
     public override void CmdClick()
     {
+        if(n < .15f) { return; }
+        n = 0;
         base.CmdClick();
     }
 
