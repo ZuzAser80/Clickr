@@ -11,6 +11,7 @@ namespace Assets.Scripts.Unit {
         public float ExplosionRadius;
         public float Damage;
         public GameObject explosion;
+        public float ArmCooldown = 0.05f;
         [SerializeField] private AudioClip explos;
 
         private AudioSource source;
@@ -28,7 +29,7 @@ namespace Assets.Scripts.Unit {
 
         [ServerCallback]
         private void OnDestroy() {
-            if(Explode && c > 1) { 
+            if(Explode && c > ArmCooldown) { 
                 if(explosion != null) {
                     explosion.GetComponent<UnitExplosion>().rad = (int)ExplosionRadius;
                     var r = Instantiate(explosion, transform.position, Quaternion.identity);
