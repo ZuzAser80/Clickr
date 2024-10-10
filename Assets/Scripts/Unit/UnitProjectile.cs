@@ -34,7 +34,7 @@ namespace Assets.Scripts.Unit {
                     explosion.GetComponent<UnitExplosion>().rad = (int)ExplosionRadius;
                     var r = Instantiate(explosion, transform.position, Quaternion.identity);
                     source.PlayOneShot(explos);
-                    Destroy(r, 0.5f);
+                    Destroy(r, 0.25f);
                     NetworkServer.Spawn(r);
                 }
                 Physics.OverlapSphereNonAlloc(transform.position, ExplosionRadius, res);
