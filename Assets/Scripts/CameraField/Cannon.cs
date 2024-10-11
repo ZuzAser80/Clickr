@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
 public class Cannon : NetworkBehaviour {
+
     [SerializeField] private Vector3 upperAngle;
     [SerializeField] private Vector3 lowerAngle;
     [SerializeField] private float RotationSpeed = 1f;
+    [SerializeField] private List<GameObject> mags = new List<GameObject>();   
 
     private Vector3 _current;
 
@@ -14,9 +17,11 @@ public class Cannon : NetworkBehaviour {
     private ProjectileConfig _p;
     private Vector3 _dir;
     private float _;
+    [SerializeField] private Animator animator;
 
     private void Awake() {
         _current = upperAngle;
+        //animator = GetComponent<Animator>();
     }
 
     #region Rotation
@@ -54,8 +59,13 @@ public class Cannon : NetworkBehaviour {
     }
 
     public void Shoot(GameObject config, ISP player, float speed) {
-        ShootInDir(transform.right, 0, config, player, speed);        
+        if (player.GetType() != typeof(AI)) { animator.SetTrigger("Shot"); }
+        
+        StartCoroutine(c(0.25f, config, player, speed));
     }
+
+
+    private IEnumerator c(float wait, GameObject config, ISP player, float speed) { yield return new WaitForSeconds(wait); ShootInDir(transform.right, 0, config, player, speed); }
 
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, ISP player, float speed) {
         _g = Instantiate(config, transform.position + transform.forward, Quaternion.identity);
@@ -64,6 +74,13 @@ public class Cannon : NetworkBehaviour {
         _p.StartM(player, _dir, speed);
         _p.color = player.color;
         NetworkServer.Spawn(_g);
+    }
+
+    public void SetCountInMag(int c) {
+        mags.ForEach(x => x.SetActive(false));
+        for (int i = 0; i < c; i++) {
+            mags[i].SetActive(true);
+        }
     }
 
     private void SwitchCurrent() { _current = _current == upperAngle ? lowerAngle : upperAngle; }
