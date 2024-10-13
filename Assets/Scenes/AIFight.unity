@@ -2274,6 +2274,14 @@ PrefabInstance:
       value: Circle
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.16
       objectReference: {fileID: 0}
@@ -2370,10 +2378,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &452838238
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,6 +2659,14 @@ PrefabInstance:
       value: Circle (9)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.14
       objectReference: {fileID: 0}
@@ -2747,10 +2763,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1001 &560214263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,6 +2778,14 @@ PrefabInstance:
     - target: {fileID: 1918642128098246877, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_Name
       value: Circle (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2860,10 +2884,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &595761413
 GameObject:
   m_ObjectHideFlags: 0
@@ -5755,6 +5779,14 @@ PrefabInstance:
       value: Circle (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.16
       objectReference: {fileID: 0}
@@ -5851,10 +5883,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1036920313
 GameObject:
   m_ObjectHideFlags: 0
@@ -6822,6 +6854,14 @@ PrefabInstance:
       value: Circle (5)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.119995
       objectReference: {fileID: 0}
@@ -6918,10 +6958,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1194644267
 GameObject:
   m_ObjectHideFlags: 0
@@ -7312,6 +7352,14 @@ PrefabInstance:
       value: Circle (8)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.04
       objectReference: {fileID: 0}
@@ -7408,10 +7456,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1218673857
 GameObject:
   m_ObjectHideFlags: 0
@@ -7643,6 +7691,14 @@ PrefabInstance:
       value: Circle (7)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.16
       objectReference: {fileID: 0}
@@ -7739,10 +7795,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1281561510
 GameObject:
   m_ObjectHideFlags: 0
@@ -8622,16 +8678,16 @@ MonoBehaviour:
   lowerAngle: {x: 3, y: 3, z: 0}
   RotationSpeed: 1
   mags:
-  - {fileID: 434512270}
-  - {fileID: 1027295853}
-  - {fileID: 560214265}
-  - {fileID: 1857308089}
-  - {fileID: 2058244317}
-  - {fileID: 1189823775}
   - {fileID: 1751449443}
-  - {fileID: 1265368239}
-  - {fileID: 1218350321}
+  - {fileID: 1189823775}
+  - {fileID: 2058244317}
   - {fileID: 454469352}
+  - {fileID: 1218350321}
+  - {fileID: 1265368239}
+  - {fileID: 1027295853}
+  - {fileID: 1857308089}
+  - {fileID: 560214265}
+  - {fileID: 434512270}
   animator: {fileID: 1802638325}
 --- !u!1 &1435429100
 GameObject:
@@ -10392,6 +10448,14 @@ PrefabInstance:
       value: Circle (6)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.119995
       objectReference: {fileID: 0}
@@ -10488,10 +10552,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1768850928
 GameObject:
   m_ObjectHideFlags: 0
@@ -10582,11 +10646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalScale.z
@@ -11099,6 +11163,14 @@ PrefabInstance:
       value: Circle (3)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.16
       objectReference: {fileID: 0}
@@ -11195,10 +11267,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &1936609477
 GameObject:
   m_ObjectHideFlags: 0
@@ -11967,6 +12039,14 @@ PrefabInstance:
       value: Circle (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3658308012422633124, guid: eb8207025ee9546a8bb908aef59f89a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.17
       objectReference: {fileID: 0}
@@ -12063,10 +12143,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!1 &2065519591
 GameObject:
   m_ObjectHideFlags: 0

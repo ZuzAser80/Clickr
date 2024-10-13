@@ -45,7 +45,7 @@ public class SinglePlayer : ISP {
     #region Timer + count
     private void PutOnCooldown() {
         StartCoroutine(wait(
-            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; } StopAllCoroutines(); PutOnCooldown(); }, 
+            delegate { timer = 0; if(count < 1) { count += localCount + 1; localCount = 0; FindObjectOfType<Cannon>().SetCountInMag(c); } StopAllCoroutines(); PutOnCooldown(); }, 
             delegate { timer += MathF.Round(Time.deltaTime / 4f, 3); },
             4f
         ));
@@ -67,6 +67,7 @@ public class SinglePlayer : ISP {
             count = 1;
             PutOnCooldown();
         }
+        FindObjectOfType<Cannon>().SetCountInMag(c);
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
