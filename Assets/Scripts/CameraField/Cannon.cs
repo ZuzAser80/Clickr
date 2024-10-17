@@ -10,6 +10,7 @@ public class Cannon : NetworkBehaviour {
     [SerializeField] private Vector3 lowerAngle;
     [SerializeField] private float RotationSpeed = 1f;
     [SerializeField] private List<GameObject> mags = new List<GameObject>();   
+    [SerializeField] private Transform magSpawn;
 
     private Vector3 _current;
 
@@ -79,6 +80,7 @@ public class Cannon : NetworkBehaviour {
     public void SetCountInMag(int c) {
         mags.ForEach(x => x.SetActive(false));
         for (int i = 0; i < c; i++) {
+            //mags[i].transform.position = magSpawn.position;
             mags[i].SetActive(true);
         }
     }
