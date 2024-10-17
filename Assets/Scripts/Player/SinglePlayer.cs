@@ -55,6 +55,7 @@ public class SinglePlayer : ISP {
     [Command]
     public override void CmdClick()
     {
+        Debug.Log("0");
         if(nig < 0.3f || c == 0) { return; }
         nig = 0;
         c -= 1;
