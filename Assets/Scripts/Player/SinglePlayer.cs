@@ -55,8 +55,7 @@ public class SinglePlayer : ISP {
     [Command]
     public override void CmdClick()
     {
-        Debug.Log("0");
-        if(nig < 0.3f || c == 0) { return; }
+        if(nig < 0.5f || c == 0) { return; }
         nig = 0;
         c -= 1;
         if (proj_speed <= 0.5f) {
@@ -166,6 +165,15 @@ public class SinglePlayer : ISP {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
     }
 
+    public void Alternate0(RectTransform rt) {
+        rt.anchoredPosition = new Vector2(rt.anchoredPosition.x == 0 ? 354.5505f : 0, rt.anchoredPosition.y);
+    }
+
+    public void Alternate1(RectTransform rt) {
+        FindObjectOfType<UIBaseHpManager>().UpdateHp();
+        rt.anchoredPosition = new Vector2(rt.anchoredPosition.x == 150 ? 822.1f : 150, rt.anchoredPosition.y);
+    }
+
     private void Update() {
         if(!isLocalPlayer || Time.timeScale == 0) { return; }
         UpdateEnemyTimer();
@@ -177,16 +185,18 @@ public class SinglePlayer : ISP {
             CmdClick();
         }
         // Camera rotation
-        if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {
-            cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
-        } else if(Input.GetAxis("Horizontal") < 0 && cameraHolder.position.x > leftX) {
-            cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
-        }
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
+            if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {
+                cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+            } else if(Input.GetAxis("Horizontal") < 0 && cameraHolder.position.x > leftX) {
+                cameraHolder.position = new Vector3(cameraHolder.position.x + Input.GetAxis("Horizontal") * cameraSpeed * Time.deltaTime, cameraHolder.position.y, cameraHolder.position.z);
+            }
 
-        if(Input.GetAxis("Vertical") > 0 && cameraHolder.position.z < maxForward) {
-            cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
-        } else if(Input.GetAxis("Vertical") < 0 && cameraHolder.position.z > -35) {
-            cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
+            if(Input.GetAxis("Vertical") > 0 && cameraHolder.position.z < maxForward) {
+                cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
+            } else if(Input.GetAxis("Vertical") < 0 && cameraHolder.position.z > -35) {
+                cameraHolder.position = new Vector3(cameraHolder.position.x, cameraHolder.position.y, cameraHolder.position.z + Input.GetAxis("Vertical") * cameraSpeed * Time.deltaTime);
+            }
         }
         
         if (Input.GetMouseButtonDown(0)) {

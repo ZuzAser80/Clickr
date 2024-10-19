@@ -15,6 +15,7 @@ public class UIBaseHpManager : NetworkBehaviour {
 
     [SerializeField] private GameObject onWinPanel;
     [SerializeField] private GameObject onLosePanel;
+    [SerializeField] private RectTransform hpParent;
     [SerializeField] private List<TextMeshProUGUI> tmp = new List<TextMeshProUGUI>();
 
     [ClientRpc]
@@ -39,6 +40,8 @@ public class UIBaseHpManager : NetworkBehaviour {
             }
         });
     }
+
+    public void UpdateHp() => hpParent.anchoredPosition = new Vector2(hpParent.anchoredPosition.x == 352 ? 0 : 352, hpParent.anchoredPosition.y);
 
     public void Win() {
         FindObjectOfType<SinglePlayer>().WinCmd();
