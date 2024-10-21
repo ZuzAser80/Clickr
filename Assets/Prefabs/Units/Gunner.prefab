@@ -302,7 +302,7 @@ MonoBehaviour:
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   detector: {fileID: 4531411291050978115}
-  fireClip: {fileID: 8300000, guid: 7a46f23125ffd406483cff19c29ae529, type: 3}
+  fireClip: {fileID: 8300000, guid: a82e0e902f5ec4e129792c6c6b2fd033, type: 3}
   onDeathClip: {fileID: 0}
   _currentHealth: 0
   old: {r: 0, g: 0, b: 0, a: 0}

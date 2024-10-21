@@ -71,7 +71,7 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
-        if(UnityEngine.Random.Range(0f, 1f) > 0.25f) {
+        if(UnityEngine.Random.Range(0f, 1f) > 0.6f) {
             FindObjectOfType<AI>().CmdClick();
         }
     }
@@ -220,7 +220,7 @@ public class SinglePlayer : ISP {
 			return;
 		}
 
-        ZoomSpeedMouse = PlayerPrefs.GetFloat("ZoomSpeedMouse") + 0.5f;
+        ZoomSpeedMouse = (PlayerPrefs.GetFloat("ZoomSpeedMouse") + 0.5f) * 4;
 
 		cameraHolder.GetComponentInChildren<Camera>().fieldOfView = Mathf.Clamp(cameraHolder.GetComponentInChildren<Camera>().fieldOfView - (offset * speed), 10f, 85f);
 	}

@@ -163,7 +163,7 @@ MonoBehaviour:
     side: {r: 0, g: 0, b: 0, a: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   detector: {fileID: 4531411291050978115}
-  fireClip: {fileID: 8300000, guid: 0c110f3329ca7464fbd3671b579ff3ba, type: 3}
+  fireClip: {fileID: 8300000, guid: 2ed93f9b794144e1f821d8b8ca50b939, type: 3}
   onDeathClip: {fileID: 0}
   _currentHealth: 0
   old: {r: 0, g: 0, b: 0, a: 0}
@@ -223,8 +223,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5831419042788286770, guid: b019ac85539824216a6f479e239d0436, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.545
+  m_PlayOnAwake: 0
+  m_Volume: 0.49
   m_Pitch: 0.28
   Loop: 0
   Mute: 0
