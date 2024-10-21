@@ -26,7 +26,7 @@ public class BattleFieldSpawn : NetworkBehaviour {
 
     [Server]
     public void Spawn(ISP owner, PathwalkingUnit unit) {
-        cache = Instantiate(unit, owner.spawnPoint.position + Vector3.forward * Random.Range(-15, 23), Quaternion.identity);
+        cache = Instantiate(unit, owner.spawnPoint.position + Vector3.forward * Random.Range(-20, 20), Quaternion.identity);
         cache.color = owner.color;
         NetworkServer.Spawn(cache.gameObject, owner.gameObject);
         cache.StartPathfindRpc(owner.GetEnemyBasePos()+ Vector3.forward * Random.Range(-5, 30));
