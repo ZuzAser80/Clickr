@@ -13,7 +13,7 @@ public class ButtonR : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tr.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+        tr.localScale = new Vector3(1.1f, 1.1f, 1.1f);
     }
 
     public void OnPointerExit(PointerEventData eventData)

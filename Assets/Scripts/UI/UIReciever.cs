@@ -14,11 +14,9 @@ namespace Assets.Scripts.UI {
         [SerializeField] private Button _button;
 
         [Client]
-        public void UpdateUIRpc(float fillOwn, float filleEnemy, int ownCount) {
+        public void UpdateUIRpc(float fillOwn, float filleEnemy) {
             _fillOwn.fillAmount = fillOwn;
             _fillEnemy.fillAmount = filleEnemy;
-            _countText.text = ownCount.ToString();
-
         }   
 
     }

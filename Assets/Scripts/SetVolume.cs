@@ -33,7 +33,7 @@ public class SetVolume : MonoBehaviour {
     }
 
     public void SetSens (float sliderValue) {
-        PlayerPrefs.SetFloat("ZoomSpeedMouse", sliderValue);
+        PlayerPrefs.SetFloat("ZoomSpeedMouse", sliderValue * 2);
         PlayerPrefs.Save();
     }
 }

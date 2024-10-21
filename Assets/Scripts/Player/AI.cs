@@ -42,11 +42,6 @@ public class AI : ISP {
         base.CmdClick();
     }
 
-    // public void tryCmdClick() {
-    //     if(n < 2f) { return; }
-    //     n = 0;
-    //     CmdClick();
-    // }
 
     public IEnumerator tryShoot(float seconds) {
         if(c == 0) { StopCoroutine("tryShoot"); StartCoroutine("tryShoot", 2f + m); yield return null; }

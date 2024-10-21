@@ -13,7 +13,7 @@ public class BattleFieldSpawn : NetworkBehaviour {
         cache = Instantiate(unit, owner.spawnPoint.position, Quaternion.identity);
         cache.color = owner.color;
         NetworkServer.Spawn(cache.gameObject, owner.gameObject);
-        cache.StartPathfindRpc(owner.GetEnemyBasePos() + Vector3.forward * Random.Range(-15, 30));
+        cache.StartPathfindRpc(owner.GetEnemyBasePos() + Vector3.forward * Random.Range(-5, 30));
     }
 
     [ServerCallback]
@@ -26,10 +26,10 @@ public class BattleFieldSpawn : NetworkBehaviour {
 
     [Server]
     public void Spawn(ISP owner, PathwalkingUnit unit) {
-        cache = Instantiate(unit, owner.spawnPoint.position + Vector3.forward * Random.Range(-5, 30), Quaternion.identity);
+        cache = Instantiate(unit, owner.spawnPoint.position + Vector3.forward * Random.Range(-12, 30), Quaternion.identity);
         cache.color = owner.color;
         NetworkServer.Spawn(cache.gameObject, owner.gameObject);
-        cache.StartPathfindRpc(owner.GetEnemyBasePos()+ Vector3.forward * Random.Range(-15, 30));
+        cache.StartPathfindRpc(owner.GetEnemyBasePos()+ Vector3.forward * Random.Range(-5, 30));
     }
 
     [ServerCallback]

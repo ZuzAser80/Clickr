@@ -16,7 +16,6 @@ public class SinglePlayer : ISP {
     [SerializeField] private GameObject ui;
     [SerializeField] private Transform _camera;
     [SerializeField] private Transform cameraHolder;
-    [SerializeField] private float lookSpeed = 2f;
     [SerializeField] private float panSpeed = 20f;
     [SerializeField] private float cameraSpeed = 2.5f;
     [SerializeField] private AudioClip click;
@@ -30,6 +29,7 @@ public class SinglePlayer : ISP {
     [SerializeField] private Button button;
     [SerializeField] private GameObject plusOne;
 	[SerializeField] private float ZoomSpeedMouse = .5f;
+    [SerializeField] private Button pause;
 
 	private bool zoomActive;
     private bool panActive;
@@ -175,11 +175,14 @@ public class SinglePlayer : ISP {
     }
 
     private void Update() {
+        if(Input.GetKeyDown(KeyCode.Escape)) {
+            pause.onClick?.Invoke();
+        }
         if(!isLocalPlayer || Time.timeScale == 0) { return; }
         UpdateEnemyTimer();
         nig += Time.deltaTime;
         CmdUpdateUI();
-        _reciever.UpdateUIRpc(timer, enemyTimer, c);
+        _reciever.UpdateUIRpc(timer, enemyTimer);
         if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
             CmdClick();
