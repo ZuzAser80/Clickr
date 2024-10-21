@@ -33,7 +33,7 @@ namespace Assets.Scripts.Unit {
         private Material oldMat;
         private Renderer _renderer;
         private AudioSource source;
-        
+        private Vector3 obj;
 
         private Collider[] res = new Collider[]{};
 
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Unit {
             _currentEnemy = unit;
             StopRpc();
             _currentEnemy.onDeath += delegate { 
-                if(this == null) { return; }
+                if(this == null || gameObject == null) { return; }
                 ContinueRpc();
                 _currentEnemy = null;
             };
@@ -88,20 +88,23 @@ namespace Assets.Scripts.Unit {
         }
 
         [ClientRpc]
-        public virtual void StartPathfindRpc(Vector3 objective) { if(_navMeshAgent == null) { return; } _navMeshAgent.SetDestination(objective); }
+        public virtual void StartPathfindRpc(Vector3 objective) { if(_navMeshAgent == null) { return; } obj = objective; _navMeshAgent.SetDestination(objective); }
 
         public UnitProperties GetProperties() => _properties;
 
         [ClientRpc]
-        public void ContinueRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = false; }  }
+        public void ContinueRpc() { if(_navMeshAgent != null && this != null) { _navMeshAgent.ResetPath(); _navMeshAgent.isStopped = false; _navMeshAgent.SetDestination(obj); }  }
 
         [ClientRpc]
-        public void StopRpc() { if(_navMeshAgent != null) { _navMeshAgent.isStopped = true; }  }
+        public void StopRpc() { if(_navMeshAgent != null && this != null) { _navMeshAgent.isStopped = true; } else if(this == null) {DestroyImmediate(gameObject);} }
 
         public float GetHealth() { return _currentHealth; }
 
         private IEnumerator reload() {
             canShoot = false;
+            if (_currentEnemy == null) {
+                ContinueRpc();
+            }
             for(int i = 0; i < _properties.ProjectileCount; i++) {
                 ShootRpc(_currentEnemy);
                 yield return new WaitForSeconds(_properties.RPM);
@@ -135,12 +138,14 @@ namespace Assets.Scripts.Unit {
             yield return new WaitForSeconds(0.3f);
             color = old / 2;
             yield return new WaitForSeconds(0.2f);
-            Destroy(gameObject);
+            Destroy(gameObject, 1);
+            NetworkServer.Destroy(gameObject);
         }
 
         [ServerCallback]
         public virtual void Die() {
             if (onDeathClip != null && source != null) { source.PlayOneShot(onDeathClip); }
+            //StopRpc();
             onDeath?.Invoke();
             StartCoroutine(deathImpact());
         }

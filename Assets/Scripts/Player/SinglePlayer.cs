@@ -8,6 +8,7 @@ using Mirror;
 using Steamworks;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -90,7 +91,7 @@ public class SinglePlayer : ISP {
         SteamFace.instance.shouldShow = flag;
     }
 
-    public void Restart() { Debug.Log("Restart"); Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
+    public void Restart() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
 
     public void Quit() { Pause(); NetworkServer.Shutdown(); NetworkClient.Disconnect(); SceneManager.LoadScene(0); }
 
@@ -184,7 +185,10 @@ public class SinglePlayer : ISP {
         _reciever.UpdateUIRpc(timer, enemyTimer);
         if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
-            CmdClick();
+            // button.onClick.Invoke();
+            ExecuteEvents.Execute(button.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+            // button.OnPointerClick();
+            //CmdClick();
         }
         // Camera rotation
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
