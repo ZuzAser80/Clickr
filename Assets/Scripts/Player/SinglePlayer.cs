@@ -117,9 +117,8 @@ public class SinglePlayer : ISP {
         cameraHolder.gameObject.SetActive(true);
         base.OnStartAuthority();
         Pause();
-        if(SteamFace.instance.shouldShow) {
-            helpPanel.SetActive(true);
-        }
+        helpPanel.SetActive(!SteamFace.instance.shouldShow);
+        if(!helpPanel.activeSelf && SteamFace.instance.shouldShow) { Pause();}
         source.PlayOneShot(onStartGame);
     StartCoroutine(tryShoot(4f));
     }
