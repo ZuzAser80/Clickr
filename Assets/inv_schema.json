@@ -1,0 +1,61 @@
+{
+	"appid": 3202880,
+	"items": [
+	{
+		"itemdefid": 1001,
+		"type": "playtimegenerator",
+		"bundle": "101x85;102x14,6;103x0.39975;104x0,00025",
+		"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+		"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+		"tradable": false,
+		"marketable": false,
+        "drop_interval" : 180
+	},
+	{
+		"itemdefid": 110,
+        "bundle": "1101x8.33;1102x8.33;1103x8.33;1104x8.33;1105x8.33;1106x8.33;1107x8.33;1108x8.33;1109x8.33;1110x8.33;1111x8.33;1112x8.33",
+		"type":  "playtimegenerator",
+		"name": "Bronze Generator",
+		"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+		"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+		"tradable": false,
+		"marketable": false
+	},
+	{
+		"itemdefid": 100,
+		"type":  "item",
+		"name_english": "The Hammer",
+		"icon_url": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"icon_url_large": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"tradable": true,
+		"marketable": true
+	},
+    {
+		"itemdefid": 1102,
+		"type":  "item",
+		"name_english": "Red Hat",
+		"icon_url": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"icon_url_large": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"tradable": true,
+		"marketable": true
+	},
+    {
+		"itemdefid": 1103,
+		"type":  "item",
+		"name_english": "Red Hat",
+		"icon_url": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"icon_url_large": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"tradable": true,
+		"marketable": true
+	},
+    {
+		"itemdefid": 1104,
+		"type":  "item",
+		"name_english": "Red Hat",
+		"icon_url": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"icon_url_large": "https://drive.google.com/file/d/19BFSc6Dc6fm9u-5dfmnS1-1758LYA5YZ/view",
+		"tradable": true,
+		"marketable": true
+	}
+	]
+}

@@ -121,12 +121,12 @@ public class SinglePlayer : ISP {
         helpPanel.SetActive(!SteamFace.instance.shouldShow);
         if(!helpPanel.activeSelf && SteamFace.instance.shouldShow) { Pause();}
         source.PlayOneShot(onStartGame);
-    StartCoroutine(tryShoot(4f));
+        StartCoroutine(tryShoot(4f));
     }
 
     public override void WinCmd()
     {
-        SteamInventory.TriggerItemDropAsync(0);
+        SteamInventory.TriggerItemDropAsync(100);
         source.PlayOneShot(onWin);
         base.WinCmd();
     }
