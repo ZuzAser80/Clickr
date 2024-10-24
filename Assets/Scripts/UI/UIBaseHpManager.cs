@@ -62,13 +62,13 @@ public class UIBaseHpManager : NetworkBehaviour {
             textRed.color = redColors[0];
             alarm.gameObject.SetActive(true);
         } 
-        if (fillRed.fillAmount <= .5f) {    
+        else if (fillRed.fillAmount <= .5f) {    
             textRed.color = redColors[1];
         } 
         if (fillBlue.fillAmount <= .2f) {
             textBlue.color = blueColors[0];
         } 
-        if (fillBlue.fillAmount <= .5f) {    
+        else if (fillBlue.fillAmount <= .5f) {    
             textBlue.color = blueColors[1];
         }
         tmp.ForEach(x => {
@@ -77,6 +77,27 @@ public class UIBaseHpManager : NetworkBehaviour {
             }
         });
     }
+    
+    // {
+	// 	"itemdefid": 1001,
+	// 	"type": "playtimegenerator",
+	// 	"bundle": "101x85;102x14,6;103x0.39975;104x0,00025",
+	// 	"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+	// 	"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+	// 	"tradable": false,
+	// 	"marketable": false,
+    //     "drop_interval" : 180
+	// },
+	// {
+	// 	"itemdefid": 110,
+    //     "bundle": "1101x8.33;1102x8.33;1103x8.33;1104x8.33;1105x8.33;1106x8.33;1107x8.33;1108x8.33;1109x8.33;1110x8.33;1111x8.33;1112x8.33",
+	// 	"type":  "playtimegenerator",
+	// 	"name": "Bronze Generator",
+	// 	"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+	// 	"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
+	// 	"tradable": false,
+	// 	"marketable": false
+	// },
 
     public void UpdateHp() => hpParent.anchoredPosition = new Vector2(hpParent.anchoredPosition.x == 352 ? 0 : 352, hpParent.anchoredPosition.y);
 

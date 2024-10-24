@@ -30,7 +30,9 @@ public class SteamFace : MonoBehaviour
 
         try
         {
-            SteamClient.Init(3202880);
+            SteamClient.Init(3202880, true);
+            SteamInventory.LoadItemDefinitions();
+            SteamInventory.GetAllItemsAsync();
             Debug.Log(SteamClient.Name);
         }
         catch ( System.Exception e )
@@ -45,7 +47,7 @@ public class SteamFace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(instance != null) { return; }
+        // if(instance == null) { return; }
         SteamClient.RunCallbacks();
         // if(Input.GetKeyDown(KeyCode.X)) {
         //     Debug.Log(SteamInventory.Items);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.UI;
 using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
@@ -59,6 +60,7 @@ public class SinglePlayer : ISP {
         if(nig < 0.5f || c == 0) { return; }
         nig = 0;
         c -= 1;
+        FindObjectOfType<Cannon>().SetCountInMag(c);
         if (proj_speed <= 0.5f) {
             proj_speed = 1;
         } else {
@@ -68,7 +70,6 @@ public class SinglePlayer : ISP {
             count = 1;
             PutOnCooldown();
         }
-        FindObjectOfType<Cannon>().SetCountInMag(c);
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
@@ -126,7 +127,16 @@ public class SinglePlayer : ISP {
 
     public override void WinCmd()
     {
-        SteamInventory.TriggerItemDropAsync(100);
+        var r = UnityEngine.Random.Range(0f, 100f);
+        if(r < 0.00025f) {
+            SteamInventory.TriggerItemDropAsync(400);
+        } else if (r < 0.39975f) {
+            SteamInventory.TriggerItemDropAsync(300);
+        } else if (r < 14.60f) {
+            SteamInventory.TriggerItemDropAsync(200);
+        } else {
+            SteamInventory.TriggerItemDropAsync(100);
+        }
         source.PlayOneShot(onWin);
         base.WinCmd();
     }
@@ -185,11 +195,15 @@ public class SinglePlayer : ISP {
         _reciever.UpdateUIRpc(timer, enemyTimer);
         if(Input.GetKeyDown(KeyCode.Space)) {
             source.PlayOneShot(click);
-            // button.onClick.Invoke();
             ExecuteEvents.Execute(button.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
-            // button.OnPointerClick();
-            //CmdClick();
         }
+        // if(Input.GetKeyDown(KeyCode.F)) {
+        //     // SteamInventory.WaitForDefinitions();
+        //     // Debug.Log("TriggerItemDropAsync: " + SteamInventory.FindDefinition(100).Properties + " :  : ");
+        //     // SteamInventory.GenerateItemAsync(SteamInventory.FindDefinition(100), 1);
+        //     SteamInventory.TriggerItemDropAsync(100);
+        //     Debug.Log("0: " + SteamInventory.FindDefinition(100).Properties + " :  : ");
+        // }
         // Camera rotation
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
             if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {
