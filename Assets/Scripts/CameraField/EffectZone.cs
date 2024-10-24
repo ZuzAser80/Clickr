@@ -1,5 +1,6 @@
 using System;
 using Mirror;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,8 +30,12 @@ public class EffectZone : NetworkBehaviour {
                 _.singleOwner.SpawnUnit(0); 
                 return;
             }
+            if(number == 8 || number == 10) {
+                _.singleOwner.CmdSpawnUnitWIndex(4, number); 
+                return;
+            }
             if(number % 2 == 0) {
-                _.singleOwner.SpawnUnit((int)number / 2); 
+                _.singleOwner.SpawnUnit(number / 2); 
             }
         }
     }

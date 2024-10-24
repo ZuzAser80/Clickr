@@ -48,7 +48,7 @@ public class UIBaseHpManager : NetworkBehaviour {
     }
 
     private void Update() {
-        if (!alarm.gameObject.activeSelf) {return;}
+        if (!alarm.gameObject.activeSelf || Time.timeScale == 0) {return;}
         c.a = (Mathf.Sin(Time.time * 4) + 1.0f) / 2.0f;
         alarm.color = c; 
     }
@@ -58,46 +58,31 @@ public class UIBaseHpManager : NetworkBehaviour {
         textRed.text = hp.ToString();
         fillBlue.fillAmount = MathF.Round(enemyHp/maxHp, 2);
         textBlue.text = enemyHp.ToString();
-        if (fillRed.fillAmount <= .2f) {
+        if (fillRed.fillAmount <= .25f) {
             textRed.color = redColors[0];
             alarm.gameObject.SetActive(true);
         } 
         else if (fillRed.fillAmount <= .5f) {    
             textRed.color = redColors[1];
         } 
-        if (fillBlue.fillAmount <= .2f) {
+        if (fillBlue.fillAmount <= .25f) {
             textBlue.color = blueColors[0];
         } 
         else if (fillBlue.fillAmount <= .5f) {    
             textBlue.color = blueColors[1];
         }
-        tmp.ForEach(x => {
-            if(x != null && maxReq.Count >= tmp.IndexOf(x) && curReq.Count >= tmp.IndexOf(x)) { 
-                x.text = (maxReq[tmp.IndexOf(x)] - curReq[tmp.IndexOf(x)]).ToString();
+        for(int i = 0; i < tmp.Count; i++) {
+            if(tmp[i] != null) { 
+                tmp[i].text = (maxReq[i] - curReq[i]).ToString();
             }
-        });
+        }
+        // tmp.ForEach(x => {
+        //     if(x != null) { 
+        //         x.text = (maxReq[tmp.IndexOf(x)] - curReq[tmp.IndexOf(x)]).ToString();
+        //         Debug.Log(": " + tmp.IndexOf(x) + " : " + x.text);
+        //     }
+        // });
     }
-    
-    // {
-	// 	"itemdefid": 1001,
-	// 	"type": "playtimegenerator",
-	// 	"bundle": "101x85;102x14,6;103x0.39975;104x0,00025",
-	// 	"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
-	// 	"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
-	// 	"tradable": false,
-	// 	"marketable": false,
-    //     "drop_interval" : 180
-	// },
-	// {
-	// 	"itemdefid": 110,
-    //     "bundle": "1101x8.33;1102x8.33;1103x8.33;1104x8.33;1105x8.33;1106x8.33;1107x8.33;1108x8.33;1109x8.33;1110x8.33;1111x8.33;1112x8.33",
-	// 	"type":  "playtimegenerator",
-	// 	"name": "Bronze Generator",
-	// 	"icon_url": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
-	// 	"icon_url_large": "http://cdn.beta.steampowered.com/apps/440/icons/c_fireaxe_pyro_xmas_large.fa878752e1aa09a721a03042a234063b6c929278.png",
-	// 	"tradable": false,
-	// 	"marketable": false
-	// },
 
     public void UpdateHp() => hpParent.anchoredPosition = new Vector2(hpParent.anchoredPosition.x == 352 ? 0 : 352, hpParent.anchoredPosition.y);
 

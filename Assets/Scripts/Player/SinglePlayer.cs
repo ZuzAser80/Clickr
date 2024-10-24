@@ -73,7 +73,7 @@ public class SinglePlayer : ISP {
         base.CmdClick();
         var v = Instantiate(plusOne, button.transform);
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
-        if(UnityEngine.Random.Range(0f, 1f) > 0.5f) {
+        if(UnityEngine.Random.Range(0f, 1f) > 0.55f) {
             FindObjectOfType<AI>().CmdClick();
         }
     }
@@ -197,13 +197,7 @@ public class SinglePlayer : ISP {
             source.PlayOneShot(click);
             ExecuteEvents.Execute(button.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
         }
-        // if(Input.GetKeyDown(KeyCode.F)) {
-        //     // SteamInventory.WaitForDefinitions();
-        //     // Debug.Log("TriggerItemDropAsync: " + SteamInventory.FindDefinition(100).Properties + " :  : ");
-        //     // SteamInventory.GenerateItemAsync(SteamInventory.FindDefinition(100), 1);
-        //     SteamInventory.TriggerItemDropAsync(100);
-        //     Debug.Log("0: " + SteamInventory.FindDefinition(100).Properties + " :  : ");
-        // }
+
         // Camera rotation
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) {
             if(Input.GetAxis("Horizontal") > 0 && cameraHolder.position.x < rightX) {

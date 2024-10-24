@@ -77,6 +77,17 @@ public abstract class ISP : NetworkBehaviour {
     }
 
     [Command]
+    public void CmdSpawnUnitWIndex(int index, int reqIndex) {
+        if(curReq.Count < reqIndex || maxReq.Count < reqIndex) { return; }
+        if (curReq[reqIndex] < maxReq[reqIndex]-1) {
+            curReq[reqIndex]++;
+        } else {
+            curReq[reqIndex] = 0;
+            FindObjectOfType<BattleFieldSpawn>().Spawn(this, spawnables[index]);
+        }
+    }
+
+    [Command]
     public void SpawnBase() {
         FindObjectOfType<BattleFieldSpawn>().SpawnBase(this, baseUnitPrefab, out baseUnit);
         UpdateBases();

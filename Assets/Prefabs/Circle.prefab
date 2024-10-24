@@ -167,7 +167,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   StartVelocityMultiplier: 43.2
-  StartCollisionCooldown: 0.1
+  StartCollisionCooldown: 0.3
   owner: {fileID: 0}
   singleOwner: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
