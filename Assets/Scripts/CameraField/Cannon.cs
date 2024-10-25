@@ -69,7 +69,7 @@ public class Cannon : NetworkBehaviour {
     private IEnumerator c(float wait, GameObject config, ISP player, float speed) { yield return new WaitForSeconds(wait); ShootInDir(transform.right, 0, config, player, speed); }
 
     private void ShootInDir(Vector2 fwd, float angle, GameObject config, ISP player, float speed) {
-        _g = Instantiate(config, transform.position + transform.forward, Quaternion.identity);
+        _g = Instantiate(config, transform.position + transform.right * 4, Quaternion.identity);
         _p = _g.GetComponent<ProjectileConfig>();
         _dir = Quaternion.AngleAxis(angle, Vector3.forward) * fwd;
         _p.StartM(player, _dir, speed);
