@@ -23,6 +23,9 @@ public class EffectZone : NetworkBehaviour {
             }
         } else {
             _.singleOwner.AddC();
+            if(number == 6 && _.singleOwner.GetType() == typeof(SinglePlayer)) {
+                ((SinglePlayer)_.singleOwner).eff_t();
+            }
             if(number == 18) {
                 _.singleOwner.SpawnUnit(0); 
                 _.singleOwner.SpawnUnit(0); 

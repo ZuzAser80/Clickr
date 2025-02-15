@@ -9,7 +9,6 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Unit {
-    //[RequireComponent(typeof(NavMeshAgent))]
     public class PathwalkingUnit : NetworkBehaviour, IDamagable, IShooter
     {
         [SerializeField] protected UnitProperties _properties;
@@ -87,21 +86,40 @@ namespace Assets.Scripts.Unit {
             }
         }
 
+        /// <summary>
+        /// Отправляет юнита к точке
+        /// </summary>
+        /// <param name="objective">точка / позиция к которой отправляют юнита</param>
         [ClientRpc]
         public virtual void StartPathfindRpc(Vector3 objective) { if(_navMeshAgent == null) { return; } obj = objective; _navMeshAgent.SetDestination(objective); }
 
+        /// <summary>
+        /// Возвращает данные о юните
+        /// </summary>
+        /// <returns></returns>
         public UnitProperties GetProperties() => _properties;
 
+        /// <summary>
+        /// Чтоб юнит дальше шел
+        /// </summary>
         [ClientRpc]
         public void ContinueRpc() { if(_navMeshAgent != null && this != null) { _navMeshAgent.ResetPath(); _navMeshAgent.isStopped = false; _navMeshAgent.SetDestination(obj); }  }
 
+        /// <summary>
+        /// Остановка юнита
+        /// </summary>
         [ClientRpc]
         public void StopRpc() { if(_navMeshAgent != null && this != null) { _navMeshAgent.isStopped = true; } else if(this == null) {DestroyImmediate(gameObject);} }
 
         public float GetHealth() { return _currentHealth; }
 
+        /// <summary>
+        /// Корутина для перезарядки
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator reload() {
             canShoot = false;
+            ContinueRpc();
             if (_currentEnemy == null) {
                 ContinueRpc();
             }
@@ -117,6 +135,10 @@ namespace Assets.Scripts.Unit {
             canShoot = true;
         }
 
+        /// <summary>
+        /// Урон по юниту
+        /// </summary>
+        /// <param name="amount">кол-во урона</param>
         [ServerCallback]
         public virtual void Damage(float amount) { 
             StartCoroutine(impact());
@@ -126,13 +148,22 @@ namespace Assets.Scripts.Unit {
                 Die();
             } 
         }
+        
 
+        /// <summary>
+        /// Импакт(белый на пару секунд)
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator impact() {
             color = Color.white;
             yield return new WaitForSeconds(0.3f);
             color = old;
         }
 
+        /// <summary>
+        /// Импакт в момент смерти (там  от типа темный а потом белый)
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator deathImpact() {
             color = Color.white;
             yield return new WaitForSeconds(0.3f);
@@ -142,6 +173,9 @@ namespace Assets.Scripts.Unit {
             NetworkServer.Destroy(gameObject);
         }
 
+        /// <summary>
+        /// Смерть
+        /// </summary>
         [ServerCallback]
         public virtual void Die() {
             if (onDeathClip != null && source != null) { source.PlayOneShot(onDeathClip); }
@@ -150,6 +184,10 @@ namespace Assets.Scripts.Unit {
             StartCoroutine(deathImpact());
         }
 
+        /// <summary>
+        /// Юнит стреляет
+        /// </summary>
+        /// <param name="target">Цель</param>
         [ServerCallback]
         public void ShootRpc(PathwalkingUnit target)
         {

@@ -5,6 +5,7 @@ using Assets.Scripts.Unit.Units;
 using Mirror;
 using UnityEngine;
 
+
 public abstract class ISP : NetworkBehaviour {
 
     [SyncVar] public Color color;

@@ -7,10 +7,12 @@ using Assets.Scripts.Unit;
 using Assets.Scripts.Unit.Units;
 using Mirror;
 using Steamworks;
+using Steamworks.Data;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class SinglePlayer : ISP {
@@ -37,6 +39,7 @@ public class SinglePlayer : ISP {
     private bool panActive;
 	private Vector3 lastPanPosition;
     private float nig = 0;
+    private int ar = 0;
 
     public Material material;
 
@@ -54,6 +57,9 @@ public class SinglePlayer : ISP {
         
     }
 
+    /// <summary>
+    /// Клик по кнопке (спавн шара, спавн юнитов и тп)
+    /// </summary>
     [Command]
     public override void CmdClick()
     {
@@ -75,6 +81,32 @@ public class SinglePlayer : ISP {
         v.transform.position = new Vector3(v.transform.position.x + UnityEngine.Random.Range(-50, 50), 0, 0);
         if(UnityEngine.Random.Range(0f, 1f) > 0.6f) {
             FindObjectOfType<AI>().CmdClick();
+        }
+        if (SteamClient.IsValid) {
+            if (!PlayerPrefs.HasKey("clicked")) {
+                PlayerPrefs.SetInt("clicked", 0);
+            }
+            PlayerPrefs.SetInt("clicked", PlayerPrefs.GetInt("clicked") + 1);
+            
+            if(PlayerPrefs.GetInt("clicked") == 1) {
+                var a = new Steamworks.Data.Achievement("NEW_ACHIEVEMENT_1_1");
+                a.Trigger();
+            } else if (PlayerPrefs.GetInt("clicked") - ar == 500) {
+                new Steamworks.Data.Achievement("NEW_ACHIEVEMENT_1_5").Trigger();
+            } else if (PlayerPrefs.GetInt("clicked") == 10000) {
+                new Steamworks.Data.Achievement("NEW_ACHIEVEMENT_1_6").Trigger();
+            }
+        }
+    }
+
+    public void eff_t() {
+        if (!PlayerPrefs.HasKey("tank")) {
+            PlayerPrefs.SetInt("tank", 0);
+        } else {
+            if(PlayerPrefs.GetInt("tank") == 20) {
+                new Steamworks.Data.Achievement("NEW_ACHIEVEMENT_1_4").Trigger();
+            }
+            PlayerPrefs.SetInt("tank", PlayerPrefs.GetInt("tank") + 1);
         }
     }
 
@@ -123,6 +155,9 @@ public class SinglePlayer : ISP {
         if(!helpPanel.activeSelf && SteamFace.instance.shouldShow) { Pause();}
         source.PlayOneShot(onStartGame);
         StartCoroutine(tryShoot(4f));
+        ar = PlayerPrefs.GetInt("clicked");
+        PlayerPrefs.SetInt("destroyed", 0);
+        PlayerPrefs.SetInt("tank", 0);
     }
 
     public override void WinCmd()
@@ -138,6 +173,14 @@ public class SinglePlayer : ISP {
             SteamInventory.TriggerItemDropAsync(100);
         }
         source.PlayOneShot(onWin);
+        if (!PlayerPrefs.HasKey("won")) {
+            PlayerPrefs.SetInt("won", 0);
+        } else {
+            if(PlayerPrefs.GetInt("won") == 10) {
+                new Steamworks.Data.Achievement("NEW_ACHIEVEMENT_1_3").Trigger();
+            }
+            PlayerPrefs.SetInt("won", PlayerPrefs.GetInt("won") + 1);
+        }
         base.WinCmd();
     }
 
@@ -147,6 +190,9 @@ public class SinglePlayer : ISP {
         base.LoseCmd();
     }
 
+    /// <summary>
+    /// Обновляем юниты баз
+    /// </summary>
     public override void UpdateBases()
     {
         baseUnit.onDeath += delegate {FindObjectOfType<UIBaseHpManager>().Lost();};
@@ -171,10 +217,17 @@ public class SinglePlayer : ISP {
 
     #endregion
 
+    /// <summary>
+    /// Пауза
+    /// </summary>
     public void Pause() {
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
     }
 
+    /// <summary>
+    /// Для кнопки Hide
+    /// </summary>
+    /// <param name="rt"></param>
     public void Alternate0(RectTransform rt) {
         rt.anchoredPosition = new Vector2(rt.anchoredPosition.x == 0 ? 354.5505f : 0, rt.anchoredPosition.y);
     }
@@ -239,6 +292,11 @@ public class SinglePlayer : ISP {
 		cameraHolder.GetComponentInChildren<Camera>().fieldOfView = Mathf.Clamp(cameraHolder.GetComponentInChildren<Camera>().fieldOfView - (offset * speed), 10f, 85f);
 	}
 
+
+    /// <summary>
+    /// Перемещение камеры
+    /// </summary>
+    /// <param name="newPanPosition">Новая позиция</param>
     void PanCamera(Vector3 newPanPosition) {
 		if (!panActive) {
 			return;
